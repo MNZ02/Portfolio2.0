@@ -1,5 +1,16 @@
 import { IProject } from '@/types';
 
+interface ISocialLink {
+    name: string;
+    url: string;
+}
+
+interface IExperience {
+    title: string;
+    company: string;
+    duration: string;
+}
+
 export const GENERAL_INFO = {
     email: 'abdulminhaz2@gmail.com',
 
@@ -10,7 +21,7 @@ export const GENERAL_INFO = {
     upworkProfile: 'mailto:abdulminhaz2@gmail.com',
 };
 
-export const SOCIAL_LINKS = [];
+export const SOCIAL_LINKS: ISocialLink[] = [];
 
 export const MY_STACK = {
     frontend: [
@@ -181,4 +192,4 @@ export const PROJECTS: IProject[] = [
     },
 ];
 
-export const MY_EXPERIENCE = [];
+export const MY_EXPERIENCE: IExperience[] = [];
