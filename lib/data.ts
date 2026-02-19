@@ -11,6 +11,13 @@ interface IExperience {
     duration: string;
 }
 
+export interface IHeroTerminalPanel {
+    title: string;
+    prompt: string;
+    output: string[];
+    status?: 'ok' | 'warn';
+}
+
 export const GENERAL_INFO = {
     email: 'abdulminhaz2@gmail.com',
 
@@ -19,9 +26,47 @@ export const GENERAL_INFO = {
 
     oldPortfolio: '',
     upworkProfile: 'mailto:abdulminhaz2@gmail.com',
+    ctaLabel: 'Start a Project',
+    availability: 'Available for freelance and contract work in 2026.',
 };
 
 export const SOCIAL_LINKS: ISocialLink[] = [];
+
+export const HERO_TERMINAL_PANELS: IHeroTerminalPanel[] = [
+    {
+        title: 'Build Check',
+        prompt: 'npm run build',
+        status: 'ok',
+        output: [
+            '▲ Next.js 15.2.8',
+            '✓ Compiled successfully',
+            '✓ Generating static pages (10/10)',
+            'Route /projects/[slug] prerendered',
+        ],
+    },
+    {
+        title: 'Deploy Health',
+        prompt: "ssh deploy@openclaw 'systemctl status gateway --no-pager'",
+        status: 'ok',
+        output: [
+            '● gateway.service - OpenClaw API Gateway',
+            'Active: active (running)',
+            'Memory: 162.4M | CPU: 2.3%',
+            'Health endpoint: 200 OK',
+        ],
+    },
+    {
+        title: 'Runtime Monitor',
+        prompt: 'node scripts/monitor.js --env=prod',
+        status: 'ok',
+        output: [
+            'queue_depth=0',
+            'p95_latency=138ms',
+            'error_rate=0.2%',
+            'uptime=99.97%',
+        ],
+    },
+];
 
 export const MY_STACK = {
     frontend: [
@@ -116,6 +161,7 @@ export const PROJECTS: IProject[] = [
         slug: 'psigenei',
         liveUrl: '',
         year: 2026,
+        status: 'in-progress',
         description:
             'An AI-based exam generation engine with a taxonomy-driven structure and a rule engine that produces valid, high-fidelity papers under data constraints.',
         role: `Status: In Progress<br/>
@@ -143,6 +189,7 @@ export const PROJECTS: IProject[] = [
     {
         title: 'OpenClaw Gateway',
         slug: 'openclaw-gateway',
+        status: 'completed',
         techStack: [
             'VPS',
             'Oracle Cloud',
@@ -171,6 +218,7 @@ export const PROJECTS: IProject[] = [
     {
         title: 'Portfolio Website',
         slug: 'portfolio-website',
+        status: 'completed',
         techStack: ['Next.js', 'React', 'Tailwind CSS'],
         thumbnail: '/projects/thumbnail/devLinks.jpg',
         longThumbnail: '/projects/long/devLinks.jpg',

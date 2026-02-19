@@ -16,6 +16,10 @@ export default {
                     light: 'hsl(var(--background-light))',
                 },
                 foreground: 'hsl(var(--foreground))',
+                surface: {
+                    '1': 'hsl(var(--surface-1))',
+                    '2': 'hsl(var(--surface-2))',
+                },
                 card: {
                     DEFAULT: 'hsl(var(--card))',
                     foreground: 'hsl(var(--card-foreground))',
@@ -65,7 +69,7 @@ export default {
                 'roboto-flex': ['var(--font-roboto-flex)'],
             },
             padding: {
-                section: '250px',
+                section: '180px',
             },
             container: {
                 center: true,

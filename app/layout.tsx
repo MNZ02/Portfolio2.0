@@ -67,21 +67,12 @@ export default function RootLayout({
                 <ReactLenis
                     root
                     options={{
-                        lerp: 0.1,
-                        duration: 1.4,
+                        lerp: 0.09,
+                        duration: 1.15,
                     }}
                 >
-                    {/* <a
-                        href="https://forms.gle/t73XYJgWD5cJNr6e8"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-4 block bg-black text-center z-[1] text-sm py-2 hover:text-primary transition-all"
-                    >
-                        Frontend dev? I&apos;ll help you polish your resume —
-                        completely free.
-                    </a> */}
                     <Navbar />
-                    <main>{children}</main>
+                    <main className="relative z-[1]">{children}</main>
                     <Footer />
 
                     <CustomCursor />

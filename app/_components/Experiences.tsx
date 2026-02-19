@@ -1,6 +1,6 @@
 'use client';
 import SectionTitle from '@/components/SectionTitle';
-import { MY_EXPERIENCE } from '@/lib/data';
+import { GENERAL_INFO, MY_EXPERIENCE } from '@/lib/data';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
@@ -13,64 +13,69 @@ const Experiences = () => {
 
     useGSAP(
         () => {
-            const tl = gsap.timeline({
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                return;
+            }
+
+            gsap.from('.experience-item', {
+                y: 34,
+                autoAlpha: 0,
+                stagger: 0.12,
+                duration: 0.65,
+                ease: 'power2.out',
                 scrollTrigger: {
                     trigger: containerRef.current,
-                    start: 'top 60%',
-                    end: 'bottom 50%',
-                    toggleActions: 'restart none none reverse',
-                    scrub: 1,
+                    start: 'top 80%',
                 },
-            });
-
-            tl.from('.experience-item', {
-                y: 50,
-                opacity: 0,
-                stagger: 0.3,
-            });
-        },
-        { scope: containerRef },
-    );
-
-    useGSAP(
-        () => {
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: containerRef.current,
-                    start: 'bottom 50%',
-                    end: 'bottom 20%',
-                    scrub: 1,
-                },
-            });
-
-            tl.to(containerRef.current, {
-                y: -150,
-                opacity: 0,
             });
         },
         { scope: containerRef },
     );
 
     return (
-        <section className="py-section" id="my-experience">
+        <section className="section-divider py-20 md:py-32" id="my-experience">
             <div className="container" ref={containerRef}>
-                <SectionTitle title="My Experience" />
+                <SectionTitle
+                    title="My Experience"
+                    eyebrow="Professional Timeline"
+                />
 
-                <div className="grid gap-14">
-                    {MY_EXPERIENCE.map((item) => (
-                        <div key={item.title} className="experience-item">
-                            <p className="text-xl text-muted-foreground">
-                                {item.company}
-                            </p>
-                            <p className="text-5xl font-anton leading-none mt-3.5 mb-2.5">
-                                {item.title}
-                            </p>
-                            <p className="text-lg text-muted-foreground">
-                                {item.duration}
-                            </p>
-                        </div>
-                    ))}
-                </div>
+                {MY_EXPERIENCE.length > 0 ? (
+                    <div className="grid gap-4 md:gap-5">
+                        {MY_EXPERIENCE.map((item) => (
+                            <article
+                                key={item.title}
+                                className="experience-item surface-card p-6 md:p-7"
+                            >
+                                <p className="eyebrow">{item.company}</p>
+                                <p className="mt-3 font-anton text-4xl leading-none md:text-5xl">
+                                    {item.title}
+                                </p>
+                                <p className="mt-4 text-muted-foreground">
+                                    {item.duration}
+                                </p>
+                            </article>
+                        ))}
+                    </div>
+                ) : (
+                    <article className="experience-item surface-card p-7 md:p-9">
+                        <p className="eyebrow">Experience updates</p>
+                        <h3 className="mt-3 font-anton text-3xl md:text-4xl">
+                            Detailed role history will be published here.
+                        </h3>
+                        <p className="mt-4 max-w-[640px] text-muted-foreground md:text-lg">
+                            I am currently consolidating recent work into concise,
+                            public case notes. Reach out if you want a direct
+                            walkthrough of relevant projects.
+                        </p>
+                        <a
+                            href={`mailto:${GENERAL_INFO.email}`}
+                            className="mt-6 inline-flex rounded-full border border-border/80 px-5 py-2.5 text-sm uppercase tracking-[0.14em] text-foreground transition-colors hover:border-primary hover:text-primary"
+                        >
+                            Contact for full timeline
+                        </a>
+                    </article>
+                )}
             </div>
         </section>
     );

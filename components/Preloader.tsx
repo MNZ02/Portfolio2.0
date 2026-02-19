@@ -1,64 +1,82 @@
 'use client';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 gsap.registerPlugin(useGSAP);
 
 const Preloader = () => {
     const preloaderRef = useRef<HTMLDivElement>(null);
+    const [showPreloader, setShowPreloader] = useState(false);
+
+    useEffect(() => {
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const seenPreloader = window.sessionStorage.getItem('portfolio-preloader') === '1';
+
+        if (reducedMotion || seenPreloader) {
+            return;
+        }
+
+        window.sessionStorage.setItem('portfolio-preloader', '1');
+        setShowPreloader(true);
+    }, []);
 
     useGSAP(
         () => {
+            if (!showPreloader || !preloaderRef.current) return;
+
             const tl = gsap.timeline({
                 defaults: {
-                    ease: 'power1.inOut',
+                    ease: 'power2.inOut',
                 },
             });
 
-            tl.to('.name-text span', {
-                y: 0,
-                stagger: 0.05,
-                duration: 0.2,
-            });
-
-            tl.to('.preloader-item', {
-                delay: 1,
+            tl.from('.name-text span', {
                 y: '100%',
-                duration: 0.5,
-                stagger: 0.1,
+                stagger: 0.028,
+                duration: 0.18,
             })
-                .to('.name-text span', { autoAlpha: 0 }, '<0.5')
+                .to('.name-text span', {
+                    autoAlpha: 0,
+                    duration: 0.2,
+                    delay: 0.22,
+                })
+                .to(
+                    '.preloader-item',
+                    {
+                        y: '-100%',
+                        duration: 0.35,
+                        stagger: 0.05,
+                    },
+                    '<0.06',
+                )
                 .to(
                     preloaderRef.current,
                     {
                         autoAlpha: 0,
+                        duration: 0.2,
+                        onComplete: () => setShowPreloader(false),
                     },
-                    '<1',
+                    '<0.1',
                 );
         },
-        { scope: preloaderRef },
+        { scope: preloaderRef, dependencies: [showPreloader] },
     );
 
-    return (
-        <div className="fixed inset-0 z-[6] flex" ref={preloaderRef}>
-            <div className="preloader-item h-full w-[10%] bg-black"></div>
-            <div className="preloader-item h-full w-[10%] bg-black"></div>
-            <div className="preloader-item h-full w-[10%] bg-black"></div>
-            <div className="preloader-item h-full w-[10%] bg-black"></div>
-            <div className="preloader-item h-full w-[10%] bg-black"></div>
-            <div className="preloader-item h-full w-[10%] bg-black"></div>
-            <div className="preloader-item h-full w-[10%] bg-black"></div>
-            <div className="preloader-item h-full w-[10%] bg-black"></div>
-            <div className="preloader-item h-full w-[10%] bg-black"></div>
-            <div className="preloader-item h-full w-[10%] bg-black"></div>
+    if (!showPreloader) return null;
 
-            <p className="name-text flex text-[20vw] lg:text-[200px] font-anton text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 leading-none overflow-hidden">
-                {'<Minhaz.dev/>'.split('').map((char, index) => (
-                    <span
-                        key={`${char}-${index}`}
-                        className="inline-block translate-y-full"
-                    >
+    return (
+        <div className="fixed inset-0 z-[70] flex" ref={preloaderRef}>
+            {Array.from({ length: 8 }).map((_, index) => (
+                <div
+                    key={index}
+                    className="preloader-item h-full w-[12.5%] bg-background"
+                ></div>
+            ))}
+
+            <p className="name-text absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 overflow-hidden text-[13vw] font-anton leading-none text-foreground md:text-[140px]">
+                {'MINHAZ.DEV'.split('').map((char, index) => (
+                    <span key={`${char}-${index}`} className="inline-block">
                         {char}
                     </span>
                 ))}

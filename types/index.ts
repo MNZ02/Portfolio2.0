@@ -15,11 +15,13 @@ export type Variant =
     | 'link'
     | 'no-color';
 
+export type ProjectStatus = 'in-progress' | 'completed';
+
 export interface IProject {
     title: string;
     year: number;
     description: string;
-    role: string;
+    role?: string;
     techStack: string[];
     thumbnail: string;
     longThumbnail: string;
@@ -27,4 +29,5 @@ export interface IProject {
     slug: string;
     liveUrl?: string;
     sourceCode?: string;
+    status?: ProjectStatus;
 }

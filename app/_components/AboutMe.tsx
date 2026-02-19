@@ -1,4 +1,5 @@
 'use client';
+import SectionTitle from '@/components/SectionTitle';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
@@ -11,79 +12,66 @@ const AboutMe = () => {
 
     useGSAP(
         () => {
-            const tl = gsap.timeline({
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                return;
+            }
+
+            gsap.from('.about-reveal', {
+                y: 42,
+                autoAlpha: 0,
+                stagger: 0.12,
+                duration: 0.7,
+                ease: 'power2.out',
                 scrollTrigger: {
-                    id: 'about-me-in',
                     trigger: container.current,
-                    start: 'top 70%',
-                    end: 'bottom bottom',
-                    scrub: 0.5,
+                    start: 'top 78%',
                 },
-            });
-
-            tl.from('.slide-up-and-fade', {
-                y: 150,
-                opacity: 0,
-                stagger: 0.05,
-            });
-        },
-        { scope: container },
-    );
-
-    useGSAP(
-        () => {
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    id: 'about-me-out',
-                    trigger: container.current,
-                    start: 'bottom 50%',
-                    end: 'bottom 10%',
-                    scrub: 0.5,
-                },
-            });
-
-            tl.to('.slide-up-and-fade', {
-                y: -150,
-                opacity: 0,
-                stagger: 0.02,
             });
         },
         { scope: container },
     );
 
     return (
-        <section className="pb-section" id="about-me">
+        <section className="section-divider py-20 md:py-32" id="about-me">
             <div className="container" ref={container}>
-                <h2 className="text-4xl md:text-6xl font-thin mb-20 slide-up-and-fade">
-                    I design systems that handle complexity, constraints, and
-                    real-world edge cases.
-                </h2>
+                <SectionTitle title="About Me" eyebrow="What I Focus On" />
 
-                <p className="pb-3 border-b text-muted-foreground slide-up-and-fade">
-                    This is me.
-                </p>
-
-                <div className="grid md:grid-cols-12 mt-9">
-                    <div className="md:col-span-5">
-                        <p className="text-5xl slide-up-and-fade">
-                            Hi, I&apos;m Abdul Minhaz.
-                        </p>
+                <div className="grid gap-10 md:grid-cols-12 md:gap-12">
+                    <div className="about-reveal md:col-span-5">
+                        <h2 className="text-4xl leading-tight md:text-5xl md:leading-[1.08]">
+                            I design systems that handle complexity, constraints,
+                            and edge cases without slowing teams down.
+                        </h2>
                     </div>
-                    <div className="md:col-span-7">
-                        <div className="text-lg text-muted-foreground max-w-[450px]">
-                            <p className="slide-up-and-fade">
-                                I&apos;m a full-stack developer and system
-                                architect focused on backend logic, data
-                                modeling, and scalable system design.
+
+                    <div className="about-reveal md:col-span-7">
+                        <div className="surface-card p-6 md:p-8">
+                            <p className="text-base text-muted-foreground md:text-lg md:leading-relaxed">
+                                I&apos;m a full-stack developer and system architect
+                                focused on backend logic, data modeling, and
+                                scalable product foundations.
                             </p>
-                            <p className="mt-3 slide-up-and-fade">
-                                I build rule-driven systems and intelligent
-                                workflows that handle constraints, edge cases,
-                                and real-world complexity. I&apos;m comfortable
-                                across the stack, but my strongest value is
-                                designing the logic that makes systems reliable
-                                and scalable.
+
+                            <p className="mt-4 text-base text-muted-foreground md:text-lg md:leading-relaxed">
+                                I work across the stack, but my strongest value is
+                                turning ambiguous product requirements into clear,
+                                rule-driven systems that teams can trust.
                             </p>
+
+                            <ul className="mt-6 grid gap-2 text-sm text-foreground/90 md:grid-cols-2">
+                                <li className="rounded-lg border border-border/60 bg-surface-2/65 px-3 py-2">
+                                    Rule-driven architecture
+                                </li>
+                                <li className="rounded-lg border border-border/60 bg-surface-2/65 px-3 py-2">
+                                    Scalable data modeling
+                                </li>
+                                <li className="rounded-lg border border-border/60 bg-surface-2/65 px-3 py-2">
+                                    Constraint validation
+                                </li>
+                                <li className="rounded-lg border border-border/60 bg-surface-2/65 px-3 py-2">
+                                    AI-assisted workflows
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>

@@ -6,28 +6,27 @@ const ScrollProgressIndicator = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-            if (scrollBarRef.current) {
-                const { scrollHeight, clientHeight } = document.documentElement;
-                const scrollableHeight = scrollHeight - clientHeight;
-                const scrollY = window.scrollY;
-                const scrollProgress = (scrollY / scrollableHeight) * 100;
+            if (!scrollBarRef.current) return;
 
-                scrollBarRef.current.style.transform = `translateY(-${
-                    100 - scrollProgress
-                }%)`;
-            }
+            const { scrollHeight, clientHeight } = document.documentElement;
+            const scrollableHeight = Math.max(scrollHeight - clientHeight, 1);
+            const scrollY = window.scrollY;
+            const scrollProgress = Math.min(scrollY / scrollableHeight, 1);
+
+            scrollBarRef.current.style.transform = `scaleY(${scrollProgress})`;
         };
 
         handleScroll();
 
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     return (
-        <div className="fixed top-[50svh] right-[2%] -translate-y-1/2 w-1.5 h-[100px] rounded-full bg-background-light overflow-hidden">
+        <div className="fixed right-5 top-1/2 z-40 hidden h-[100px] w-1.5 -translate-y-1/2 overflow-hidden rounded-full bg-background-light/85 lg:block">
             <div
-                className="w-full bg-primary rounded-full h-full"
+                className="h-full w-full origin-top scale-y-0 rounded-full bg-primary/85"
                 ref={scrollBarRef}
             ></div>
         </div>

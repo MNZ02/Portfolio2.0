@@ -14,124 +14,64 @@ const Skills = () => {
 
     useGSAP(
         () => {
-            const slideUpEl =
-                containerRef.current?.querySelectorAll('.slide-up');
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                return;
+            }
 
-            if (!slideUpEl?.length) return;
-
-            const tl = gsap.timeline({
+            gsap.from('.stack-card', {
+                y: 32,
+                autoAlpha: 0,
+                duration: 0.65,
+                stagger: 0.12,
+                ease: 'power2.out',
                 scrollTrigger: {
                     trigger: containerRef.current,
-                    start: 'top 80%',
-                    end: 'bottom 80%',
-                    scrub: 0.5,
+                    start: 'top 78%',
                 },
-            });
-
-            tl.from('.slide-up', {
-                opacity: 0,
-                y: 40,
-                ease: 'none',
-                stagger: 0.4,
-            });
-        },
-        { scope: containerRef },
-    );
-
-    useGSAP(
-        () => {
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: containerRef.current,
-                    start: 'bottom 50%',
-                    end: 'bottom 10%',
-                    scrub: 1,
-                },
-            });
-
-            tl.to(containerRef.current, {
-                y: -150,
-                opacity: 0,
             });
         },
         { scope: containerRef },
     );
 
     return (
-        <section id="my-stack" ref={containerRef}>
-            <div className="container">
-                <SectionTitle title="My Stack" />
+        <section className="section-divider py-20 md:py-32" id="my-stack">
+            <div className="container" ref={containerRef}>
+                <SectionTitle title="My Stack" eyebrow="Tools and Platforms" />
 
-                <div className="space-y-20">
-                    {Object.entries(MY_STACK).map(([key, value]) => (
-                        <div className="grid sm:grid-cols-12" key={key}>
-                            <div className="sm:col-span-5">
-                                <p className="slide-up text-5xl font-anton leading-none text-muted-foreground uppercase">
-                                    {key}
+                <div className="grid gap-5">
+                    {Object.entries(MY_STACK).map(([category, values]) => (
+                        <article
+                            className="stack-card surface-card grid gap-6 p-6 md:grid-cols-12 md:gap-8 md:p-8"
+                            key={category}
+                        >
+                            <div className="md:col-span-4">
+                                <p className="font-anton text-3xl uppercase leading-none text-foreground md:text-4xl">
+                                    {category}
                                 </p>
                             </div>
 
-                            <div className="sm:col-span-7 flex gap-x-11 gap-y-9 flex-wrap">
-                                {value.map((item) => (
-                                    <div
-                                        className="slide-up flex gap-3.5 items-center leading-none"
-                                        key={item.name}
-                                    >
-                                        <div>
+                            <div className="md:col-span-8">
+                                <div className="grid gap-3 sm:grid-cols-2">
+                                    {values.map((item) => (
+                                        <div
+                                            className="flex items-center gap-3 rounded-xl border border-border/60 bg-surface-2/60 px-3 py-2.5"
+                                            key={item.name}
+                                        >
                                             <Image
                                                 src={item.icon}
                                                 alt={item.name}
-                                                width="40"
-                                                height="40"
-                                                className="max-h-10"
+                                                width="34"
+                                                height="34"
+                                                className="h-8 w-8 object-contain"
                                             />
+                                            <span className="text-sm capitalize text-foreground/90 md:text-base">
+                                                {item.name}
+                                            </span>
                                         </div>
-                                        <span className="text-2xl capitalize">
-                                            {item.name}
-                                        </span>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
-
-    return (
-        <section id="my-stack" ref={containerRef}>
-            <div className="container">
-                <SectionTitle title="My Stack" />
-
-                <div className="space-y-20">
-                    {Object.entries(MY_STACK).map(([key, value]) => (
-                        <div className="grid sm:grid-cols-12" key={key}>
-                            <div className="sm:col-span-5">
-                                <p className="slide-up text-5xl font-anton leading-none text-muted-foreground uppercase">
-                                    {key}
-                                </p>
-                            </div>
-                            <div className="sm:col-span-7 flex gap-x-11 gap-y-9 flex-wrap">
-                                {value.map((item) => (
-                                    <div
-                                        className="slide-up flex gap-3.5 items-center leading-none"
-                                        key={item.name}
-                                    >
-                                        <Image
-                                            src={item.icon}
-                                            alt={item.name}
-                                            width="40"
-                                            height="40"
-                                            className="h-10"
-                                        />
-                                        <span className="text-2xl capitalize">
-                                            {item.name}
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+                        </article>
                     ))}
                 </div>
             </div>

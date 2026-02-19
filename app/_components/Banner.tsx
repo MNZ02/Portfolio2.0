@@ -1,92 +1,127 @@
 'use client';
 import ArrowAnimation from '@/components/ArrowAnimation';
 import Button from '@/components/Button';
-import { GENERAL_INFO } from '@/lib/data';
+import { GENERAL_INFO, HERO_TERMINAL_PANELS } from '@/lib/data';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 import React from 'react';
+import HeroTerminalPanels from './HeroTerminalPanels';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
+
+const METRICS = [
+    { value: '3+', label: 'Years of experience' },
+    { value: '7+', label: 'Projects shipped' },
+    { value: '10K+', label: 'Hours of delivery' },
+];
 
 const Banner = () => {
     const containerRef = React.useRef<HTMLDivElement>(null);
 
-    // move the content a little up on scroll
     useGSAP(
         () => {
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: containerRef.current,
-                    start: 'bottom 70%',
-                    end: 'bottom 10%',
-                    scrub: 1,
-                },
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                return;
+            }
+
+            gsap.from('.hero-intro', {
+                y: 32,
+                autoAlpha: 0,
+                duration: 0.7,
+                stagger: 0.09,
+                ease: 'power2.out',
             });
 
-            tl.fromTo(
-                '.slide-up-and-fade',
-                { y: 0 },
-                { y: -150, opacity: 0, stagger: 0.02 },
-            );
+            gsap.from('.hero-terminal-item', {
+                y: 22,
+                autoAlpha: 0,
+                duration: 0.55,
+                stagger: 0.1,
+                delay: 0.2,
+                ease: 'power2.out',
+            });
+
+            gsap.to('.hero-float', {
+                y: -56,
+                autoAlpha: 0.25,
+                stagger: 0.05,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: 0.8,
+                },
+            });
         },
         { scope: containerRef },
     );
 
     return (
-        <section className="relative overflow-hidden" id="banner">
+        <section
+            className="relative overflow-hidden pb-12 pt-16 md:pb-14 md:pt-20"
+            id="banner"
+        >
             <ArrowAnimation />
-            <div
-                className="container h-[100svh] min-h-[530px] max-md:pb-10 flex justify-between items-center max-md:flex-col"
-                ref={containerRef}
-            >
-                <div className="max-md:grow max-md:flex flex-col justify-center items-start max-w-[544px]">
-                    <h1 className="banner-title slide-up-and-fade leading-[.95] text-6xl sm:text-[80px] font-anton">
-                        <span className="text-primary">FULL-STACK</span>
-                        <br /> <span className="ml-4">DEVELOPER</span>
-                    </h1>
-                    <p className="banner-description slide-up-and-fade mt-6 text-lg text-muted-foreground">
-                        Hi! I&apos;m{' '}
-                        <span className="font-medium text-foreground">
-                            Abdul Minhaz
-                        </span>
-                        . I build complex systems with rule engines, scalable
-                        data models, and AI-driven workflows.
-                    </p>
-                    <Button
-                        as="link"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href={GENERAL_INFO.upworkProfile}
-                        variant="primary"
-                        className="mt-9 banner-button slide-up-and-fade"
-                    >
-                        Contact Me
-                    </Button>
-                </div>
 
-                <div className="md:absolute bottom-[10%] right-[4%] flex md:flex-col gap-4 md:gap-8 text-center md:text-right">
-                    <div className="slide-up-and-fade">
-                        <h5 className="text-3xl sm:text-4xl font-anton text-primary mb-1.5">
-                            3+
-                        </h5>
-                        <p className="text-muted-foreground">
-                            Years of Experience
+            <div className="container" ref={containerRef}>
+                <div className="grid min-h-[calc(100svh-92px)] items-center gap-8 lg:grid-cols-12 lg:gap-8">
+                    <div className="lg:col-span-7 xl:col-span-8">
+                        <p className="hero-intro hero-float eyebrow mb-6 inline-flex rounded-full border border-border/70 bg-background-light/70 px-4 py-2 text-[11px]">
+                            {GENERAL_INFO.availability}
                         </p>
-                    </div>
-                    <div className="slide-up-and-fade">
-                        <h5 className="text-3xl sm:text-4xl font-anton text-primary mb-1.5">
-                            7+
-                        </h5>
-                        <p className="text-muted-foreground">
-                            Completed Projects
+
+                        <h1 className="hero-intro hero-float font-anton text-6xl leading-[0.94] sm:text-7xl md:text-[88px]">
+                            FULL-STACK
+                            <br />
+                            <span className="text-primary">SYSTEM BUILDER</span>
+                        </h1>
+
+                        <p className="hero-intro hero-float mt-7 max-w-[680px] text-base text-muted-foreground md:text-lg md:leading-relaxed">
+                            Hi, I&apos;m Abdul Minhaz. I build complex backend-first
+                            products with clear architecture, resilient data models,
+                            and AI-assisted workflows that hold up in production.
                         </p>
+
+                        <div className="hero-intro hero-float mt-10 flex flex-wrap items-center gap-4">
+                            <Button
+                                as="link"
+                                href={GENERAL_INFO.upworkProfile}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                variant="primary"
+                            >
+                                {GENERAL_INFO.ctaLabel || 'Start a Project'}
+                            </Button>
+
+                            <Button
+                                as="link"
+                                href="/#selected-projects"
+                                variant="link"
+                                className="text-muted-foreground"
+                            >
+                                Explore Case Studies
+                            </Button>
+                        </div>
+
+                        <div className="hero-intro hero-float mt-7 grid gap-3 sm:grid-cols-3">
+                            {METRICS.map((metric) => (
+                                <div className="kpi-card" key={metric.label}>
+                                    <p className="font-anton text-4xl leading-none text-primary">
+                                        {metric.value}
+                                    </p>
+                                    <p className="mt-2 text-sm text-muted-foreground">
+                                        {metric.label}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                    <div className="slide-up-and-fade">
-                        <h5 className="text-3xl sm:text-4xl font-anton text-primary mb-1.5">
-                            10K+
-                        </h5>
-                        <p className="text-muted-foreground">Hours Worked</p>
+
+                    <div className="hero-intro hero-float lg:col-span-5 xl:col-span-4 lg:pl-2">
+                        <p className="eyebrow mb-3">Live Delivery Signals</p>
+                        <HeroTerminalPanels panels={HERO_TERMINAL_PANELS} />
                     </div>
                 </div>
             </div>

@@ -9,38 +9,58 @@ interface Props {
         container?: string;
         title?: string;
         icon?: string;
+        eyebrow?: string;
     };
     title: string;
+    eyebrow?: string;
 }
 
-const SectionTitle = ({ icon, title, className, classNames }: Props) => {
+const SectionTitle = ({
+    icon,
+    title,
+    className,
+    classNames,
+    eyebrow,
+}: Props) => {
     return (
         <div
             className={cn(
-                'flex items-center gap-4 mb-10',
+                'mb-12 flex items-end gap-4 md:gap-7',
                 className,
                 classNames?.container,
             )}
         >
-            {icon ? (
-                icon
-            ) : (
-                <SectionFlower
-                    width={25}
-                    className={cn(
-                        'animate-spin duration-7000',
-                        classNames?.icon,
-                    )}
-                />
-            )}
-            <h2
-                className={cn(
-                    'text-xl uppercase leading-none',
-                    classNames?.title,
+            <span className="shrink-0 rounded-full border border-border/70 bg-background-light/70 p-2.5">
+                {icon ? (
+                    icon
+                ) : (
+                    <SectionFlower
+                        width={20}
+                        className={cn(
+                            'animate-spin duration-7000 text-primary/80',
+                            classNames?.icon,
+                        )}
+                    />
                 )}
-            >
-                {title}
-            </h2>
+            </span>
+
+            <div className="min-w-0">
+                {eyebrow && (
+                    <p className={cn('eyebrow mb-2', classNames?.eyebrow)}>
+                        {eyebrow}
+                    </p>
+                )}
+                <h2
+                    className={cn(
+                        'text-xl leading-none uppercase tracking-[0.15em]',
+                        classNames?.title,
+                    )}
+                >
+                    {title}
+                </h2>
+            </div>
+
+            <span className="hidden h-px flex-1 bg-border/70 md:block"></span>
         </div>
     );
 };
