@@ -36,6 +36,7 @@ const MENU_LINKS = [
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const router = useRouter();
+    const normalizedEmail = GENERAL_INFO.email.toLowerCase();
 
     return (
         <>
@@ -50,7 +51,7 @@ const Navbar = () => {
                         </Link>
 
                         <a
-                            href={`mailto:${GENERAL_INFO.email}`}
+                            href={`mailto:${normalizedEmail}`}
                             className="ml-auto mr-3 hidden rounded-full border border-border/80 px-4 py-2 text-xs uppercase tracking-[0.15em] text-muted-foreground transition-colors hover:border-primary/70 hover:text-primary md:inline-flex"
                         >
                             {GENERAL_INFO.ctaLabel || 'Start a Project'}
@@ -156,10 +157,10 @@ const Navbar = () => {
                     <div className="rounded-xl border border-border/70 bg-background-light/55 p-4">
                         <p className="eyebrow mb-2">Get in touch</p>
                         <a
-                            href={`mailto:${GENERAL_INFO.email}`}
+                            href={`mailto:${normalizedEmail}`}
                             className="inline-flex text-base text-foreground transition-colors hover:text-primary"
                         >
-                            {GENERAL_INFO.email}
+                            {normalizedEmail}
                         </a>
                         <p className="mt-3 text-sm text-muted-foreground">
                             {GENERAL_INFO.availability}

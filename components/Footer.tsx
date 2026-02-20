@@ -1,6 +1,8 @@
 import { GENERAL_INFO, SOCIAL_LINKS } from '@/lib/data';
 
 const Footer = () => {
+    const normalizedEmail = GENERAL_INFO.email.toLowerCase();
+
     return (
         <footer className="section-divider pb-10 pt-16 md:pt-20" id="contact">
             <div className="container">
@@ -15,10 +17,10 @@ const Footer = () => {
                     </p>
 
                     <a
-                        href={`mailto:${GENERAL_INFO.email}`}
-                        className="mt-8 inline-flex rounded-full bg-primary px-7 py-3 text-sm font-semibold uppercase tracking-[0.15em] text-primary-foreground transition-colors hover:bg-primary/85"
+                        href={`mailto:${normalizedEmail}`}
+                        className="mt-8 inline-flex rounded-full bg-primary px-7 py-3 text-sm font-semibold lowercase tracking-[0.15em] text-primary-foreground transition-colors hover:bg-primary/85"
                     >
-                        {GENERAL_INFO.email}
+                        {normalizedEmail}
                     </a>
 
                     {SOCIAL_LINKS.length > 0 ? (
