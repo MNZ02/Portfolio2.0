@@ -11,9 +11,9 @@ import HeroTerminalPanels from './HeroTerminalPanels';
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const METRICS = [
-    { value: '3+', label: 'Years of experience' },
-    { value: '7+', label: 'Projects shipped' },
-    { value: '10K+', label: 'Hours of delivery' },
+    { stat: '2+', text: 'Years of experience' },
+    { stat: '7+', text: 'Projects shipped' },
+    { stat: '10K+', text: 'Engineering hours' },
 ];
 
 const Banner = () => {
@@ -79,9 +79,10 @@ const Banner = () => {
                         </h1>
 
                         <p className="hero-intro hero-float mt-7 max-w-[680px] text-base text-muted-foreground md:text-lg md:leading-relaxed">
-                            Hi, I&apos;m Abdul Minhaz. I build complex backend-first
-                            products with clear architecture, resilient data models,
-                            and AI-assisted workflows that hold up in production.
+                            Hi, I&apos;m Abdul Minhaz. I build complex
+                            backend-first products with clear architecture,
+                            resilient data models, and AI-assisted workflows
+                            that hold up in production.
                         </p>
 
                         <div className="hero-intro hero-float mt-10 flex flex-wrap items-center gap-4">
@@ -107,12 +108,12 @@ const Banner = () => {
 
                         <div className="hero-intro hero-float mt-7 grid gap-3 sm:grid-cols-3">
                             {METRICS.map((metric) => (
-                                <div className="kpi-card" key={metric.label}>
+                                <div className="kpi-card" key={metric.text}>
                                     <p className="font-anton text-4xl leading-none text-primary">
-                                        {metric.value}
+                                        {metric.stat}
                                     </p>
                                     <p className="mt-2 text-sm text-muted-foreground">
-                                        {metric.label}
+                                        {metric.text}
                                     </p>
                                 </div>
                             ))}

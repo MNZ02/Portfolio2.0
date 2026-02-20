@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { SectionFlower } from './icons';
 import { cn } from '@/lib/utils';
 
 interface Props {
@@ -34,13 +33,14 @@ const SectionTitle = ({
                 {icon ? (
                     icon
                 ) : (
-                    <SectionFlower
-                        width={20}
+                    <span
                         className={cn(
-                            'animate-spin duration-7000 text-primary/80',
+                            'block font-mono text-sm font-semibold text-primary/80',
                             classNames?.icon,
                         )}
-                    />
+                    >
+                        {'</>'}
+                    </span>
                 )}
             </span>
 
