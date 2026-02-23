@@ -65,8 +65,8 @@ export default {
                 sm: 'calc(var(--radius) - 4px)',
             },
             fontFamily: {
-                anton: ['var(--font-anton)'],
-                'roboto-flex': ['var(--font-roboto-flex)'],
+                anton: ['Impact', 'Haettenschweiler', 'Arial Narrow Bold', 'sans-serif'],
+                'roboto-flex': ['Avenir Next', 'Segoe UI', 'Helvetica Neue', 'sans-serif'],
             },
             padding: {
                 section: '180px',

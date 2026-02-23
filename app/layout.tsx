@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Anton, Roboto_Flex } from 'next/font/google';
 import { ReactLenis } from 'lenis/react';
 
 import 'lenis/dist/lenis.css';
@@ -12,20 +11,6 @@ import CustomCursor from '@/components/CustomCursor';
 import Preloader from '../components/Preloader';
 import StickyEmail from './_components/StickyEmail';
 import { SITE_NAME, SITE_URL } from '@/lib/site';
-
-const antonFont = Anton({
-    weight: '400',
-    style: 'normal',
-    subsets: ['latin'],
-    variable: '--font-anton',
-});
-
-const robotoFlex = Roboto_Flex({
-    weight: ['100', '400', '500', '600', '700', '800'],
-    style: 'normal',
-    subsets: ['latin'],
-    variable: '--font-roboto-flex',
-});
 
 export const metadata: Metadata = {
     metadataBase: new URL(SITE_URL),
@@ -61,9 +46,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body
-                className={`${antonFont.variable} ${robotoFlex.variable} antialiased`}
-            >
+            <body className="antialiased">
                 <ReactLenis
                     root
                     options={{

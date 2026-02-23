@@ -10,6 +10,7 @@ type BlackHoleSceneProps = {
     quality: SceneQuality;
     collapseRef: React.MutableRefObject<number>;
     interactive: boolean;
+    onPerformanceDip?: () => void;
 };
 
 type ScenePreset = {
@@ -19,38 +20,52 @@ type ScenePreset = {
     swirlParticles: number;
     infallParticles: number;
     starParticles: number;
+    ringSegments: number;
+    singularitySegments: number;
     antialias: boolean;
+    precision: 'highp' | 'mediump';
 };
 
 const QUALITY_PRESETS: Record<SceneQuality, ScenePreset> = {
     low: {
-        dpr: [0.85, 1.2],
+        dpr: [0.7, 1.05],
         diskLayers: 3,
-        diskSegments: 112,
-        swirlParticles: 420,
-        infallParticles: 120,
-        starParticles: 420,
+        diskSegments: 96,
+        swirlParticles: 330,
+        infallParticles: 92,
+        starParticles: 300,
+        ringSegments: 160,
+        singularitySegments: 48,
         antialias: false,
+        precision: 'mediump',
     },
     medium: {
-        dpr: [1, 1.65],
+        dpr: [0.85, 1.4],
         diskLayers: 5,
-        diskSegments: 144,
-        swirlParticles: 760,
-        infallParticles: 190,
-        starParticles: 780,
+        diskSegments: 132,
+        swirlParticles: 620,
+        infallParticles: 164,
+        starParticles: 620,
+        ringSegments: 212,
+        singularitySegments: 64,
         antialias: true,
+        precision: 'highp',
     },
     high: {
-        dpr: [1.2, 2],
+        dpr: [1, 1.85],
         diskLayers: 7,
-        diskSegments: 176,
-        swirlParticles: 1100,
-        infallParticles: 260,
-        starParticles: 1180,
+        diskSegments: 168,
+        swirlParticles: 920,
+        infallParticles: 224,
+        starParticles: 960,
+        ringSegments: 256,
+        singularitySegments: 80,
         antialias: true,
+        precision: 'highp',
     },
 };
+
+const clampFrameDelta = (delta: number) => Math.min(delta, 1 / 28);
 
 const DISK_VERTEX_SHADER = `
 varying vec2 vUv;
@@ -63,10 +78,12 @@ void main() {
 
     vec3 transformed = position;
     float sink = pow(clamp(uCollapse, 0.0, 1.0), 1.6);
-    float pulse = sin(uTime * 1.7 + uLayer * 3.2 + position.x * 0.3) * 0.022;
 
-    transformed.y += pulse * (1.0 - sink);
-    transformed.xy *= 1.0 - sink * 0.84;
+    float ripple = sin((position.x + position.z) * 0.45 + uTime * (1.1 + uLayer)) * 0.018;
+    float shear = sin(position.x * 0.18 + uTime * 0.9 + uLayer * 7.0) * 0.012;
+
+    transformed.y += (ripple + shear) * (1.0 - sink);
+    transformed.xz *= 1.0 - sink * 0.82;
 
     gl_Position = projectionMatrix * modelViewMatrix * vec4(transformed, 1.0);
 }
@@ -83,27 +100,35 @@ void main() {
     float radius = length(uv);
     float theta = atan(uv.y, uv.x);
 
-    float inner = 0.3;
-    float outer = 1.0;
-    float ring = smoothstep(inner, inner + 0.08, radius) *
-                 (1.0 - smoothstep(outer - 0.16, outer, radius));
+    float inner = 0.26;
+    float outer = 1.06;
 
-    float sink = pow(clamp(uCollapse, 0.0, 1.0), 1.85);
-    float twistA = sin(theta * 13.0 - uTime * 2.7 + radius * 28.0 + uLayer * 6.0) * 0.5 + 0.5;
-    float twistB = sin(theta * 7.0 + uTime * 1.9 + radius * 17.0 - uLayer * 5.0) * 0.5 + 0.5;
-    float turbulence = mix(twistA, twistB, 0.44);
+    float innerEdge = smoothstep(inner, inner + 0.13, radius);
+    float outerEdge = 1.0 - smoothstep(outer - 0.24, outer, radius);
+    float diskMask = innerEdge * outerEdge;
 
-    vec3 deepBlue = vec3(0.02, 0.06, 0.17);
-    vec3 violet = vec3(0.35, 0.24, 0.82);
-    vec3 cyan = vec3(0.18, 0.84, 0.96);
-    vec3 white = vec3(0.94, 0.98, 1.0);
+    float sink = pow(clamp(uCollapse, 0.0, 1.0), 1.9);
 
-    vec3 base = mix(violet, cyan, turbulence);
-    float highlight = pow(smoothstep(0.42, 1.0, turbulence), 2.3);
-    vec3 color = mix(deepBlue, base, ring);
-    color += white * highlight * ring * 0.52;
+    float spiralA = sin(theta * 9.0 - uTime * 2.0 + radius * 24.0 + uLayer * 8.0) * 0.5 + 0.5;
+    float spiralB = sin(theta * 17.0 + uTime * 2.6 - radius * 32.0 - uLayer * 6.0) * 0.5 + 0.5;
+    float ribbons = mix(spiralA, spiralB, 0.46);
 
-    float alpha = ring * (0.18 + turbulence * 0.58 + uLayer * 0.18) * (1.0 - sink);
+    float shear = sin(theta * 4.0 - uTime * 0.75 + radius * 12.0) * 0.5 + 0.5;
+    float radialBoost = smoothstep(0.35, 0.92, radius) * (1.0 - smoothstep(0.86, 1.05, radius));
+    float luminance = smoothstep(0.18, 1.0, mix(ribbons, shear, 0.24) + radialBoost * 0.35);
+
+    vec3 deepBlue = vec3(0.02, 0.05, 0.14);
+    vec3 violet = vec3(0.34, 0.24, 0.86);
+    vec3 cyan = vec3(0.17, 0.84, 0.98);
+    vec3 white = vec3(0.96, 0.99, 1.0);
+
+    vec3 chroma = mix(violet, cyan, clamp(ribbons * 0.78 + shear * 0.22, 0.0, 1.0));
+    vec3 color = mix(deepBlue, chroma, diskMask);
+    color += white * pow(luminance, 1.8) * diskMask * (0.45 + uLayer * 0.35);
+
+    float alpha = diskMask * (0.16 + luminance * 0.56 + radialBoost * 0.12 + uLayer * 0.14) * (1.0 - sink);
+    alpha *= 1.0 - smoothstep(0.98, 1.08, radius) * 0.55;
+
     gl_FragColor = vec4(color, alpha);
 }
 `;
@@ -127,7 +152,7 @@ void main() {
     float angle = aAngle + uTime * aSpeed;
     float radius = max(0.05, aRadius * (1.0 - sink * 0.93));
 
-    float wave = sin(angle * 2.5 + uTime * 0.6) * 0.055;
+    float wave = sin(angle * 2.2 + uTime * 0.58) * 0.048;
     float vertical = (aHeight + wave) * (1.0 - sink);
 
     vec3 transformed = vec3(cos(angle) * radius, vertical, sin(angle) * radius);
@@ -135,8 +160,8 @@ void main() {
     vec4 mvPosition = modelViewMatrix * vec4(transformed, 1.0);
     gl_Position = projectionMatrix * mvPosition;
 
-    float depthScale = clamp(1.45 / -mvPosition.z, 0.0, 2.6);
-    gl_PointSize = (1.15 + aSize * 2.9) * depthScale;
+    float depthScale = clamp(1.42 / -mvPosition.z, 0.0, 2.5);
+    gl_PointSize = (1.1 + aSize * 2.8) * depthScale;
 
     vAlpha = (1.0 - sink) * clamp(depthScale, 0.22, 1.0);
     vHueMix = aHueMix;
@@ -152,14 +177,14 @@ void main() {
     float dist = length(centered);
     float glow = smoothstep(0.54, 0.0, dist);
 
-    vec3 cyan = vec3(0.2, 0.88, 0.98);
-    vec3 violet = vec3(0.48, 0.38, 0.92);
-    vec3 white = vec3(0.95, 0.98, 1.0);
+    vec3 cyan = vec3(0.18, 0.9, 1.0);
+    vec3 violet = vec3(0.47, 0.35, 0.94);
+    vec3 white = vec3(0.95, 0.99, 1.0);
 
     vec3 blend = mix(violet, cyan, vHueMix);
-    vec3 color = mix(blend, white, glow * 0.38);
+    vec3 color = mix(blend, white, glow * 0.45);
 
-    gl_FragColor = vec4(color, glow * vAlpha * 0.58);
+    gl_FragColor = vec4(color, glow * vAlpha * 0.62);
 }
 `;
 
@@ -181,8 +206,8 @@ void main() {
     float cycle = fract(aPhase + uTime * aSpeed);
     float inward = smoothstep(0.0, 1.0, cycle);
 
-    float radius = mix(aRadius, 0.14, inward) * (1.0 - sink * 0.95);
-    float angle = aAngle + inward * 8.4 + uTime * 0.28;
+    float radius = mix(aRadius, 0.13, inward) * (1.0 - sink * 0.95);
+    float angle = aAngle + inward * 8.4 + uTime * 0.29;
     float height = aHeight * (1.0 - inward) * (1.0 - sink);
 
     vec3 transformed = vec3(cos(angle) * radius, height, sin(angle) * radius);
@@ -190,8 +215,8 @@ void main() {
     vec4 mvPosition = modelViewMatrix * vec4(transformed, 1.0);
     gl_Position = projectionMatrix * mvPosition;
 
-    float depthScale = clamp(1.55 / -mvPosition.z, 0.0, 2.8);
-    gl_PointSize = (1.2 + aSize * 2.5) * depthScale;
+    float depthScale = clamp(1.52 / -mvPosition.z, 0.0, 2.8);
+    gl_PointSize = (1.15 + aSize * 2.55) * depthScale;
 
     vAlpha = (1.0 - inward) * (1.0 - sink) * clamp(depthScale, 0.2, 1.0);
 }
@@ -203,10 +228,13 @@ varying float vAlpha;
 void main() {
     vec2 centered = gl_PointCoord - vec2(0.5);
     float dist = length(centered);
-    float streak = smoothstep(0.56, 0.0, dist);
 
-    vec3 color = mix(vec3(0.34, 0.75, 0.98), vec3(0.96, 0.99, 1.0), streak * 0.8);
-    gl_FragColor = vec4(color, streak * vAlpha * 0.62);
+    float core = smoothstep(0.56, 0.0, dist);
+    float tail = smoothstep(0.3, -0.28, centered.x);
+    float streak = core * mix(0.65, 1.0, tail);
+
+    vec3 color = mix(vec3(0.3, 0.74, 0.98), vec3(0.96, 0.99, 1.0), streak * 0.82);
+    gl_FragColor = vec4(color, streak * vAlpha * 0.66);
 }
 `;
 
@@ -230,17 +258,119 @@ const LENS_FRAGMENT_SHADER = `
 varying vec3 vWorldPosition;
 varying vec3 vWorldNormal;
 uniform float uCollapse;
+uniform float uTime;
 
 void main() {
     vec3 viewDir = normalize(cameraPosition - vWorldPosition);
-    float fresnel = pow(1.0 - max(dot(normalize(vWorldNormal), viewDir), 0.0), 3.3);
-    float halo = smoothstep(0.14, 1.0, fresnel);
+    float fresnel = pow(1.0 - max(dot(normalize(vWorldNormal), viewDir), 0.0), 2.8);
+    float halo = smoothstep(0.08, 1.0, fresnel);
+    float pulse = 0.88 + sin(uTime * 1.6) * 0.12;
 
-    vec3 deep = vec3(0.09, 0.19, 0.44);
-    vec3 bright = vec3(0.82, 0.95, 1.0);
+    vec3 deep = vec3(0.05, 0.13, 0.34);
+    vec3 bright = vec3(0.83, 0.95, 1.0);
     vec3 color = mix(deep, bright, halo);
 
-    float alpha = halo * (0.16 + fresnel * 0.52) * (1.0 - uCollapse * 0.9);
+    float alpha = halo * (0.11 + fresnel * 0.62) * pulse * (1.0 - uCollapse * 0.9);
+    gl_FragColor = vec4(color, alpha);
+}
+`;
+
+const PHOTON_RING_VERTEX_SHADER = `
+varying vec2 vUv;
+uniform float uTime;
+uniform float uCollapse;
+
+void main() {
+    vUv = uv;
+
+    float sink = pow(clamp(uCollapse, 0.0, 1.0), 1.75);
+    vec3 transformed = position;
+
+    float pulse = sin(uv.x * 6.28318 * 3.0 - uTime * 2.0) * 0.018;
+    transformed += normal * pulse * (1.0 - sink);
+    transformed *= 1.0 - sink * 0.24;
+
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(transformed, 1.0);
+}
+`;
+
+const PHOTON_RING_FRAGMENT_SHADER = `
+varying vec2 vUv;
+uniform float uTime;
+uniform float uCollapse;
+
+void main() {
+    float x = vUv.x * 6.28318;
+    float y = abs(vUv.y - 0.5) * 2.0;
+
+    float core = exp(-pow(y * 8.5, 2.0));
+    float flare = pow(max(0.0, sin(x * 2.0 - uTime * 2.4) * 0.5 + 0.5), 6.0);
+    float shimmer = sin(x * 14.0 + uTime * 5.0) * 0.5 + 0.5;
+
+    float energy = core * (0.52 + flare * 0.85 + shimmer * 0.28);
+
+    vec3 cyan = vec3(0.22, 0.9, 1.0);
+    vec3 violet = vec3(0.48, 0.36, 0.95);
+    vec3 white = vec3(0.98, 1.0, 1.0);
+
+    vec3 color = mix(violet, cyan, 0.55 + sin(x - uTime * 0.35) * 0.18);
+    color = mix(color, white, pow(energy, 1.3) * 0.72);
+
+    float alpha = energy * (1.0 - uCollapse * 0.94);
+    gl_FragColor = vec4(color, alpha);
+}
+`;
+
+const SINGULARITY_RIM_VERTEX_SHADER = `
+varying vec3 vWorldPosition;
+varying vec3 vWorldNormal;
+uniform float uCollapse;
+
+void main() {
+    vec3 transformed = position * (1.0 - uCollapse * 0.08);
+    vec4 worldPosition = modelMatrix * vec4(transformed, 1.0);
+
+    vWorldPosition = worldPosition.xyz;
+    vWorldNormal = normalize(mat3(modelMatrix) * normal);
+
+    gl_Position = projectionMatrix * viewMatrix * worldPosition;
+}
+`;
+
+const SINGULARITY_RIM_FRAGMENT_SHADER = `
+varying vec3 vWorldPosition;
+varying vec3 vWorldNormal;
+uniform float uCollapse;
+
+void main() {
+    vec3 viewDir = normalize(cameraPosition - vWorldPosition);
+    float fresnel = pow(1.0 - max(dot(normalize(vWorldNormal), viewDir), 0.0), 5.2);
+
+    vec3 edgeA = vec3(0.22, 0.3, 0.72);
+    vec3 edgeB = vec3(0.76, 0.93, 1.0);
+    vec3 color = mix(edgeA, edgeB, fresnel);
+
+    float alpha = fresnel * 0.24 * (1.0 - uCollapse * 0.84);
+    gl_FragColor = vec4(color, alpha);
+}
+`;
+
+const BLOOM_SHELL_FRAGMENT_SHADER = `
+varying vec3 vWorldPosition;
+varying vec3 vWorldNormal;
+uniform float uCollapse;
+uniform float uTime;
+
+void main() {
+    vec3 viewDir = normalize(cameraPosition - vWorldPosition);
+    float fresnel = pow(1.0 - max(dot(normalize(vWorldNormal), viewDir), 0.0), 1.7);
+    float breathing = 0.9 + sin(uTime * 0.9) * 0.1;
+
+    vec3 deep = vec3(0.06, 0.14, 0.35);
+    vec3 glow = vec3(0.47, 0.82, 1.0);
+    vec3 color = mix(deep, glow, fresnel);
+
+    float alpha = fresnel * 0.14 * breathing * (1.0 - uCollapse * 0.9);
     gl_FragColor = vec4(color, alpha);
 }
 `;
@@ -260,8 +390,8 @@ const StarField = memo(({ count }: { count: number }) => {
             positions[i3 + 1] = radius * Math.cos(phi) * 0.7;
             positions[i3 + 2] = radius * Math.sin(phi) * Math.sin(theta);
 
-            const tint = THREE.MathUtils.randFloat(0.68, 1);
-            colors[i3] = 0.45 * tint;
+            const tint = THREE.MathUtils.randFloat(0.65, 1);
+            colors[i3] = 0.42 * tint;
             colors[i3 + 1] = 0.72 * tint;
             colors[i3 + 2] = 1.0 * tint;
         }
@@ -282,10 +412,10 @@ const StarField = memo(({ count }: { count: number }) => {
     return (
         <points geometry={geometry} frustumCulled={false}>
             <pointsMaterial
-                size={0.03}
+                size={0.028}
                 sizeAttenuation
                 transparent
-                opacity={0.58}
+                opacity={0.55}
                 depthWrite={false}
                 blending={THREE.AdditiveBlending}
                 vertexColors
@@ -310,11 +440,11 @@ const SwirlParticles = memo(
             const hueMix = new Float32Array(count);
 
             for (let i = 0; i < count; i += 1) {
-                radius[i] = THREE.MathUtils.randFloat(1.7, 8.6) * Math.pow(Math.random(), 0.35);
+                radius[i] = THREE.MathUtils.randFloat(1.7, 8.7) * Math.pow(Math.random(), 0.35);
                 angle[i] = THREE.MathUtils.randFloat(0, Math.PI * 2);
-                height[i] = THREE.MathUtils.randFloatSpread(0.62) * Math.pow(radius[i] / 8.6, 0.7);
-                speed[i] = THREE.MathUtils.randFloat(0.68, 2.28) / (0.5 + radius[i] * 0.24);
-                size[i] = THREE.MathUtils.randFloat(0.45, 1.6);
+                height[i] = THREE.MathUtils.randFloatSpread(0.6) * Math.pow(radius[i] / 8.7, 0.72);
+                speed[i] = THREE.MathUtils.randFloat(0.66, 2.2) / (0.5 + radius[i] * 0.24);
+                size[i] = THREE.MathUtils.randFloat(0.44, 1.55);
                 hueMix[i] = THREE.MathUtils.randFloat(0.1, 0.95);
             }
 
@@ -355,7 +485,8 @@ const SwirlParticles = memo(
 
         useFrame((_, delta) => {
             if (!materialRef.current) return;
-            materialRef.current.uniforms.uTime.value += delta;
+            const dt = clampFrameDelta(delta);
+            materialRef.current.uniforms.uTime.value += dt;
             materialRef.current.uniforms.uCollapse.value = collapseRef.current;
             materialRef.current.opacity = 1 - collapseRef.current * 0.45;
         });
@@ -387,9 +518,9 @@ const InfallParticles = memo(
                 radius[i] = THREE.MathUtils.randFloat(2.6, 8.8);
                 angle[i] = THREE.MathUtils.randFloat(0, Math.PI * 2);
                 phase[i] = Math.random();
-                speed[i] = THREE.MathUtils.randFloat(0.3, 0.78);
-                size[i] = THREE.MathUtils.randFloat(0.45, 1.4);
-                height[i] = THREE.MathUtils.randFloatSpread(0.45);
+                speed[i] = THREE.MathUtils.randFloat(0.3, 0.76);
+                size[i] = THREE.MathUtils.randFloat(0.42, 1.35);
+                height[i] = THREE.MathUtils.randFloatSpread(0.42);
             }
 
             const buffer = new THREE.BufferGeometry();
@@ -429,7 +560,8 @@ const InfallParticles = memo(
 
         useFrame((_, delta) => {
             if (!materialRef.current) return;
-            materialRef.current.uniforms.uTime.value += delta;
+            const dt = clampFrameDelta(delta);
+            materialRef.current.uniforms.uTime.value += dt;
             materialRef.current.uniforms.uCollapse.value = collapseRef.current;
             materialRef.current.opacity = 1 - collapseRef.current * 0.55;
         });
@@ -452,6 +584,7 @@ const LensShell = memo(({ collapseRef }: { collapseRef: React.MutableRefObject<n
             new THREE.ShaderMaterial({
                 uniforms: {
                     uCollapse: { value: 0 },
+                    uTime: { value: 0 },
                 },
                 vertexShader: LENS_VERTEX_SHADER,
                 fragmentShader: LENS_FRAGMENT_SHADER,
@@ -470,13 +603,15 @@ const LensShell = memo(({ collapseRef }: { collapseRef: React.MutableRefObject<n
         };
     }, [material]);
 
-    useFrame(() => {
+    useFrame((_, delta) => {
         if (!materialRef.current) return;
+        const dt = clampFrameDelta(delta);
+        materialRef.current.uniforms.uTime.value += dt;
         materialRef.current.uniforms.uCollapse.value = collapseRef.current;
     });
 
     return (
-        <mesh scale={[1.78, 1.78, 1.78]} renderOrder={30}>
+        <mesh scale={[1.9, 1.9, 1.9]} renderOrder={30}>
             <sphereGeometry args={[1.0, 64, 64]} />
             <primitive object={material} attach="material" />
         </mesh>
@@ -484,6 +619,152 @@ const LensShell = memo(({ collapseRef }: { collapseRef: React.MutableRefObject<n
 });
 
 LensShell.displayName = 'LensShell';
+
+const BloomShell = memo(({ collapseRef }: { collapseRef: React.MutableRefObject<number> }) => {
+    const materialRef = useRef<THREE.ShaderMaterial | null>(null);
+
+    const material = useMemo(
+        () =>
+            new THREE.ShaderMaterial({
+                uniforms: {
+                    uCollapse: { value: 0 },
+                    uTime: { value: 0 },
+                },
+                vertexShader: LENS_VERTEX_SHADER,
+                fragmentShader: BLOOM_SHELL_FRAGMENT_SHADER,
+                transparent: true,
+                depthWrite: false,
+                blending: THREE.AdditiveBlending,
+                side: THREE.DoubleSide,
+            }),
+        [],
+    );
+
+    useEffect(() => {
+        materialRef.current = material;
+        return () => {
+            material.dispose();
+        };
+    }, [material]);
+
+    useFrame((_, delta) => {
+        if (!materialRef.current) return;
+        const dt = clampFrameDelta(delta);
+        materialRef.current.uniforms.uTime.value += dt;
+        materialRef.current.uniforms.uCollapse.value = collapseRef.current;
+    });
+
+    return (
+        <mesh scale={[2.5, 2.5, 2.5]} renderOrder={10}>
+            <sphereGeometry args={[1.0, 48, 48]} />
+            <primitive object={material} attach="material" />
+        </mesh>
+    );
+});
+
+BloomShell.displayName = 'BloomShell';
+
+const LensingRing = memo(
+    ({
+        collapseRef,
+        segments,
+    }: {
+        collapseRef: React.MutableRefObject<number>;
+        segments: number;
+    }) => {
+        const materialRef = useRef<THREE.ShaderMaterial | null>(null);
+
+        const material = useMemo(
+            () =>
+                new THREE.ShaderMaterial({
+                    uniforms: {
+                        uCollapse: { value: 0 },
+                        uTime: { value: 0 },
+                    },
+                    vertexShader: PHOTON_RING_VERTEX_SHADER,
+                    fragmentShader: PHOTON_RING_FRAGMENT_SHADER,
+                    transparent: true,
+                    depthWrite: false,
+                    blending: THREE.AdditiveBlending,
+                    side: THREE.DoubleSide,
+                }),
+            [],
+        );
+
+        useEffect(() => {
+            materialRef.current = material;
+            return () => {
+                material.dispose();
+            };
+        }, [material]);
+
+        useFrame((_, delta) => {
+            if (!materialRef.current) return;
+            const dt = clampFrameDelta(delta);
+            materialRef.current.uniforms.uTime.value += dt;
+            materialRef.current.uniforms.uCollapse.value = collapseRef.current;
+            materialRef.current.opacity = 1 - collapseRef.current * 0.8;
+        });
+
+        return (
+            <mesh rotation={[Math.PI * 0.52, 0, 0]} renderOrder={35}>
+                <torusGeometry args={[1.54, 0.13, 36, segments]} />
+                <primitive object={material} attach="material" />
+            </mesh>
+        );
+    },
+);
+
+LensingRing.displayName = 'LensingRing';
+
+const SingularityRim = memo(
+    ({
+        collapseRef,
+        segments,
+    }: {
+        collapseRef: React.MutableRefObject<number>;
+        segments: number;
+    }) => {
+        const materialRef = useRef<THREE.ShaderMaterial | null>(null);
+
+        const material = useMemo(
+            () =>
+                new THREE.ShaderMaterial({
+                    uniforms: {
+                        uCollapse: { value: 0 },
+                    },
+                    vertexShader: SINGULARITY_RIM_VERTEX_SHADER,
+                    fragmentShader: SINGULARITY_RIM_FRAGMENT_SHADER,
+                    transparent: true,
+                    depthWrite: false,
+                    blending: THREE.AdditiveBlending,
+                    side: THREE.DoubleSide,
+                }),
+            [],
+        );
+
+        useEffect(() => {
+            materialRef.current = material;
+            return () => {
+                material.dispose();
+            };
+        }, [material]);
+
+        useFrame(() => {
+            if (!materialRef.current) return;
+            materialRef.current.uniforms.uCollapse.value = collapseRef.current;
+        });
+
+        return (
+            <mesh scale={[1.06, 1.06, 1.06]} renderOrder={24}>
+                <sphereGeometry args={[1.0, segments, segments]} />
+                <primitive object={material} attach="material" />
+            </mesh>
+        );
+    },
+);
+
+SingularityRim.displayName = 'SingularityRim';
 
 const AccretionDiskLayers = memo(
     ({
@@ -501,13 +782,13 @@ const AccretionDiskLayers = memo(
             () =>
                 Array.from({ length: layers }).map((_, index) => {
                     const spread = layers <= 1 ? 0 : index / (layers - 1);
-                    const yOffset = THREE.MathUtils.lerp(-0.21, 0.21, spread);
-                    const scale = THREE.MathUtils.lerp(0.82, 1.16, spread);
+                    const yOffset = THREE.MathUtils.lerp(-0.2, 0.2, spread);
+                    const scale = THREE.MathUtils.lerp(0.82, 1.19, spread);
 
                     const material = new THREE.ShaderMaterial({
                         uniforms: {
                             uTime: { value: 0 },
-                            uLayer: { value: spread + 0.16 },
+                            uLayer: { value: spread + 0.14 },
                             uCollapse: { value: 0 },
                         },
                         vertexShader: DISK_VERTEX_SHADER,
@@ -538,8 +819,9 @@ const AccretionDiskLayers = memo(
         }, [layerConfigs]);
 
         useFrame((_, delta) => {
+            const dt = clampFrameDelta(delta);
             materialRefs.current.forEach((material) => {
-                material.uniforms.uTime.value += delta;
+                material.uniforms.uTime.value += dt;
                 material.uniforms.uCollapse.value = collapseRef.current;
             });
         });
@@ -553,7 +835,7 @@ const AccretionDiskLayers = memo(
                         scale={[layer.scale, 1, layer.scale]}
                         renderOrder={index + 1}
                     >
-                        <ringGeometry args={[1.18, 3.95, segments, 1]} />
+                        <ringGeometry args={[1.16, 4.05, segments, 1]} />
                         <primitive object={layer.material} attach="material" />
                     </mesh>
                 ))}
@@ -566,19 +848,57 @@ AccretionDiskLayers.displayName = 'AccretionDiskLayers';
 
 const CameraRig = ({ interactive }: { interactive: boolean }) => {
     useFrame((state, delta) => {
-        const idleX = Math.sin(state.clock.elapsedTime * 0.21) * 0.24;
-        const idleY = 0.34 + Math.cos(state.clock.elapsedTime * 0.15) * 0.06;
+        const dt = clampFrameDelta(delta);
 
-        const targetX = interactive ? state.pointer.x * 0.42 : idleX;
-        const targetY = interactive ? 0.34 + state.pointer.y * 0.2 : idleY;
-        const targetZ = interactive ? 6.82 : 7.02;
+        const idleX = Math.sin(state.clock.elapsedTime * 0.22) * 0.24;
+        const idleY = 0.34 + Math.cos(state.clock.elapsedTime * 0.14) * 0.06;
 
-        const damp = 1 - Math.exp(-delta * (interactive ? 4.1 : 2.5));
+        const targetX = interactive ? state.pointer.x * 0.36 : idleX;
+        const targetY = interactive ? 0.34 + state.pointer.y * 0.18 : idleY;
+        const targetZ = interactive ? 6.8 : 7.02;
+
+        const damp = 1 - Math.exp(-dt * (interactive ? 3.5 : 2.4));
 
         state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, targetX, damp);
         state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, targetY, damp);
         state.camera.position.z = THREE.MathUtils.lerp(state.camera.position.z, targetZ, damp);
         state.camera.lookAt(0, 0, 0);
+    });
+
+    return null;
+};
+
+const PerformanceWatchdog = ({
+    quality,
+    onPerformanceDip,
+}: {
+    quality: SceneQuality;
+    onPerformanceDip?: () => void;
+}) => {
+    const sampleRef = useRef({
+        time: 0,
+        total: 0,
+        frames: 0,
+        evaluated: false,
+    });
+
+    useFrame((_, delta) => {
+        if (!onPerformanceDip || sampleRef.current.evaluated || quality === 'low') return;
+
+        const dt = Math.min(delta, 0.25);
+        sampleRef.current.time += dt;
+        sampleRef.current.total += dt;
+        sampleRef.current.frames += 1;
+
+        if (sampleRef.current.time < 2.1) return;
+
+        sampleRef.current.evaluated = true;
+        const fps = sampleRef.current.frames / Math.max(sampleRef.current.total, 0.001);
+        const threshold = quality === 'high' ? 52 : 45;
+
+        if (fps < threshold) {
+            onPerformanceDip();
+        }
     });
 
     return null;
@@ -591,7 +911,11 @@ const SceneSystem = ({
     swirlParticles,
     infallParticles,
     starParticles,
+    ringSegments,
+    singularitySegments,
     interactive,
+    quality,
+    onPerformanceDip,
 }: {
     collapseRef: React.MutableRefObject<number>;
     diskLayers: number;
@@ -599,7 +923,11 @@ const SceneSystem = ({
     swirlParticles: number;
     infallParticles: number;
     starParticles: number;
+    ringSegments: number;
+    singularitySegments: number;
     interactive: boolean;
+    quality: SceneQuality;
+    onPerformanceDip?: () => void;
 }) => {
     const groupRef = useRef<THREE.Group>(null);
     const coreRef = useRef<THREE.Mesh>(null);
@@ -607,17 +935,19 @@ const SceneSystem = ({
     useFrame((state, delta) => {
         if (!groupRef.current) return;
 
+        const dt = clampFrameDelta(delta);
         const collapse = collapseRef.current;
-        groupRef.current.rotation.y += delta * (0.11 + (1 - collapse) * 0.07 + collapse * 0.12);
-        groupRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.24) * 0.036 * (1 - collapse * 0.5);
-        groupRef.current.position.z = -collapse * 0.32;
+
+        groupRef.current.rotation.y += dt * (0.12 + (1 - collapse) * 0.08 + collapse * 0.12);
+        groupRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.24) * 0.034 * (1 - collapse * 0.5);
+        groupRef.current.position.z = -collapse * 0.34;
 
         const scale = 1 - collapse * 0.33;
         groupRef.current.scale.setScalar(scale);
 
         if (coreRef.current) {
-            const pulse = 1 + Math.sin(state.clock.elapsedTime * 1.9) * 0.01 * (1 - collapse);
-            coreRef.current.scale.setScalar(pulse + collapse * 0.045);
+            const pulse = 1 + Math.sin(state.clock.elapsedTime * 2.05) * 0.008 * (1 - collapse);
+            coreRef.current.scale.setScalar(pulse + collapse * 0.04);
         }
     });
 
@@ -625,33 +955,33 @@ const SceneSystem = ({
         <>
             <color attach="background" args={['#01030a']} />
             <fog attach="fog" args={['#01030a', 8, 30]} />
-            <ambientLight intensity={0.2} color="#8bb7ff" />
-            <pointLight position={[3.4, 2.2, 4.8]} intensity={8.8} color="#56d5ff" distance={25} />
-            <pointLight position={[-2.7, -1.4, -3.9]} intensity={7.3} color="#7f73ff" distance={21} />
+            <ambientLight intensity={0.19} color="#8bb6ff" />
+            <pointLight position={[3.6, 2.2, 4.9]} intensity={9.4} color="#4dd8ff" distance={25} />
+            <pointLight position={[-2.8, -1.5, -4]} intensity={7.8} color="#8170ff" distance={21} />
 
+            <PerformanceWatchdog quality={quality} onPerformanceDip={onPerformanceDip} />
             <CameraRig interactive={interactive} />
 
             <group ref={groupRef}>
                 <StarField count={starParticles} />
 
                 <group rotation-y={Math.PI * 0.08}>
+                    <BloomShell collapseRef={collapseRef} />
+
                     <AccretionDiskLayers
                         layers={diskLayers}
                         segments={diskSegments}
                         collapseRef={collapseRef}
                     />
 
-                    <mesh ref={coreRef} renderOrder={20}>
-                        <sphereGeometry args={[1.02, 72, 72]} />
-                        <meshStandardMaterial
-                            color="#01030a"
-                            roughness={0.08}
-                            metalness={0.26}
-                            emissive="#03071c"
-                            emissiveIntensity={0.78}
-                        />
+                    <LensingRing collapseRef={collapseRef} segments={ringSegments} />
+
+                    <mesh ref={coreRef} renderOrder={22}>
+                        <sphereGeometry args={[0.98, singularitySegments, singularitySegments]} />
+                        <meshBasicMaterial color="#010205" />
                     </mesh>
 
+                    <SingularityRim collapseRef={collapseRef} segments={singularitySegments} />
                     <LensShell collapseRef={collapseRef} />
                     <InfallParticles count={infallParticles} collapseRef={collapseRef} />
                     <SwirlParticles count={swirlParticles} collapseRef={collapseRef} />
@@ -661,7 +991,12 @@ const SceneSystem = ({
     );
 };
 
-const BlackHoleScene = ({ quality, collapseRef, interactive }: BlackHoleSceneProps) => {
+const BlackHoleScene = ({
+    quality,
+    collapseRef,
+    interactive,
+    onPerformanceDip,
+}: BlackHoleSceneProps) => {
     const preset = QUALITY_PRESETS[quality];
 
     return (
@@ -674,8 +1009,9 @@ const BlackHoleScene = ({ quality, collapseRef, interactive }: BlackHoleScenePro
                 powerPreference: 'high-performance',
                 stencil: false,
                 depth: true,
+                precision: preset.precision,
             }}
-            performance={{ min: 0.45 }}
+            performance={{ min: 0.4, debounce: 220 }}
         >
             <SceneSystem
                 collapseRef={collapseRef}
@@ -684,7 +1020,11 @@ const BlackHoleScene = ({ quality, collapseRef, interactive }: BlackHoleScenePro
                 swirlParticles={preset.swirlParticles}
                 infallParticles={preset.infallParticles}
                 starParticles={preset.starParticles}
+                ringSegments={preset.ringSegments}
+                singularitySegments={preset.singularitySegments}
                 interactive={interactive}
+                quality={quality}
+                onPerformanceDip={onPerformanceDip}
             />
         </Canvas>
     );
