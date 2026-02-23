@@ -54,10 +54,10 @@ const AboutMe = () => {
                             </p>
 
                             <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base md:text-lg md:leading-relaxed">
-                                Recent work includes government portals,
-                                SSO-enabled service flows, RBAC/JWT security
-                                design, and backend-heavy systems for Psigenei
-                                and Mobipay.
+                                Recent resume-aligned work spans government
+                                portals, SSO-enabled service flows, RBAC/JWT
+                                security architecture, and backend-intensive
+                                systems for Psigenei and Mobipay.
                             </p>
 
                             <ul className="mt-5 grid gap-2 text-xs text-foreground/90 sm:grid-cols-2 sm:text-sm md:mt-6 md:gap-3">

@@ -40,12 +40,12 @@ const HeroTerminalPanels = ({ panels, className }: Props) => {
                         )}
                     </header>
 
-                    <div className="space-y-2 px-3.5 py-3 font-mono text-xs leading-relaxed md:text-[13px]">
-                        <p className="truncate text-primary">$ {panel.prompt}</p>
+                    <div className="space-y-2 px-3.5 py-3 font-mono text-[11px] leading-relaxed sm:text-xs md:text-[13px]">
+                        <p className="break-words text-primary">$ {panel.prompt}</p>
                         <div className="space-y-1 text-muted-foreground">
                             {panel.output.map((line, lineIdx) => (
                                 <p
-                                    className={cn('truncate', {
+                                    className={cn('break-words', {
                                         'text-foreground':
                                             line.includes('✓') ||
                                             line.includes('200 OK') ||

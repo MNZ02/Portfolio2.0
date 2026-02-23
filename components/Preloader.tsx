@@ -2,7 +2,7 @@
 
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import BlackHoleScene, { type SceneQuality } from '@/components/preloader/BlackHoleScene';
 
@@ -11,10 +11,10 @@ gsap.registerPlugin(useGSAP);
 const FREEZE_ON_PRELOADER = false;
 
 const BOOT_LINES = [
-    'stabilizing event horizon',
-    'syncing RBAC and JWT policies',
-    'handshaking SSO and service gateways',
-    'loading Psigenei and Mobipay contexts',
+    'aligning singularity lensing field',
+    'verifying RBAC, JWT, and SSO controls',
+    'warming secure portfolio route graph',
+    'syncing Psigenei and Mobipay delivery context',
 ];
 
 type NavigatorWithMemory = Navigator & {
@@ -57,8 +57,13 @@ const Preloader = () => {
     const [showPreloader, setShowPreloader] = useState(false);
     const [sceneQuality, setSceneQuality] = useState<SceneQuality>('medium');
     const [isCoarsePointer, setIsCoarsePointer] = useState(true);
+    const [isPhoneViewport, setIsPhoneViewport] = useState(false);
 
     const interactive = !isCoarsePointer && sceneQuality !== 'low';
+    const visibleBootLines = useMemo(
+        () => (isPhoneViewport ? BOOT_LINES.slice(0, 3) : BOOT_LINES),
+        [isPhoneViewport],
+    );
 
     const handlePerformanceDip = useCallback(() => {
         if (qualityDebounceRef.current !== null) return;
@@ -88,12 +93,21 @@ const Preloader = () => {
         }
 
         const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
+        const updatePhoneViewport = () => {
+            setIsPhoneViewport(window.matchMedia('(max-width: 640px)').matches);
+        };
 
         setSceneQuality(pickSceneQuality());
         setIsCoarsePointer(coarsePointer);
+        updatePhoneViewport();
 
+        window.addEventListener('resize', updatePhoneViewport, { passive: true });
         window.sessionStorage.setItem('portfolio-preloader', '1');
         setShowPreloader(true);
+
+        return () => {
+            window.removeEventListener('resize', updatePhoneViewport);
+        };
     }, []);
 
     useEffect(
@@ -122,7 +136,7 @@ const Preloader = () => {
             collapseProgressRef.current = 0;
 
             const isPhone = window.matchMedia('(max-width: 640px)').matches;
-            const sceneZoom = isPhone ? 1.26 : 1.46;
+            const sceneZoom = isPhone ? 1.2 : 1.42;
 
             const tl = gsap.timeline({
                 defaults: {
@@ -181,7 +195,7 @@ const Preloader = () => {
                     0.96,
                 );
 
-            BOOT_LINES.forEach((line, index) => {
+            visibleBootLines.forEach((line, index) => {
                 tl.to(
                     `.pl-line-${index}`,
                     {
@@ -267,7 +281,7 @@ const Preloader = () => {
                 collapseProgressRef.current = 0;
             };
         },
-        { scope: preloaderRef, dependencies: [showPreloader] },
+        { scope: preloaderRef, dependencies: [showPreloader, visibleBootLines] },
     );
 
     if (!showPreloader) return null;
@@ -287,25 +301,25 @@ const Preloader = () => {
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(188,236,255,0.08),transparent_34%)]" />
             </div>
 
-            <div className="pl-overlay-content pointer-events-none absolute inset-0 z-20 flex items-center justify-center px-4 will-change-transform">
-                <div className="flex w-full max-w-[620px] flex-col items-center rounded-2xl border border-cyan-100/15 bg-[linear-gradient(150deg,rgba(3,8,21,0.66),rgba(3,7,18,0.4))] px-4 py-5 text-center shadow-[0_12px_56px_rgba(0,12,26,0.64)] backdrop-blur-[10px] xs:px-6 sm:py-7">
-                    <p className="pl-headline text-[11px] uppercase tracking-[0.26em] text-cyan-100/85 sm:text-xs">
+            <div className="pl-overlay-content pointer-events-none absolute inset-0 z-20 flex items-center justify-center px-3 pb-[max(env(safe-area-inset-bottom),0.75rem)] pt-[max(env(safe-area-inset-top),0.75rem)] will-change-transform sm:px-4">
+                <div className="flex w-full max-w-[620px] flex-col items-center rounded-2xl border border-cyan-100/15 bg-[linear-gradient(150deg,rgba(3,8,21,0.68),rgba(3,7,18,0.44))] px-4 py-5 text-center shadow-[0_12px_56px_rgba(0,12,26,0.64)] backdrop-blur-[10px] xs:px-6 sm:py-7">
+                    <p className="pl-headline text-[10px] uppercase tracking-[0.24em] text-cyan-100/85 sm:text-xs">
                         signature system boot
                     </p>
 
-                    <h2 className="pl-headline mt-3 font-anton text-[clamp(2rem,8.4vw,4.4rem)] leading-[0.92] tracking-[0.05em] text-white drop-shadow-[0_0_24px_rgba(173,232,255,0.4)]">
+                    <h2 className="pl-headline mt-3 font-anton text-[clamp(1.8rem,8vw,4.4rem)] leading-[0.92] tracking-[0.05em] text-white drop-shadow-[0_0_24px_rgba(173,232,255,0.4)]">
                         Calibrating Singularity
                     </h2>
 
-                    <p className="pl-headline mt-3 max-w-[510px] text-[12px] uppercase tracking-[0.16em] text-cyan-100/80 sm:text-[13px] md:text-sm">
+                    <p className="pl-headline mt-3 max-w-[510px] text-[11px] uppercase tracking-[0.13em] text-cyan-100/80 sm:text-[13px] md:text-sm">
                         preparing secure modules and portfolio routes
                     </p>
 
-                    <div className="relative mt-5 h-10 w-full overflow-hidden">
-                        {BOOT_LINES.map((line, index) => (
+                    <div className="relative mt-4 h-10 w-full overflow-hidden sm:mt-5">
+                        {visibleBootLines.map((line, index) => (
                             <p
                                 key={line}
-                                className={`pl-terminal-line pl-line-${index} absolute inset-0 flex items-center justify-center px-2 text-[10px] font-medium uppercase tracking-[0.16em] text-cyan-100/90 sm:text-[11px] md:text-xs`}
+                                className={`pl-terminal-line pl-line-${index} absolute inset-0 flex items-center justify-center px-2 text-[9px] font-medium uppercase tracking-[0.13em] text-cyan-100/90 sm:text-[11px] sm:tracking-[0.16em] md:text-xs`}
                             >
                                 {line}
                             </p>

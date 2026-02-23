@@ -120,7 +120,7 @@ void main() {
     vec3 deepBlue = vec3(0.02, 0.05, 0.14);
     vec3 violet = vec3(0.34, 0.24, 0.86);
     vec3 cyan = vec3(0.17, 0.84, 0.98);
-    vec3 white = vec3(0.96, 0.99, 1.0);
+    vec3 white = vec3(0.8, 0.9, 1.0);
 
     vec3 chroma = mix(violet, cyan, clamp(ribbons * 0.78 + shear * 0.22, 0.0, 1.0));
     vec3 color = mix(deepBlue, chroma, diskMask);
@@ -179,7 +179,7 @@ void main() {
 
     vec3 cyan = vec3(0.18, 0.9, 1.0);
     vec3 violet = vec3(0.47, 0.35, 0.94);
-    vec3 white = vec3(0.95, 0.99, 1.0);
+    vec3 white = vec3(0.82, 0.92, 1.0);
 
     vec3 blend = mix(violet, cyan, vHueMix);
     vec3 color = mix(blend, white, glow * 0.45);
@@ -233,7 +233,7 @@ void main() {
     float tail = smoothstep(0.3, -0.28, centered.x);
     float streak = core * mix(0.65, 1.0, tail);
 
-    vec3 color = mix(vec3(0.3, 0.74, 0.98), vec3(0.96, 0.99, 1.0), streak * 0.82);
+    vec3 color = mix(vec3(0.3, 0.74, 0.98), vec3(0.82, 0.92, 1.0), streak * 0.82);
     gl_FragColor = vec4(color, streak * vAlpha * 0.66);
 }
 `;
@@ -267,7 +267,7 @@ void main() {
     float pulse = 0.88 + sin(uTime * 1.6) * 0.12;
 
     vec3 deep = vec3(0.05, 0.13, 0.34);
-    vec3 bright = vec3(0.83, 0.95, 1.0);
+    vec3 bright = vec3(0.74, 0.9, 1.0);
     vec3 color = mix(deep, bright, halo);
 
     float alpha = halo * (0.11 + fresnel * 0.62) * pulse * (1.0 - uCollapse * 0.9);
@@ -311,7 +311,7 @@ void main() {
 
     vec3 cyan = vec3(0.22, 0.9, 1.0);
     vec3 violet = vec3(0.48, 0.36, 0.95);
-    vec3 white = vec3(0.98, 1.0, 1.0);
+    vec3 white = vec3(0.84, 0.93, 1.0);
 
     vec3 color = mix(violet, cyan, 0.55 + sin(x - uTime * 0.35) * 0.18);
     color = mix(color, white, pow(energy, 1.3) * 0.72);

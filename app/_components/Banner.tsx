@@ -12,13 +12,16 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const METRICS = [
     {
-        stat: 'Gov Platforms',
-        text: 'Public Registration, Job Mela, Skill Courses',
+        stat: 'Government Delivery',
+        text: 'Public Registration, Job Mela, and Skill Courses programs',
     },
-    { stat: 'Security Stack', text: 'RBAC, JWT, SSO integration' },
     {
-        stat: 'Product Impact',
-        text: 'Psigenei and Mobipay delivery outcomes',
+        stat: 'Security Core',
+        text: 'Production RBAC, JWT hardening, and SSO integration',
+    },
+    {
+        stat: 'Product Builds',
+        text: 'Psigenei and Mobipay systems with backend-first execution',
     },
 ];
 
@@ -87,10 +90,11 @@ const Banner = () => {
                         </h1>
 
                         <p className="hero-intro hero-float mt-6 max-w-[720px] text-sm leading-relaxed text-muted-foreground sm:text-base md:text-lg md:leading-relaxed">
-                            I&apos;m Abdul Minhaz. I build secure,
-                            backend-focused web products with Next.js, React,
-                            Node.js, and MongoDB, with strong emphasis on
-                            RBAC/JWT, SSO integration, and reliable delivery.
+                            I&apos;m Abdul Minhaz. I build backend-first web
+                            products across Next.js, React, Node.js, and
+                            MongoDB, with delivery centered on security,
+                            maintainable architecture, and clear product
+                            outcomes.
                         </p>
 
                         <div className="hero-intro hero-float mt-8 flex flex-wrap items-center gap-4">

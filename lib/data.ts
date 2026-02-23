@@ -291,7 +291,7 @@ export const MY_EXPERIENCE: IExperience[] = [
         company: 'Psigenei',
         duration: '2025 - Present',
         summary:
-            'Leading architecture for a rule-driven AI assessment platform with production-focused backend design.',
+            'Leading architecture for a rule-driven AI assessment platform with production-safe backend design and deterministic output controls.',
         highlights: [
             'Built taxonomy and rule-validation systems to keep generated outputs structurally correct.',
             'Converted ambiguous academic requirements into deterministic backend workflows.',
@@ -303,7 +303,7 @@ export const MY_EXPERIENCE: IExperience[] = [
         company: 'Government Digital Programs',
         duration: '2024 - 2025',
         summary:
-            'Delivered citizen-facing systems including Public Registration, Job Mela, and Skill Courses platforms.',
+            'Delivered citizen-facing systems including Public Registration, Job Mela, and Skill Courses with shared auth and service workflows.',
         highlights: [
             'Implemented SSO-oriented service flows across multiple government products.',
             'Built Node.js and MongoDB APIs with role-aware permissions for admin operations.',
@@ -315,7 +315,7 @@ export const MY_EXPERIENCE: IExperience[] = [
         company: 'Mobipay',
         duration: '2023 - 2024',
         summary:
-            'Contributed to secure transaction workflows, monitoring, and cross-functional delivery in a fintech environment.',
+            'Contributed to secure transaction workflows, monitoring, and cross-functional delivery in a fintech environment with reliability focus.',
         highlights: [
             'Strengthened auth handling with JWT-centric security controls.',
             'Supported operational stability by improving incident visibility and backend safeguards.',
