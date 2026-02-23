@@ -18,7 +18,7 @@ const Project = ({ index, project, selectedProject, onMouseEnter }: Props) => {
     return (
         <TransitionLink
             href={`/projects/${project.slug}`}
-            className="project-row group block rounded-2xl border border-border/70 bg-[hsl(var(--surface-1)/0.84)] p-5 transition-all duration-300 hover:border-primary/45 hover:bg-[hsl(var(--surface-2)/0.85)] md:p-7"
+            className="project-row group block rounded-2xl border border-border/70 bg-[hsl(var(--surface-1)/0.84)] p-4 transition-all duration-300 hover:border-primary/45 hover:bg-[hsl(var(--surface-2)/0.85)] sm:p-5 md:p-7"
             onMouseEnter={() => onMouseEnter(project.slug)}
         >
             {selectedProject === null && (
@@ -39,7 +39,7 @@ const Project = ({ index, project, selectedProject, onMouseEnter }: Props) => {
 
                 <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-start justify-between gap-3">
-                        <h4 className="font-anton text-3xl leading-[0.95] sm:text-4xl md:text-5xl">
+                        <h4 className="font-anton text-2xl leading-[0.95] sm:text-4xl md:text-5xl">
                             {project.title}
                         </h4>
 
@@ -66,12 +66,12 @@ const Project = ({ index, project, selectedProject, onMouseEnter }: Props) => {
                         </div>
                     </div>
 
-                    <p className="mt-3 max-w-[760px] text-sm text-muted-foreground md:text-base md:leading-relaxed">
+                    <p className="mt-3 max-w-[760px] text-xs leading-relaxed text-muted-foreground sm:text-sm md:text-base md:leading-relaxed">
                         {project.description}
                     </p>
 
-                    <div className="mt-5 flex flex-wrap gap-2">
-                        {project.techStack.slice(0, 4).map((tech) => (
+                    <div className="mt-4 flex flex-wrap gap-2 md:mt-5">
+                        {project.techStack.slice(0, 5).map((tech) => (
                             <span
                                 className="rounded-full border border-border/60 bg-background-light/60 px-3 py-1 text-xs uppercase tracking-[0.1em] text-foreground/85"
                                 key={tech}

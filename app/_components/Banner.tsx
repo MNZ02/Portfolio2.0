@@ -11,9 +11,15 @@ import HeroTerminalPanels from './HeroTerminalPanels';
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const METRICS = [
-    { stat: '2+', text: 'Years of experience' },
-    { stat: '7+', text: 'Projects shipped' },
-    { stat: '10K+', text: 'Engineering hours' },
+    {
+        stat: 'Gov Platforms',
+        text: 'Public Registration, Job Mela, Skill Courses',
+    },
+    { stat: 'Security Stack', text: 'RBAC, JWT, SSO integration' },
+    {
+        stat: 'Product Impact',
+        text: 'Psigenei and Mobipay delivery outcomes',
+    },
 ];
 
 const Banner = () => {
@@ -26,9 +32,9 @@ const Banner = () => {
             }
 
             gsap.from('.hero-intro', {
-                y: 32,
+                y: 30,
                 autoAlpha: 0,
-                duration: 0.7,
+                duration: 0.65,
                 stagger: 0.09,
                 ease: 'power2.out',
             });
@@ -43,7 +49,7 @@ const Banner = () => {
             });
 
             gsap.to('.hero-float', {
-                y: -56,
+                y: -52,
                 autoAlpha: 0.25,
                 stagger: 0.05,
                 ease: 'none',
@@ -60,32 +66,34 @@ const Banner = () => {
 
     return (
         <section
-            className="relative overflow-hidden pb-12 pt-16 md:pb-14 md:pt-20"
+            className="relative overflow-hidden pb-10 pt-14 sm:pt-16 md:pb-14 md:pt-20"
             id="banner"
         >
             <ArrowAnimation />
 
             <div className="container" ref={containerRef}>
-                <div className="grid min-h-[calc(100svh-92px)] items-center gap-8 lg:grid-cols-12 lg:gap-8">
+                <div className="grid min-h-[calc(100svh-90px)] items-center gap-8 lg:grid-cols-12 lg:gap-8">
                     <div className="lg:col-span-7 xl:col-span-8">
-                        <p className="hero-intro hero-float eyebrow mb-6 inline-flex rounded-full border border-border/70 bg-background-light/70 px-4 py-2 text-[11px]">
+                        <p className="hero-intro hero-float eyebrow mb-5 inline-flex rounded-full border border-border/70 bg-background-light/70 px-4 py-2 text-[10px] sm:text-[11px]">
                             {GENERAL_INFO.availability}
                         </p>
 
-                        <h1 className="hero-intro hero-float font-anton text-6xl leading-[0.94] sm:text-7xl md:text-[88px]">
+                        <h1 className="hero-intro hero-float font-anton text-5xl leading-[0.92] sm:text-6xl md:text-[82px] lg:text-[92px]">
                             FULL-STACK
                             <br />
-                            <span className="text-primary">SYSTEM BUILDER</span>
+                            <span className="text-primary">
+                                PRODUCT ENGINEER
+                            </span>
                         </h1>
 
-                        <p className="hero-intro hero-float mt-7 max-w-[680px] text-base text-muted-foreground md:text-lg md:leading-relaxed">
-                            Hi, I&apos;m Abdul Minhaz. I build complex
-                            backend-first products with clear architecture,
-                            resilient data models, and AI-assisted workflows
-                            that hold up in production.
+                        <p className="hero-intro hero-float mt-6 max-w-[720px] text-sm leading-relaxed text-muted-foreground sm:text-base md:text-lg md:leading-relaxed">
+                            I&apos;m Abdul Minhaz. I build secure,
+                            backend-focused web products with Next.js, React,
+                            Node.js, and MongoDB, with strong emphasis on
+                            RBAC/JWT, SSO integration, and reliable delivery.
                         </p>
 
-                        <div className="hero-intro hero-float mt-10 flex flex-wrap items-center gap-4">
+                        <div className="hero-intro hero-float mt-8 flex flex-wrap items-center gap-4">
                             <Button
                                 as="link"
                                 href={GENERAL_INFO.upworkProfile}
@@ -106,13 +114,13 @@ const Banner = () => {
                             </Button>
                         </div>
 
-                        <div className="hero-intro hero-float mt-7 grid gap-3 sm:grid-cols-3">
+                        <div className="hero-intro hero-float mt-6 grid gap-3 sm:grid-cols-3">
                             {METRICS.map((metric) => (
                                 <div className="kpi-card" key={metric.text}>
-                                    <p className="font-anton text-4xl leading-none text-primary">
+                                    <p className="font-anton text-xl leading-none text-primary sm:text-2xl md:text-3xl">
                                         {metric.stat}
                                     </p>
-                                    <p className="mt-2 text-sm text-muted-foreground">
+                                    <p className="mt-2 text-xs leading-relaxed text-muted-foreground sm:text-sm">
                                         {metric.text}
                                     </p>
                                 </div>

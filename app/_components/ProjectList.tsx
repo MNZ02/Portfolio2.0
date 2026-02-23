@@ -42,9 +42,9 @@ const ProjectList = () => {
             }
 
             gsap.from('.project-row', {
-                y: 32,
+                y: 30,
                 autoAlpha: 0,
-                duration: 0.65,
+                duration: 0.62,
                 stagger: 0.1,
                 ease: 'power2.out',
                 scrollTrigger: {
@@ -97,21 +97,21 @@ const ProjectList = () => {
     };
 
     return (
-        <section className="section-divider py-20 md:py-32" id="selected-projects">
+        <section className="section-divider py-16 md:py-28" id="selected-projects">
             <div className="container">
                 <SectionTitle
                     title="Selected Projects"
-                    eyebrow="Recent Case Studies"
+                    eyebrow="Resume-Driven Case Studies"
                 />
 
-                <p className="max-w-[700px] text-muted-foreground md:text-lg md:leading-relaxed">
-                    A few representative builds focused on system reliability,
-                    backend complexity, and product delivery under practical
-                    constraints.
+                <p className="max-w-[740px] text-sm leading-relaxed text-muted-foreground sm:text-base md:text-lg md:leading-relaxed">
+                    Projects focused on secure architecture, government service
+                    delivery, and backend reliability, including Psigenei and
+                    Mobipay impact work.
                 </p>
 
                 <div
-                    className="relative mt-10"
+                    className="relative mt-8 md:mt-10"
                     ref={containerRef}
                     onMouseMove={handleMouseMove}
                     onMouseLeave={handleMouseLeave}

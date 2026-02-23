@@ -17,10 +17,10 @@ const AboutMe = () => {
             }
 
             gsap.from('.about-reveal', {
-                y: 42,
+                y: 38,
                 autoAlpha: 0,
-                stagger: 0.12,
-                duration: 0.7,
+                stagger: 0.11,
+                duration: 0.65,
                 ease: 'power2.out',
                 scrollTrigger: {
                     trigger: container.current,
@@ -32,44 +32,52 @@ const AboutMe = () => {
     );
 
     return (
-        <section className="section-divider py-20 md:py-32" id="about-me">
+        <section className="section-divider py-16 md:py-28" id="about-me">
             <div className="container" ref={container}>
-                <SectionTitle title="About Me" eyebrow="What I Focus On" />
+                <SectionTitle title="About Me" eyebrow="How I Build" />
 
-                <div className="grid gap-10 md:grid-cols-12 md:gap-12">
+                <div className="grid gap-8 md:grid-cols-12 md:gap-10 lg:gap-12">
                     <div className="about-reveal md:col-span-5">
-                        <h2 className="text-4xl leading-tight md:text-5xl md:leading-[1.08]">
-                            I design systems that handle complexity, constraints,
-                            and edge cases without slowing teams down.
+                        <h2 className="text-3xl leading-tight sm:text-4xl md:text-5xl md:leading-[1.05]">
+                            I build secure, production-ready systems that stay
+                            maintainable as products scale.
                         </h2>
                     </div>
 
                     <div className="about-reveal md:col-span-7">
-                        <div className="surface-card p-6 md:p-8">
-                            <p className="text-base text-muted-foreground md:text-lg md:leading-relaxed">
-                                I&apos;m a full-stack developer and system architect
-                                focused on backend logic, data modeling, and
-                                scalable product foundations.
+                        <div className="surface-card p-5 sm:p-6 md:p-8">
+                            <p className="text-sm leading-relaxed text-muted-foreground sm:text-base md:text-lg md:leading-relaxed">
+                                I work across Next.js, React, Node.js, and
+                                MongoDB to deliver platforms where architecture,
+                                security, and product outcomes are tightly
+                                aligned.
                             </p>
 
-                            <p className="mt-4 text-base text-muted-foreground md:text-lg md:leading-relaxed">
-                                I work across the stack, but my strongest value is
-                                turning ambiguous product requirements into clear,
-                                rule-driven systems that teams can trust.
+                            <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base md:text-lg md:leading-relaxed">
+                                Recent work includes government portals,
+                                SSO-enabled service flows, RBAC/JWT security
+                                design, and backend-heavy systems for Psigenei
+                                and Mobipay.
                             </p>
 
-                            <ul className="mt-6 grid gap-2 text-sm text-foreground/90 md:grid-cols-2">
+                            <ul className="mt-5 grid gap-2 text-xs text-foreground/90 sm:grid-cols-2 sm:text-sm md:mt-6 md:gap-3">
                                 <li className="rounded-lg border border-border/60 bg-surface-2/65 px-3 py-2">
-                                    Rule-driven architecture
+                                    Next.js and React product delivery
                                 </li>
                                 <li className="rounded-lg border border-border/60 bg-surface-2/65 px-3 py-2">
-                                    Scalable data modeling
+                                    Node.js service architecture
                                 </li>
                                 <li className="rounded-lg border border-border/60 bg-surface-2/65 px-3 py-2">
-                                    Constraint validation
+                                    MongoDB data modeling
                                 </li>
                                 <li className="rounded-lg border border-border/60 bg-surface-2/65 px-3 py-2">
-                                    AI-assisted workflows
+                                    Security, RBAC, and JWT controls
+                                </li>
+                                <li className="rounded-lg border border-border/60 bg-surface-2/65 px-3 py-2">
+                                    Government workflow platforms
+                                </li>
+                                <li className="rounded-lg border border-border/60 bg-surface-2/65 px-3 py-2">
+                                    SSO and multi-system integration
                                 </li>
                             </ul>
                         </div>

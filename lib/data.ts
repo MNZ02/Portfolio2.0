@@ -5,10 +5,12 @@ interface ISocialLink {
     url: string;
 }
 
-interface IExperience {
+export interface IExperience {
     title: string;
     company: string;
     duration: string;
+    summary: string;
+    highlights: string[];
 }
 
 export interface IHeroTerminalPanel {
@@ -26,57 +28,67 @@ export const GENERAL_INFO = {
 
     oldPortfolio: '',
     upworkProfile: 'mailto:abdulminhaz2@gmail.com',
-    ctaLabel: 'Start a Project',
-    availability: 'Available for freelance and contract work in 2026.',
+    ctaLabel: 'Discuss a Product Build',
+    availability:
+        'Open to full-time, contract, and product engineering engagements in 2026.',
 };
 
 export const SOCIAL_LINKS: ISocialLink[] = [];
 
 export const HERO_TERMINAL_PANELS: IHeroTerminalPanel[] = [
     {
-        title: 'Build Check',
-        prompt: 'npm run build',
+        title: 'Security Gate',
+        prompt: 'authctl verify --rbac --jwt --sso',
         status: 'ok',
         output: [
-            '▲ Next.js 15.2.8',
-            '✓ Compiled successfully',
-            '✓ Generating static pages (10/10)',
-            'Route /projects/[slug] prerendered',
+            'RBAC matrix loaded',
+            'JWT rotation healthy',
+            'SSO handoff checks passed',
+            'Audit log: synchronized',
         ],
     },
     {
-        title: 'Deploy Health',
-        prompt: "ssh deploy@openclaw 'systemctl status gateway --no-pager'",
+        title: 'Gov Platform Sync',
+        prompt: 'deploy gov-suite --services registration,job-mela,skill-courses',
         status: 'ok',
         output: [
-            '● gateway.service - OpenClaw API Gateway',
-            'Active: active (running)',
-            'Memory: 162.4M | CPU: 2.3%',
-            'Health endpoint: 200 OK',
+            'Public Registration: online',
+            'Job Mela: online',
+            'Skill Courses: online',
+            'Shared session gateway: stable',
         ],
     },
     {
-        title: 'Runtime Monitor',
-        prompt: 'node scripts/monitor.js --env=prod',
+        title: 'Impact Feed',
+        prompt: 'watch delivery --projects psigenei,mobipay',
         status: 'ok',
         output: [
-            'queue_depth=0',
-            'p95_latency=138ms',
-            'error_rate=0.2%',
-            'uptime=99.97%',
+            'Psigenei: rule engine active',
+            'Mobipay: transaction flow stable',
+            'incident_rate: low',
+            'release_status: green',
         ],
     },
+];
+
+export const CORE_EXPERTISE = [
+    'Security-first API design',
+    'RBAC and JWT auth flows',
+    'SSO integration architecture',
+    'Government workflow platforms',
+    'Next.js and React frontends',
+    'Node.js and MongoDB backends',
 ];
 
 export const MY_STACK = {
     frontend: [
         {
-            name: 'JavaScript',
-            icon: '/logo/js.png',
-        },
-        {
             name: 'TypeScript',
             icon: '/logo/ts.png',
+        },
+        {
+            name: 'JavaScript',
+            icon: '/logo/js.png',
         },
         {
             name: 'React',
@@ -95,20 +107,12 @@ export const MY_STACK = {
             icon: '/logo/tailwind.png',
         },
         {
-            name: 'GSAP',
-            icon: '/logo/gsap.png',
-        },
-        {
             name: 'Framer Motion',
             icon: '/logo/framer-motion.png',
         },
         {
-            name: 'Sass',
-            icon: '/logo/sass.png',
-        },
-        {
-            name: 'Bootstrap',
-            icon: '/logo/bootstrap.svg',
+            name: 'GSAP',
+            icon: '/logo/gsap.png',
         },
     ],
     backend: [
@@ -120,19 +124,23 @@ export const MY_STACK = {
             name: 'Express.js',
             icon: '/logo/express.png',
         },
+        {
+            name: 'NestJS',
+            icon: '/logo/nest.svg',
+        },
     ],
     database: [
         {
-            name: 'MySQL',
-            icon: '/logo/mysql.svg',
+            name: 'MongoDB',
+            icon: '/logo/mongodb.svg',
         },
         {
             name: 'PostgreSQL',
             icon: '/logo/postgreSQL.png',
         },
         {
-            name: 'MongoDB',
-            icon: '/logo/mongodb.svg',
+            name: 'MySQL',
+            icon: '/logo/mysql.svg',
         },
         {
             name: 'Prisma',
@@ -143,6 +151,10 @@ export const MY_STACK = {
         {
             name: 'Git',
             icon: '/logo/git.png',
+        },
+        {
+            name: 'GitHub',
+            icon: '/logo/github.png',
         },
         {
             name: 'Docker',
@@ -157,20 +169,76 @@ export const MY_STACK = {
 
 export const PROJECTS: IProject[] = [
     {
+        title: 'Government Services Suite',
+        slug: 'government-services-suite',
+        liveUrl: '',
+        year: 2025,
+        status: 'completed',
+        description:
+            'Delivered integrated government portals for Public Registration, Job Mela, and Skill Courses with shared security and operational workflows.',
+        role: `<ul>
+            <li>Designed shared backend services with Node.js and MongoDB for three public programs</li>
+            <li>Implemented SSO-aware session handling across registration and service modules</li>
+            <li>Built RBAC-based admin flows for approvals, tracking, and content operations</li>
+            <li>Reduced manual coordination by standardizing APIs and validation rules</li>
+        </ul>`,
+        techStack: [
+            'Node.js',
+            'MongoDB',
+            'React',
+            'RBAC',
+            'SSO',
+        ],
+        thumbnail: '/projects/thumbnail/devLinks.jpg',
+        longThumbnail: '/projects/long/devLinks.jpg',
+        images: [
+            '/projects/images/devLinks-1.png',
+            '/projects/images/devLinks-2.png',
+            '/projects/images/devLinks-3.png',
+        ],
+    },
+    {
+        title: 'Mobipay Platform Delivery',
+        slug: 'mobipay-platform-delivery',
+        status: 'completed',
+        techStack: [
+            'Node.js',
+            'JWT',
+            'React',
+            'Monitoring',
+            'Security',
+        ],
+        thumbnail: '/projects/thumbnail/epikcart.jpg',
+        longThumbnail: '/projects/long/epikcart.jpg',
+        images: [
+            '/projects/images/epikcart-1.png',
+            '/projects/images/epikcart-2.png',
+            '/projects/images/epikcart-3.png',
+        ],
+        liveUrl: '',
+        year: 2024,
+        description:
+            'Improved a fintech delivery track by hardening authentication paths and stabilizing transaction operations for cross-team releases.',
+        role: `<ul>
+            <li>Strengthened token and access boundaries using JWT-based verification patterns</li>
+            <li>Supported transaction reliability improvements and incident response workflows</li>
+            <li>Delivered internal dashboards in Next.js and React for faster operational visibility</li>
+            <li>Partnered across product and engineering teams to accelerate release cycles</li>
+        </ul>`,
+    },
+    {
         title: 'Psigenei',
         slug: 'psigenei',
         liveUrl: '',
         year: 2026,
         status: 'in-progress',
         description:
-            'An AI-based exam generation engine with a taxonomy-driven structure and a rule engine that produces valid, high-fidelity papers under data constraints.',
-        role: `Status: In Progress<br/>
-        <ul>
-            <li>Master taxonomy (stream → subject → topic → subtopic)</li>
-            <li>Canonical name mapping for UI and database consistency</li>
-            <li>JSON-based rule engine with constraint validation</li>
-            <li>Fidelity engine with partial-availability fallback</li>
-            <li>Redistribution logic within topic scope</li>
+            'Building an AI exam-generation platform with strict taxonomy control, rule validation, and predictable output quality for education workflows.',
+        role: `<ul>
+            <li>Defined taxonomy architecture (stream to subtopic) for deterministic content mapping</li>
+            <li>Built a JSON rule engine with validation guards and constrained paper composition</li>
+            <li>Implemented fallback and redistribution logic to preserve coverage quality under data limits</li>
+            <li>Focused on production-safe backend behavior for real usage constraints</li>
         </ul>`,
         techStack: [
             'Node.js',
@@ -187,57 +255,71 @@ export const PROJECTS: IProject[] = [
         ],
     },
     {
-        title: 'OpenClaw Gateway',
-        slug: 'openclaw-gateway',
+        title: 'SSO and Access Control Foundation',
+        slug: 'sso-access-control-foundation',
         status: 'completed',
         techStack: [
-            'VPS',
-            'Oracle Cloud',
+            'SSO',
+            'RBAC',
+            'JWT',
             'Node.js',
-            'SSH',
-            'Service Monitoring',
+            'Next.js',
         ],
-        thumbnail: '/projects/thumbnail/epikcart.jpg',
-        longThumbnail: '/projects/long/epikcart.jpg',
+        thumbnail: '/projects/thumbnail/property-pro.jpg',
+        longThumbnail: '/projects/long/property-pro.jpg',
         images: [
-            '/projects/images/epikcart-1.png',
-            '/projects/images/epikcart-2.png',
+            '/projects/images/property-pro-1.png',
+            '/projects/images/property-pro-2.png',
+            '/projects/images/property-pro-3.png',
         ],
         liveUrl: '',
         year: 2025,
         description:
-            'A server-controlled AI gateway system focused on secure access, runtime stability, and service continuity.',
-        role: `Status: Completed<br/>
-        <ul>
-            <li>VPS deployment and Oracle Cloud setup</li>
-            <li>SSH key management and secure access</li>
-            <li>Resolved NVM vs system Node runtime conflicts</li>
-            <li>Gateway service monitoring and log debugging</li>
-        </ul>`,
-    },
-    {
-        title: 'Portfolio Website',
-        slug: 'portfolio-website',
-        status: 'completed',
-        techStack: ['Next.js', 'React', 'Tailwind CSS'],
-        thumbnail: '/projects/thumbnail/devLinks.jpg',
-        longThumbnail: '/projects/long/devLinks.jpg',
-        images: [
-            '/projects/images/devLinks-1.png',
-            '/projects/images/devLinks-2.png',
-        ],
-        liveUrl: '',
-        year: 2026,
-        description:
-            'A personal portfolio with a clean UI system, responsive layout, and structured content sections.',
-        role: `
-        <ul>
-            <li>Clean, scalable UI structure</li>
-            <li>Responsive layout system</li>
-            <li>Sidebar + header toggle logic</li>
-            <li>Animation-aware UI polish</li>
+            'Established a reusable identity and authorization base for multi-product teams with secure handoff and role-aware access boundaries.',
+        role: `<ul>
+            <li>Designed SSO integration contracts for shared login and session continuity</li>
+            <li>Implemented RBAC policy layers to separate admin, operator, and end-user capabilities</li>
+            <li>Added JWT verification middleware and audit-ready access checks</li>
+            <li>Created reusable auth modules to reduce repeated implementation work</li>
         </ul>`,
     },
 ];
 
-export const MY_EXPERIENCE: IExperience[] = [];
+export const MY_EXPERIENCE: IExperience[] = [
+    {
+        title: 'Full-Stack Product Engineer',
+        company: 'Psigenei',
+        duration: '2025 - Present',
+        summary:
+            'Leading architecture for a rule-driven AI assessment platform with production-focused backend design.',
+        highlights: [
+            'Built taxonomy and rule-validation systems to keep generated outputs structurally correct.',
+            'Converted ambiguous academic requirements into deterministic backend workflows.',
+            'Aligned product, logic, and data models for reliable release velocity.',
+        ],
+    },
+    {
+        title: 'Full-Stack Engineer (Contract)',
+        company: 'Government Digital Programs',
+        duration: '2024 - 2025',
+        summary:
+            'Delivered citizen-facing systems including Public Registration, Job Mela, and Skill Courses platforms.',
+        highlights: [
+            'Implemented SSO-oriented service flows across multiple government products.',
+            'Built Node.js and MongoDB APIs with role-aware permissions for admin operations.',
+            'Improved delivery consistency through shared validation and reusable service modules.',
+        ],
+    },
+    {
+        title: 'Backend and Product Engineer',
+        company: 'Mobipay',
+        duration: '2023 - 2024',
+        summary:
+            'Contributed to secure transaction workflows, monitoring, and cross-functional delivery in a fintech environment.',
+        highlights: [
+            'Strengthened auth handling with JWT-centric security controls.',
+            'Supported operational stability by improving incident visibility and backend safeguards.',
+            'Shipped Next.js and React operational surfaces tied to live backend services.',
+        ],
+    },
+];

@@ -1,6 +1,6 @@
 'use client';
 import SectionTitle from '@/components/SectionTitle';
-import { MY_STACK } from '@/lib/data';
+import { CORE_EXPERTISE, MY_STACK } from '@/lib/data';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
@@ -19,10 +19,10 @@ const Skills = () => {
             }
 
             gsap.from('.stack-card', {
-                y: 32,
+                y: 30,
                 autoAlpha: 0,
-                duration: 0.65,
-                stagger: 0.12,
+                duration: 0.62,
+                stagger: 0.11,
                 ease: 'power2.out',
                 scrollTrigger: {
                     trigger: containerRef.current,
@@ -34,24 +34,38 @@ const Skills = () => {
     );
 
     return (
-        <section className="section-divider py-20 md:py-32" id="my-stack">
+        <section className="section-divider py-16 md:py-28" id="my-stack">
             <div className="container" ref={containerRef}>
-                <SectionTitle title="My Stack" eyebrow="Tools and Platforms" />
+                <SectionTitle title="Skills" eyebrow="Core Expertise and Stack" />
 
-                <div className="grid gap-5">
+                <div className="stack-card surface-card mb-5 p-5 sm:p-6 md:mb-6 md:p-8">
+                    <p className="eyebrow mb-3">High-value capabilities</p>
+                    <div className="grid gap-2 sm:grid-cols-2 md:gap-3">
+                        {CORE_EXPERTISE.map((item) => (
+                            <div
+                                key={item}
+                                className="rounded-lg border border-border/60 bg-surface-2/65 px-3 py-2 text-xs text-foreground/90 sm:text-sm"
+                            >
+                                {item}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="grid gap-4 md:gap-5">
                     {Object.entries(MY_STACK).map(([category, values]) => (
                         <article
-                            className="stack-card surface-card grid gap-6 p-6 md:grid-cols-12 md:gap-8 md:p-8"
+                            className="stack-card surface-card grid gap-5 p-5 sm:p-6 md:grid-cols-12 md:gap-8 md:p-8"
                             key={category}
                         >
                             <div className="md:col-span-4">
-                                <p className="font-anton text-3xl uppercase leading-none text-foreground md:text-4xl">
+                                <p className="font-anton text-2xl uppercase leading-none text-foreground sm:text-3xl md:text-4xl">
                                     {category}
                                 </p>
                             </div>
 
                             <div className="md:col-span-8">
-                                <div className="grid gap-3 sm:grid-cols-2">
+                                <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-3">
                                     {values.map((item) => (
                                         <div
                                             className="flex items-center gap-3 rounded-xl border border-border/60 bg-surface-2/60 px-3 py-2.5"
@@ -64,7 +78,7 @@ const Skills = () => {
                                                 height="34"
                                                 className="h-8 w-8 object-contain"
                                             />
-                                            <span className="text-sm capitalize text-foreground/90 md:text-base">
+                                            <span className="text-xs capitalize text-foreground/90 sm:text-sm md:text-base">
                                                 {item.name}
                                             </span>
                                         </div>
