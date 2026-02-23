@@ -96,67 +96,6 @@
     .markdown-text ul {
         @apply mt-2 list-disc pl-5;
     }
-
-    .pl-preloader {
-        isolation: isolate;
-    }
-
-    .pl-backdrop {
-        background:
-            radial-gradient(circle at 50% 18%, hsl(var(--primary) / 0.2), transparent 32%),
-            radial-gradient(circle at 50% 50%, hsl(220 42% 4%), hsl(220 34% 2%) 62%),
-            radial-gradient(circle at 14% 14%, hsl(var(--primary) / 0.09), transparent 26%),
-            radial-gradient(circle at 86% 82%, hsl(var(--primary) / 0.08), transparent 24%);
-    }
-
-    .pl-grid {
-        background-image:
-            linear-gradient(hsl(var(--primary) / 0.06) 1px, transparent 1px),
-            linear-gradient(90deg, hsl(var(--primary) / 0.06) 1px, transparent 1px);
-        background-size: 24px 24px, 24px 24px;
-        background-position: 0 0, 0 0;
-        mask-image: radial-gradient(circle at 50% 50%, #000 40%, transparent 86%);
-        -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 40%, transparent 86%);
-        opacity: 0.62;
-    }
-
-    .pl-shell {
-        position: relative;
-    }
-
-    .pl-shell::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        background: linear-gradient(
-            180deg,
-            hsl(var(--primary) / 0.06) 0%,
-            transparent 30%,
-            transparent 70%,
-            hsl(var(--primary) / 0.04) 100%
-        );
-    }
-
-    .pl-progress-fill {
-        background: linear-gradient(
-            90deg,
-            hsl(var(--primary) / 0.24) 0%,
-            hsl(var(--primary) / 0.94) 50%,
-            hsl(var(--primary) / 0.24) 100%
-        );
-        box-shadow: 0 0 16px hsl(var(--primary) / 0.38);
-    }
-}
-
-@media (max-width: 640px) {
-    .pl-shell {
-        width: min(92vw, 380px) !important;
-    }
-
-    .pl-body {
-        padding: 0.9rem !important;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
