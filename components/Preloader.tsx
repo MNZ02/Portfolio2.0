@@ -191,23 +191,28 @@ const Preloader = () => {
                     repeat: 1,
                 })
                 .to('.bh-loader-scene', {
-                    scale: 1.045,
-                    duration: 0.75,
-                    ease: 'sine.inOut',
+                    scale: 0.001,
+                    opacity: 0,
+                    duration: 0.5,
+                    ease: 'back.in(2)',
                 })
-                .to('.bh-backdrop', {
-                    autoAlpha: 0,
-                    duration: 0.55,
-                    ease: 'power2.in',
-                })
+                .to(
+                    '.bh-backdrop',
+                    {
+                        autoAlpha: 0,
+                        duration: 0.6,
+                        ease: 'power2.inOut',
+                    },
+                    '<0.1',
+                )
                 .to(
                     preloaderRef.current,
                     {
                         autoAlpha: 0,
-                        duration: 0.28,
+                        duration: 0.1,
                         onComplete: () => setShowPreloader(false),
                     },
-                    '<0.08',
+                    '>',
                 );
         },
         { scope: preloaderRef, dependencies: [showPreloader] },

@@ -10,6 +10,10 @@ interface IExperience {
     company: string;
     duration: string;
     description?: string;
+    liveUrl?: string;
+    isFreelance?: boolean;
+    isInternship?: boolean;
+    isTrainee?: boolean;
 }
 
 export interface IHeroTerminalPanel {
@@ -252,9 +256,11 @@ export const PROJECTS: IProject[] = [
 
 export const MY_EXPERIENCE: IExperience[] = [
     {
-        title: 'Freelance Full Stack Developer',
+        title: 'Full Stack Developer',
         company: 'Psigenei (Remote)',
         duration: 'Jan 2026 – Present',
+        liveUrl: 'https://psigenei-zeta.vercel.app',
+        isFreelance: true,
         description: `<ul>
             <li>Engineered AI-driven exam generation systems with complex taxonomy and rule-based logic</li>
             <li>Architected scalable data models for multi-tenant course management and content delivery</li>
@@ -262,9 +268,24 @@ export const MY_EXPERIENCE: IExperience[] = [
         </ul>`,
     },
     {
+        title: 'Full Stack Developer',
+        company: 'EmikoFit (Remote)',
+        duration: 'Oct 2025 – Present',
+        liveUrl: 'https://emikoapp.com',
+        isFreelance: true,
+        description: `<ul>
+            <li>Engineered a full-stack fitness app (React, TypeScript, Express, MongoDB) with protected user/admin routes and JWT-based authentication</li>
+            <li>Implemented a metabolic “debt/amortization” system that computes daily calorie targets, logs intake/workouts, and awards gamified rewards</li>
+            <li>Built adaptive workout playlist APIs (Journey/Custom/Debt modes) with day-based muscle scheduling and automatic game/meditation insertion</li>
+            <li>Integrated MediaPipe pose detection to drive live exercise sessions with rep counting, orientation checks, and calorie-per-rep estimation</li>
+            <li>Developed an AI nutrition workflow (triage → chemistry → commit) including express single-food mode and USDA search integration</li>
+        </ul>`,
+    },
+    {
         title: 'Front End Developer',
         company: 'Cognitive Tech (Onsite)',
         duration: 'Jun 2025 – Present',
+        liveUrl: 'https://skillmissionassam.org',
         description: `<ul>
             <li>Developed and maintained 3 Assam government projects: Public Registration, Job Mela, Skill Courses</li>
             <li>Built secure signup/login flows with RBAC for candidates, mobilizers, and companies</li>
@@ -273,9 +294,11 @@ export const MY_EXPERIENCE: IExperience[] = [
         </ul>`,
     },
     {
-        title: 'Freelance Full Stack Developer',
+        title: 'Full Stack Developer',
         company: 'Psigenei (Remote)',
         duration: 'Feb 2025 – Apr 2025',
+        liveUrl: 'https://psigenei-zeta.vercel.app',
+        isFreelance: true,
         description: `<ul>
             <li>Migrated exam logic to Next.js server-side for better security and maintainability (1,000+ users)</li>
             <li>Secured APIs with Zod validation + sanitization to prevent injection attacks</li>
@@ -288,6 +311,7 @@ export const MY_EXPERIENCE: IExperience[] = [
         title: 'Front End Developer',
         company: 'Mobipay Securiservices (Remote)',
         duration: 'Oct 2024 – Jan 2025',
+        isTrainee: true,
         description: `<ul>
             <li>Designed React UI for Bank of Baroda app used by 500K+ Jio feature-phone users</li>
             <li>Integrated BBPS and VPA APIs for QR payments; reduced transaction errors by 15%</li>
@@ -296,18 +320,20 @@ export const MY_EXPERIENCE: IExperience[] = [
         </ul>`,
     },
     {
-        title: 'Full Stack Developer Intern',
+        title: 'Full Stack Developer',
         company: 'Levicent (Remote)',
         duration: 'Jun 2024 – Oct 2024',
+        isInternship: true,
         description: `<ul>
             <li>Developed TypeScript-based Express.js + MongoDB backend for LMS (100+ users)</li>
             <li>Implemented secure APIs with JWT authentication</li>
         </ul>`,
     },
     {
-        title: 'Full Stack Developer Intern',
+        title: 'Full Stack Developer',
         company: 'Brandon Infotech (Remote)',
         duration: 'May 2024 – Jun 2024',
+        isInternship: true,
         description: `<ul>
             <li>Built MERN-based invoice system</li>
             <li>Streamlined billing workflow for 100+ invoices by 30%</li>
