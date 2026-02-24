@@ -291,11 +291,11 @@ export const MY_EXPERIENCE: IExperience[] = [
         company: 'Psigenei',
         duration: '2025 - Present',
         summary:
-            'Leading architecture for a rule-driven AI assessment platform with production-safe backend design and deterministic output controls.',
+            'Leading architecture for a rule-driven AI assessment platform, translating curriculum constraints into production-safe backend behavior and deterministic outputs.',
         highlights: [
-            'Built taxonomy and rule-validation systems to keep generated outputs structurally correct.',
-            'Converted ambiguous academic requirements into deterministic backend workflows.',
-            'Aligned product, logic, and data models for reliable release velocity.',
+            'Designed taxonomy, rule-validation, and fallback logic to keep generated papers structurally correct.',
+            'Converted ambiguous academic requirements into deterministic Node.js workflows and data contracts.',
+            'Aligned product logic, release plans, and data modeling for predictable iteration velocity.',
         ],
     },
     {
@@ -303,11 +303,11 @@ export const MY_EXPERIENCE: IExperience[] = [
         company: 'Government Digital Programs',
         duration: '2024 - 2025',
         summary:
-            'Delivered citizen-facing systems including Public Registration, Job Mela, and Skill Courses with shared auth and service workflows.',
+            'Delivered citizen-facing systems including Public Registration, Job Mela, and Skill Courses with shared identity, access control, and service workflows.',
         highlights: [
-            'Implemented SSO-oriented service flows across multiple government products.',
-            'Built Node.js and MongoDB APIs with role-aware permissions for admin operations.',
-            'Improved delivery consistency through shared validation and reusable service modules.',
+            'Implemented SSO-oriented service flows across multiple government products and admin surfaces.',
+            'Built Node.js and MongoDB APIs with role-aware permissions and audit-friendly operations.',
+            'Improved delivery consistency through shared validation, reusable modules, and stable release contracts.',
         ],
     },
     {

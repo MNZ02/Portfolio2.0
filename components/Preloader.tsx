@@ -58,12 +58,14 @@ const Preloader = () => {
     const [sceneQuality, setSceneQuality] = useState<SceneQuality>('medium');
     const [isCoarsePointer, setIsCoarsePointer] = useState(true);
     const [isPhoneViewport, setIsPhoneViewport] = useState(false);
+    const [isCompactHeight, setIsCompactHeight] = useState(false);
 
     const interactive = !isCoarsePointer && sceneQuality !== 'low';
-    const visibleBootLines = useMemo(
-        () => (isPhoneViewport ? BOOT_LINES.slice(0, 3) : BOOT_LINES),
-        [isPhoneViewport],
-    );
+    const visibleBootLines = useMemo(() => {
+        if (isPhoneViewport && isCompactHeight) return BOOT_LINES.slice(0, 2);
+        if (isPhoneViewport) return BOOT_LINES.slice(0, 3);
+        return BOOT_LINES;
+    }, [isCompactHeight, isPhoneViewport]);
 
     const handlePerformanceDip = useCallback(() => {
         if (qualityDebounceRef.current !== null) return;
@@ -93,20 +95,21 @@ const Preloader = () => {
         }
 
         const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
-        const updatePhoneViewport = () => {
+        const updateViewportState = () => {
             setIsPhoneViewport(window.matchMedia('(max-width: 640px)').matches);
+            setIsCompactHeight(window.matchMedia('(max-height: 760px)').matches);
         };
 
         setSceneQuality(pickSceneQuality());
         setIsCoarsePointer(coarsePointer);
-        updatePhoneViewport();
+        updateViewportState();
 
-        window.addEventListener('resize', updatePhoneViewport, { passive: true });
+        window.addEventListener('resize', updateViewportState, { passive: true });
         window.sessionStorage.setItem('portfolio-preloader', '1');
         setShowPreloader(true);
 
         return () => {
-            window.removeEventListener('resize', updatePhoneViewport);
+            window.removeEventListener('resize', updateViewportState);
         };
     }, []);
 
@@ -122,12 +125,13 @@ const Preloader = () => {
     useEffect(() => {
         if (!showPreloader || FREEZE_ON_PRELOADER) return;
 
+        const maxVisibleMs = isPhoneViewport ? 7000 : 8200;
         const forceHideTimer = window.setTimeout(() => {
             setShowPreloader(false);
-        }, 8200);
+        }, maxVisibleMs);
 
         return () => window.clearTimeout(forceHideTimer);
-    }, [showPreloader]);
+    }, [isPhoneViewport, showPreloader]);
 
     useGSAP(
         () => {
@@ -136,7 +140,8 @@ const Preloader = () => {
             collapseProgressRef.current = 0;
 
             const isPhone = window.matchMedia('(max-width: 640px)').matches;
-            const sceneZoom = isPhone ? 1.2 : 1.42;
+            const compactHeight = window.matchMedia('(max-height: 760px)').matches;
+            const sceneZoom = isPhone ? (compactHeight ? 1.12 : 1.2) : 1.42;
 
             const tl = gsap.timeline({
                 defaults: {
@@ -301,32 +306,32 @@ const Preloader = () => {
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(188,236,255,0.08),transparent_34%)]" />
             </div>
 
-            <div className="pl-overlay-content pointer-events-none absolute inset-0 z-20 flex items-center justify-center px-3 pb-[max(env(safe-area-inset-bottom),0.75rem)] pt-[max(env(safe-area-inset-top),0.75rem)] will-change-transform sm:px-4">
-                <div className="flex w-full max-w-[620px] flex-col items-center rounded-2xl border border-cyan-100/15 bg-[linear-gradient(150deg,rgba(3,8,21,0.68),rgba(3,7,18,0.44))] px-4 py-5 text-center shadow-[0_12px_56px_rgba(0,12,26,0.64)] backdrop-blur-[10px] xs:px-6 sm:py-7">
-                    <p className="pl-headline text-[10px] uppercase tracking-[0.24em] text-cyan-100/85 sm:text-xs">
+            <div className="pl-overlay-content pointer-events-none absolute inset-0 z-20 flex items-center justify-center px-2 pb-[max(env(safe-area-inset-bottom),0.65rem)] pt-[max(env(safe-area-inset-top),0.65rem)] will-change-transform sm:px-4">
+                <div className="flex w-full max-w-[620px] flex-col items-center rounded-2xl border border-cyan-100/15 bg-[linear-gradient(150deg,rgba(3,8,21,0.7),rgba(3,7,18,0.46))] px-3 py-4 text-center shadow-[0_12px_56px_rgba(0,12,26,0.64)] backdrop-blur-[10px] xs:px-5 sm:px-6 sm:py-7">
+                    <p className="pl-headline text-[9px] uppercase tracking-[0.2em] text-cyan-100/85 sm:text-xs sm:tracking-[0.24em]">
                         signature system boot
                     </p>
 
-                    <h2 className="pl-headline mt-3 font-anton text-[clamp(1.8rem,8vw,4.4rem)] leading-[0.92] tracking-[0.05em] text-white drop-shadow-[0_0_24px_rgba(173,232,255,0.4)]">
+                    <h2 className="pl-headline mt-2.5 font-anton text-[clamp(1.55rem,9vw,4.4rem)] leading-[0.92] tracking-[0.04em] text-white drop-shadow-[0_0_24px_rgba(173,232,255,0.4)] sm:mt-3 sm:tracking-[0.05em]">
                         Calibrating Singularity
                     </h2>
 
-                    <p className="pl-headline mt-3 max-w-[510px] text-[11px] uppercase tracking-[0.13em] text-cyan-100/80 sm:text-[13px] md:text-sm">
+                    <p className="pl-headline mt-2.5 max-w-[510px] text-[10px] uppercase tracking-[0.11em] text-cyan-100/80 sm:mt-3 sm:text-[13px] sm:tracking-[0.13em] md:text-sm">
                         preparing secure modules and portfolio routes
                     </p>
 
-                    <div className="relative mt-4 h-10 w-full overflow-hidden sm:mt-5">
+                    <div className="relative mt-3.5 h-9 w-full overflow-hidden sm:mt-5 sm:h-10">
                         {visibleBootLines.map((line, index) => (
                             <p
                                 key={line}
-                                className={`pl-terminal-line pl-line-${index} absolute inset-0 flex items-center justify-center px-2 text-[9px] font-medium uppercase tracking-[0.13em] text-cyan-100/90 sm:text-[11px] sm:tracking-[0.16em] md:text-xs`}
+                                className={`pl-terminal-line pl-line-${index} absolute inset-0 flex items-center justify-center px-2 text-[8px] font-medium uppercase tracking-[0.1em] text-cyan-100/90 sm:text-[11px] sm:tracking-[0.16em] md:text-xs`}
                             >
                                 {line}
                             </p>
                         ))}
                     </div>
 
-                    <div className="mt-4 flex items-center gap-2 sm:mt-5">
+                    <div className="mt-3.5 flex items-center gap-2 sm:mt-5">
                         <span className="pl-signal-dot h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_12px_rgba(79,227,255,0.9)]" />
                         <span className="pl-signal-dot h-2 w-2 rounded-full bg-sky-300 shadow-[0_0_12px_rgba(125,211,252,0.8)]" />
                         <span className="pl-signal-dot h-2 w-2 rounded-full bg-violet-300 shadow-[0_0_12px_rgba(196,181,253,0.85)]" />

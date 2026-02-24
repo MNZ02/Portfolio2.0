@@ -12,16 +12,16 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const METRICS = [
     {
-        stat: 'Government Delivery',
-        text: 'Public Registration, Job Mela, and Skill Courses programs',
+        stat: 'Gov Programs',
+        text: 'Delivered Public Registration, Job Mela, and Skill Courses service flows',
     },
     {
-        stat: 'Security Core',
-        text: 'Production RBAC, JWT hardening, and SSO integration',
+        stat: 'Identity & Access',
+        text: 'Shipped RBAC + JWT controls with SSO-ready integration patterns',
     },
     {
-        stat: 'Product Builds',
-        text: 'Psigenei and Mobipay systems with backend-first execution',
+        stat: 'Fintech + EdTech',
+        text: 'Built reliable backend-first systems for Mobipay and Psigenei',
     },
 ];
 
@@ -81,7 +81,7 @@ const Banner = () => {
                             {GENERAL_INFO.availability}
                         </p>
 
-                        <h1 className="hero-intro hero-float font-anton text-5xl leading-[0.92] sm:text-6xl md:text-[82px] lg:text-[92px]">
+                        <h1 className="hero-intro hero-float font-anton text-[clamp(2.35rem,11vw,5.75rem)] leading-[0.92]">
                             FULL-STACK
                             <br />
                             <span className="text-primary">
@@ -90,11 +90,12 @@ const Banner = () => {
                         </h1>
 
                         <p className="hero-intro hero-float mt-6 max-w-[720px] text-sm leading-relaxed text-muted-foreground sm:text-base md:text-lg md:leading-relaxed">
-                            I&apos;m Abdul Minhaz. I build backend-first web
-                            products across Next.js, React, Node.js, and
-                            MongoDB, with delivery centered on security,
-                            maintainable architecture, and clear product
-                            outcomes.
+                            I&apos;m Abdul Minhaz, a full-stack product engineer
+                            focused on secure backend systems and measurable
+                            product delivery. Across government, fintech, and
+                            EdTech platforms, I ship Next.js + Node.js stacks
+                            with strong RBAC/JWT foundations, SSO readiness,
+                            and maintainable architecture.
                         </p>
 
                         <div className="hero-intro hero-float mt-8 flex flex-wrap items-center gap-4">
