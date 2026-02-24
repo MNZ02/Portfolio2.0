@@ -9,6 +9,7 @@ interface IExperience {
     title: string;
     company: string;
     duration: string;
+    description?: string;
 }
 
 export interface IHeroTerminalPanel {
@@ -30,7 +31,16 @@ export const GENERAL_INFO = {
     availability: 'Available for freelance and contract work in 2026.',
 };
 
-export const SOCIAL_LINKS: ISocialLink[] = [];
+export const SOCIAL_LINKS: ISocialLink[] = [
+    {
+        name: 'GitHub',
+        url: 'https://github.com/mnz02',
+    },
+    {
+        name: 'LinkedIn',
+        url: 'https://linkedin.com/in/mnz02',
+    },
+];
 
 export const HERO_TERMINAL_PANELS: IHeroTerminalPanel[] = [
     {
@@ -240,4 +250,67 @@ export const PROJECTS: IProject[] = [
     },
 ];
 
-export const MY_EXPERIENCE: IExperience[] = [];
+export const MY_EXPERIENCE: IExperience[] = [
+    {
+        title: 'Freelance Full Stack Developer',
+        company: 'Psigenei (Remote)',
+        duration: 'Jan 2026 – Present',
+        description: `<ul>
+            <li>Engineered AI-driven exam generation systems with complex taxonomy and rule-based logic</li>
+            <li>Architected scalable data models for multi-tenant course management and content delivery</li>
+            <li>Optimized high-traffic server-side workflows in Next.js for enterprise-scale reliability</li>
+        </ul>`,
+    },
+    {
+        title: 'Front End Developer',
+        company: 'Cognitive Tech (Onsite)',
+        duration: 'Jun 2025 – Present',
+        description: `<ul>
+            <li>Developed and maintained 3 Assam government projects: Public Registration, Job Mela, Skill Courses</li>
+            <li>Built secure signup/login flows with RBAC for candidates, mobilizers, and companies</li>
+            <li>Implemented dashboards and profiles for candidates and companies (job applications + course enrollments)</li>
+            <li>Integrated SSO for consistent sessions across all 3 platforms</li>
+        </ul>`,
+    },
+    {
+        title: 'Freelance Full Stack Developer',
+        company: 'Psigenei (Remote)',
+        duration: 'Feb 2025 – Apr 2025',
+        description: `<ul>
+            <li>Migrated exam logic to Next.js server-side for better security and maintainability (1,000+ users)</li>
+            <li>Secured APIs with Zod validation + sanitization to prevent injection attacks</li>
+            <li>Built CRUD endpoints for courses/videos and integrated Razorpay payments</li>
+            <li>Built admin dashboard with RBAC + JWT for 500+ users; media via Cloudinary</li>
+            <li>Optimized state management with Zustand + React Query, reducing API calls by 30%</li>
+        </ul>`,
+    },
+    {
+        title: 'Front End Developer',
+        company: 'Mobipay Securiservices (Remote)',
+        duration: 'Oct 2024 – Jan 2025',
+        description: `<ul>
+            <li>Designed React UI for Bank of Baroda app used by 500K+ Jio feature-phone users</li>
+            <li>Integrated BBPS and VPA APIs for QR payments; reduced transaction errors by 15%</li>
+            <li>Built custom QR scanning without dependencies</li>
+            <li>Optimized navigation/assets; improved load times by 20%</li>
+        </ul>`,
+    },
+    {
+        title: 'Full Stack Developer Intern',
+        company: 'Levicent (Remote)',
+        duration: 'Jun 2024 – Oct 2024',
+        description: `<ul>
+            <li>Developed TypeScript-based Express.js + MongoDB backend for LMS (100+ users)</li>
+            <li>Implemented secure APIs with JWT authentication</li>
+        </ul>`,
+    },
+    {
+        title: 'Full Stack Developer Intern',
+        company: 'Brandon Infotech (Remote)',
+        duration: 'May 2024 – Jun 2024',
+        description: `<ul>
+            <li>Built MERN-based invoice system</li>
+            <li>Streamlined billing workflow for 100+ invoices by 30%</li>
+        </ul>`,
+    },
+];

@@ -50,7 +50,10 @@ export const metadata: Metadata = {
             'Full-stack developer focused on scalable architectures and intelligent backend systems.',
     },
     icons: {
-        icon: '/favicon.ico',
+        icon: [
+            { url: '/favicon.ico', sizes: '32x32' },
+            { url: '/icon.svg', type: 'image/svg+xml' },
+        ],
     },
 };
 

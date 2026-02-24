@@ -1,4 +1,5 @@
 'use client';
+import parse from 'html-react-parser';
 import SectionTitle from '@/components/SectionTitle';
 import { GENERAL_INFO, MY_EXPERIENCE } from '@/lib/data';
 import { useGSAP } from '@gsap/react';
@@ -32,6 +33,13 @@ const Experiences = () => {
         { scope: containerRef },
     );
 
+    const regularExperiences = MY_EXPERIENCE.filter(
+        (item) => !item.title.toLowerCase().includes('intern'),
+    );
+    const internshipExperiences = MY_EXPERIENCE.filter((item) =>
+        item.title.toLowerCase().includes('intern'),
+    );
+
     return (
         <section className="section-divider py-20 md:py-32" id="my-experience">
             <div className="container" ref={containerRef}>
@@ -41,21 +49,62 @@ const Experiences = () => {
                 />
 
                 {MY_EXPERIENCE.length > 0 ? (
-                    <div className="grid gap-4 md:gap-5">
-                        {MY_EXPERIENCE.map((item) => (
-                            <article
-                                key={item.title}
-                                className="experience-item surface-card p-6 md:p-7"
-                            >
-                                <p className="eyebrow">{item.company}</p>
-                                <p className="mt-3 font-anton text-4xl leading-none md:text-5xl">
-                                    {item.title}
-                                </p>
-                                <p className="mt-4 text-muted-foreground">
-                                    {item.duration}
-                                </p>
-                            </article>
-                        ))}
+                    <div className="flex flex-col gap-8 md:gap-12">
+                        {/* Regular Experiences */}
+                        <div className="grid gap-4 md:gap-6">
+                            {regularExperiences.map((item) => (
+                                <article
+                                    key={`${item.company}-${item.title}`}
+                                    className="experience-item surface-card p-6 md:p-8 transition-colors hover:border-primary/30"
+                                >
+                                    <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
+                                        <div>
+                                            <p className="eyebrow">{item.company}</p>
+                                            <h3 className="mt-2 font-anton text-2xl leading-[1.1] md:text-3xl lg:text-4xl">
+                                                {item.title}
+                                            </h3>
+                                            <p className="mt-4 text-xs font-medium uppercase tracking-[0.2em] text-primary">
+                                                {item.duration}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {item.description && (
+                                        <div className="markdown-text mt-6 max-w-[840px] text-base leading-relaxed text-muted-foreground md:text-md">
+                                            {parse(item.description)}
+                                        </div>
+                                    )}
+                                </article>
+                            ))}
+                        </div>
+
+                        {/* Internship Grid */}
+                        {internshipExperiences.length > 0 && (
+                            <div className="grid gap-4 md:gap-5 md:grid-cols-2">
+                                {internshipExperiences.map((item) => (
+                                    <article
+                                        key={`${item.company}-${item.title}`}
+                                        className="experience-item surface-card flex flex-col p-5 md:p-6 transition-colors hover:border-primary/30"
+                                    >
+                                        <div className="flex flex-col">
+                                            <p className="eyebrow">{item.company}</p>
+                                            <h3 className="mt-1 font-anton text-2xl leading-tight md:text-3xl">
+                                                {item.title}
+                                            </h3>
+                                            <p className="mt-3 text-xs font-medium uppercase tracking-widest text-primary/80">
+                                                {item.duration}
+                                            </p>
+                                        </div>
+
+                                        {item.description && (
+                                            <div className="markdown-text mt-4 text-sm leading-relaxed text-muted-foreground">
+                                                {parse(item.description)}
+                                            </div>
+                                        )}
+                                    </article>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 ) : (
                     <article className="experience-item surface-card p-7 md:p-9">
