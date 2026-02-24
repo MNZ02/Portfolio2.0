@@ -30,7 +30,7 @@ export const GENERAL_INFO = {
     upworkProfile: 'mailto:abdulminhaz2@gmail.com',
     ctaLabel: 'Discuss a Product Build',
     availability:
-        'Open to full-time, contract, and product engineering engagements in 2026.',
+        'Open to full-time, contract, and product engineering roles in 2026.',
 };
 
 export const SOCIAL_LINKS: ISocialLink[] = [];
@@ -44,7 +44,7 @@ export const HERO_TERMINAL_PANELS: IHeroTerminalPanel[] = [
             'RBAC matrix loaded',
             'JWT rotation healthy',
             'SSO handoff checks passed',
-            'Audit log: synchronized',
+            'Audit trail: green and synchronized',
         ],
     },
     {
@@ -55,7 +55,7 @@ export const HERO_TERMINAL_PANELS: IHeroTerminalPanel[] = [
             'Public Registration: online',
             'Job Mela: online',
             'Skill Courses: online',
-            'Shared session gateway: stable',
+            'Shared identity gateway: stable',
         ],
     },
     {
@@ -64,20 +64,20 @@ export const HERO_TERMINAL_PANELS: IHeroTerminalPanel[] = [
         status: 'ok',
         output: [
             'Psigenei: rule engine active',
-            'Mobipay: transaction flow stable',
+            'Mobipay: transaction reliability stable',
             'incident_rate: low',
-            'release_status: green',
+            'release_status: production-ready',
         ],
     },
 ];
 
 export const CORE_EXPERTISE = [
-    'Security-first API and service contract design',
+    'Security-first API contracts and backend service design',
     'RBAC + JWT access boundaries and auditability',
     'SSO integration architecture across products',
     'Government workflow and citizen-service platforms',
-    'Backend-heavy Node.js and MongoDB delivery',
-    'Next.js and React operational frontend systems',
+    'Backend-first Node.js + MongoDB production delivery',
+    'Next.js and React interfaces tied to live operations',
 ];
 
 export const MY_STACK = {

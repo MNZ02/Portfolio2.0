@@ -15,12 +15,14 @@ const BOOT_LINES = [
     'verifying RBAC, JWT, and SSO controls',
     'warming secure portfolio route graph',
     'syncing Psigenei and Mobipay delivery context',
+    'priming production-ready mobile viewport logic',
 ];
 
 const MOBILE_BOOT_LINES = [
     'aligning singularity lens',
     'verifying RBAC + JWT + SSO',
     'syncing Psigenei + Mobipay context',
+    'optimizing mobile viewport',
 ];
 
 type NavigatorWithMemory = Navigator & {
@@ -131,7 +133,7 @@ const Preloader = () => {
     useEffect(() => {
         if (!showPreloader || FREEZE_ON_PRELOADER) return;
 
-        const maxVisibleMs = isPhoneViewport ? (isCompactHeight ? 5200 : 6400) : 8200;
+        const maxVisibleMs = isPhoneViewport ? (isCompactHeight ? 4400 : 5600) : 7600;
         const forceHideTimer = window.setTimeout(() => {
             setShowPreloader(false);
         }, maxVisibleMs);
@@ -147,7 +149,7 @@ const Preloader = () => {
 
             const isPhone = window.matchMedia('(max-width: 640px)').matches;
             const compactHeight = window.matchMedia('(max-height: 760px)').matches;
-            const sceneZoom = isPhone ? (compactHeight ? 1.12 : 1.2) : 1.42;
+            const sceneZoom = isPhone ? (compactHeight ? 1.08 : 1.16) : 1.4;
 
             const tl = gsap.timeline({
                 defaults: {
@@ -306,14 +308,15 @@ const Preloader = () => {
                     interactive={interactive}
                     onPerformanceDip={handlePerformanceDip}
                 />
-                <div className="pl-vignette pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(1,3,10,0.32)_42%,rgba(0,0,0,0.86)_100%)]" />
+                <div className="pl-vignette pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(1,3,10,0.34)_42%,rgba(0,0,0,0.9)_100%)]" />
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_42%,rgba(90,233,255,0.18),transparent_44%)]" />
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_56%,rgba(120,96,255,0.2),transparent_52%)]" />
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(188,236,255,0.08),transparent_34%)]" />
+                <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:radial-gradient(circle_at_1px_1px,rgba(166,221,255,0.5)_1px,transparent_0)] [background-size:3px_3px]" />
             </div>
 
             <div className="pl-overlay-content pointer-events-none absolute inset-0 z-20 flex items-center justify-center px-2 pb-[max(env(safe-area-inset-bottom),0.65rem)] pt-[max(env(safe-area-inset-top),0.65rem)] will-change-transform sm:px-4">
-                <div className="flex w-full max-w-[620px] flex-col items-center rounded-2xl border border-cyan-100/15 bg-[linear-gradient(150deg,rgba(3,8,21,0.7),rgba(3,7,18,0.46))] px-3 py-4 text-center shadow-[0_12px_56px_rgba(0,12,26,0.64)] backdrop-blur-[10px] xs:px-5 sm:px-6 sm:py-7">
+                <div className="flex w-full max-w-[620px] flex-col items-center rounded-2xl border border-cyan-100/15 bg-[linear-gradient(150deg,rgba(3,8,21,0.78),rgba(3,7,18,0.5))] px-3 py-4 text-center shadow-[0_12px_56px_rgba(0,12,26,0.64)] backdrop-blur-[10px] xs:px-5 sm:px-6 sm:py-7">
                     <p className="pl-headline text-[9px] uppercase tracking-[0.2em] text-cyan-100/85 sm:text-xs sm:tracking-[0.24em]">
                         signature system boot
                     </p>

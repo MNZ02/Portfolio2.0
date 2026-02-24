@@ -20,9 +20,9 @@ const HeroTerminalPanels = ({ panels, className }: Props) => {
                     key={`${panel.title}-${idx}`}
                 >
                     <header className="flex items-center gap-2 border-b border-border/70 px-3.5 py-2.5">
-                        <span className="inline-block size-2 rounded-full bg-rose-400/80"></span>
+                        <span className="inline-block size-2 rounded-full bg-cyan-300/85"></span>
                         <span className="inline-block size-2 rounded-full bg-sky-300/85"></span>
-                        <span className="inline-block size-2 rounded-full bg-emerald-400/85"></span>
+                        <span className="inline-block size-2 rounded-full bg-violet-300/90"></span>
 
                         <p className="ml-2 min-w-0 truncate text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
                             {panel.title}

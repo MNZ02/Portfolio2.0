@@ -75,7 +75,7 @@ const Banner = () => {
             <ArrowAnimation />
 
             <div className="container" ref={containerRef}>
-                <div className="grid min-h-[calc(100svh-110px)] items-center gap-8 sm:min-h-[calc(100svh-90px)] lg:grid-cols-12 lg:gap-8">
+                <div className="grid min-h-[calc(100svh-104px)] items-center gap-7 sm:min-h-[calc(100svh-90px)] sm:gap-8 lg:grid-cols-12 lg:gap-8">
                     <div className="lg:col-span-7 xl:col-span-8">
                         <p className="hero-intro hero-float eyebrow mb-5 inline-flex rounded-full border border-border/70 bg-background-light/70 px-4 py-2 text-[10px] sm:text-[11px]">
                             {GENERAL_INFO.availability}
@@ -89,7 +89,7 @@ const Banner = () => {
                             </span>
                         </h1>
 
-                        <p className="hero-intro hero-float mt-6 max-w-[720px] text-sm leading-relaxed text-muted-foreground sm:text-base md:text-lg md:leading-relaxed">
+                        <p className="hero-intro hero-float mt-5 max-w-[720px] text-[13px] leading-relaxed text-muted-foreground sm:mt-6 sm:text-base md:text-lg md:leading-relaxed">
                             I&apos;m Abdul Minhaz, a full-stack product engineer
                             focused on secure backend systems and measurable
                             product delivery. Across government, fintech, and
@@ -120,7 +120,7 @@ const Banner = () => {
                             </Button>
                         </div>
 
-                        <div className="hero-intro hero-float mt-6 grid gap-3 sm:grid-cols-3">
+                        <div className="hero-intro hero-float mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                             {METRICS.map((metric) => (
                                 <div className="kpi-card" key={metric.text}>
                                     <p className="font-anton text-xl leading-none text-primary sm:text-2xl md:text-3xl">
@@ -135,7 +135,7 @@ const Banner = () => {
                     </div>
 
                     <div className="hero-intro hero-float lg:col-span-5 xl:col-span-4 lg:pl-2">
-                        <p className="eyebrow mb-3">Live Delivery Signals</p>
+                        <p className="eyebrow mb-3">Live Resume Signals</p>
                         <HeroTerminalPanels panels={HERO_TERMINAL_PANELS} />
                     </div>
                 </div>
