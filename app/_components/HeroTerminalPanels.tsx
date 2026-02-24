@@ -8,7 +8,7 @@ interface Props {
 
 const STATUS_STYLES: Record<NonNullable<IHeroTerminalPanel['status']>, string> = {
     ok: 'border-emerald-500/35 bg-emerald-500/10 text-emerald-300',
-    warn: 'border-amber-500/35 bg-amber-500/10 text-amber-300',
+    warn: 'border-violet-500/35 bg-violet-500/10 text-violet-300',
 };
 
 const HeroTerminalPanels = ({ panels, className }: Props) => {
@@ -20,8 +20,8 @@ const HeroTerminalPanels = ({ panels, className }: Props) => {
                     key={`${panel.title}-${idx}`}
                 >
                     <header className="flex items-center gap-2 border-b border-border/70 px-3.5 py-2.5">
-                        <span className="inline-block size-2 rounded-full bg-red-400/85"></span>
-                        <span className="inline-block size-2 rounded-full bg-amber-300/85"></span>
+                        <span className="inline-block size-2 rounded-full bg-rose-400/80"></span>
+                        <span className="inline-block size-2 rounded-full bg-sky-300/85"></span>
                         <span className="inline-block size-2 rounded-full bg-emerald-400/85"></span>
 
                         <p className="ml-2 min-w-0 truncate text-[11px] uppercase tracking-[0.12em] text-muted-foreground">

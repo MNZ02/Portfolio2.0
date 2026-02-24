@@ -72,12 +72,12 @@ export const HERO_TERMINAL_PANELS: IHeroTerminalPanel[] = [
 ];
 
 export const CORE_EXPERTISE = [
-    'Security-first API design',
-    'RBAC and JWT auth flows',
-    'SSO integration architecture',
-    'Government workflow platforms',
-    'Next.js and React frontends',
-    'Node.js and MongoDB backends',
+    'Security-first API and service contract design',
+    'RBAC + JWT access boundaries and auditability',
+    'SSO integration architecture across products',
+    'Government workflow and citizen-service platforms',
+    'Backend-heavy Node.js and MongoDB delivery',
+    'Next.js and React operational frontend systems',
 ];
 
 export const MY_STACK = {

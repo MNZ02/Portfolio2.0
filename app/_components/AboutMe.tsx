@@ -47,16 +47,17 @@ const AboutMe = () => {
                     <div className="about-reveal md:col-span-7">
                         <div className="surface-card p-5 sm:p-6 md:p-8">
                             <p className="text-sm leading-relaxed text-muted-foreground sm:text-base md:text-lg md:leading-relaxed">
-                                I work across Next.js, React, Node.js, and
-                                MongoDB to deliver platforms where architecture,
-                                security, and product outcomes are tightly
-                                aligned.
+                                I build across Next.js, React, Node.js, and
+                                MongoDB with a backend-first mindset: secure
+                                contracts first, then UI and operations that stay
+                                stable under real production usage.
                             </p>
 
                             <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base md:text-lg md:leading-relaxed">
-                                Recent resume-aligned work spans government
-                                portals, SSO-enabled service flows, RBAC/JWT
-                                security architecture, and backend-intensive
+                                Resume-aligned delivery includes citizen-facing
+                                government platforms (Public Registration, Job
+                                Mela, Skill Courses), SSO + RBAC + JWT identity
+                                foundations, and reliability-focused product
                                 systems for Psigenei and Mobipay.
                             </p>
 

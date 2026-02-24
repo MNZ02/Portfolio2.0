@@ -17,6 +17,12 @@ const BOOT_LINES = [
     'syncing Psigenei and Mobipay delivery context',
 ];
 
+const MOBILE_BOOT_LINES = [
+    'aligning singularity lens',
+    'verifying RBAC + JWT + SSO',
+    'syncing Psigenei + Mobipay context',
+];
+
 type NavigatorWithMemory = Navigator & {
     deviceMemory?: number;
 };
@@ -62,8 +68,8 @@ const Preloader = () => {
 
     const interactive = !isCoarsePointer && sceneQuality !== 'low';
     const visibleBootLines = useMemo(() => {
-        if (isPhoneViewport && isCompactHeight) return BOOT_LINES.slice(0, 2);
-        if (isPhoneViewport) return BOOT_LINES.slice(0, 3);
+        if (isPhoneViewport && isCompactHeight) return MOBILE_BOOT_LINES.slice(0, 2);
+        if (isPhoneViewport) return MOBILE_BOOT_LINES;
         return BOOT_LINES;
     }, [isCompactHeight, isPhoneViewport]);
 
@@ -125,13 +131,13 @@ const Preloader = () => {
     useEffect(() => {
         if (!showPreloader || FREEZE_ON_PRELOADER) return;
 
-        const maxVisibleMs = isPhoneViewport ? 7000 : 8200;
+        const maxVisibleMs = isPhoneViewport ? (isCompactHeight ? 5200 : 6400) : 8200;
         const forceHideTimer = window.setTimeout(() => {
             setShowPreloader(false);
         }, maxVisibleMs);
 
         return () => window.clearTimeout(forceHideTimer);
-    }, [isPhoneViewport, showPreloader]);
+    }, [isCompactHeight, isPhoneViewport, showPreloader]);
 
     useGSAP(
         () => {

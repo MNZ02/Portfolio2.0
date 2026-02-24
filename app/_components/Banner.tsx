@@ -75,7 +75,7 @@ const Banner = () => {
             <ArrowAnimation />
 
             <div className="container" ref={containerRef}>
-                <div className="grid min-h-[calc(100svh-90px)] items-center gap-8 lg:grid-cols-12 lg:gap-8">
+                <div className="grid min-h-[calc(100svh-110px)] items-center gap-8 sm:min-h-[calc(100svh-90px)] lg:grid-cols-12 lg:gap-8">
                     <div className="lg:col-span-7 xl:col-span-8">
                         <p className="hero-intro hero-float eyebrow mb-5 inline-flex rounded-full border border-border/70 bg-background-light/70 px-4 py-2 text-[10px] sm:text-[11px]">
                             {GENERAL_INFO.availability}
@@ -98,13 +98,14 @@ const Banner = () => {
                             and maintainable architecture.
                         </p>
 
-                        <div className="hero-intro hero-float mt-8 flex flex-wrap items-center gap-4">
+                        <div className="hero-intro hero-float mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
                             <Button
                                 as="link"
                                 href={GENERAL_INFO.upworkProfile}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 variant="primary"
+                                className="w-full justify-center sm:w-auto"
                             >
                                 {GENERAL_INFO.ctaLabel || 'Start a Project'}
                             </Button>
@@ -113,7 +114,7 @@ const Banner = () => {
                                 as="link"
                                 href="/#selected-projects"
                                 variant="link"
-                                className="text-muted-foreground"
+                                className="w-full justify-center text-muted-foreground sm:w-auto"
                             >
                                 Explore Case Studies
                             </Button>
