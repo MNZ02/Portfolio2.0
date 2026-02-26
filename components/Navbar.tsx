@@ -45,7 +45,7 @@ const Navbar = () => {
                     <div className="surface-card relative flex h-14 items-center px-4 md:px-5">
                         <Link
                             href="/#banner"
-                            className="font-sora text-lg leading-none tracking-[0.18em] text-foreground"
+                            className="font-sora text-xs md:text-lg leading-none tracking-[0.18em] text-foreground"
                         >
                             MINHAZ.DEV
                         </Link>
@@ -88,7 +88,7 @@ const Navbar = () => {
 
             <div
                 className={cn(
-                    'fixed inset-0 z-[42] bg-black/60 backdrop-blur-[2px] transition-all duration-200',
+                    'fixed inset-0 z-[58] bg-black/60 backdrop-blur-[2px] transition-all duration-200',
                     {
                         'invisible opacity-0 pointer-events-none': !isMenuOpen,
                     },
@@ -98,7 +98,7 @@ const Navbar = () => {
 
             <aside
                 className={cn(
-                    'fixed right-0 top-0 z-[43] flex h-[100dvh] w-[430px] max-w-[calc(100vw-2.5rem)] translate-x-full flex-col border-l border-border/70 bg-[hsl(var(--surface-1)/0.97)] p-7 shadow-2xl shadow-black/35 transition-transform duration-500 md:p-9',
+                    'fixed right-0 top-0 z-[59] flex h-[100dvh] w-[430px] max-w-[calc(100vw-2.5rem)] translate-x-full flex-col border-l border-border/70 bg-[hsl(var(--surface-1)/0.97)] p-7 shadow-2xl shadow-black/35 transition-transform duration-500 md:p-9',
                     {
                         'translate-x-0': isMenuOpen,
                     },
