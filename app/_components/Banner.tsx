@@ -77,7 +77,7 @@ const Banner = () => {
                                 {GENERAL_INFO.availability}
                             </p>
 
-                            <h1 className="hero-intro font-anton text-6xl leading-[0.94] sm:text-7xl md:text-[88px]">
+                            <h1 className="hero-intro font-sora font-semibold text-6xl leading-[0.94] sm:text-7xl md:text-[88px]">
                                 FULL-STACK
                                 <br />
                                 <span className="text-primary">
@@ -116,7 +116,7 @@ const Banner = () => {
                             <div className="hero-intro mt-7 grid gap-3 sm:grid-cols-3">
                                 {METRICS.map((metric) => (
                                     <div className="kpi-card" key={metric.text}>
-                                        <p className="font-anton text-4xl leading-none text-primary">
+                                        <p className="font-sora text-4xl leading-none text-primary">
                                             {metric.stat}
                                         </p>
                                         <p className="mt-2 text-sm text-muted-foreground">

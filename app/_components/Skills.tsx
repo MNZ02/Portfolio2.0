@@ -45,7 +45,7 @@ const Skills = () => {
                             key={category}
                         >
                             <div className="md:col-span-4">
-                                <p className="font-anton text-3xl uppercase leading-none text-foreground md:text-4xl">
+                                <p className="font-sora text-3xl uppercase leading-none text-foreground md:text-4xl">
                                     {category}
                                 </p>
                             </div>

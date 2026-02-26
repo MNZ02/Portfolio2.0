@@ -166,6 +166,14 @@ export const MY_STACK = {
             name: 'AWS',
             icon: '/logo/aws.png',
         },
+        {
+            name: 'Oracle',
+            icon: '/logo/oracle.webp',
+        },
+        {
+            name: 'DigitalOcean',
+            icon: '/logo/digitalocean.png',
+        },
     ],
 };
 
@@ -177,14 +185,15 @@ export const PROJECTS: IProject[] = [
         year: 2026,
         status: 'in-progress',
         description:
-            'An AI-based exam generation engine with a taxonomy-driven structure and a rule engine that produces valid, high-fidelity papers under data constraints.',
+            'A contract-driven test creation engine with deterministic runtime binding, strict taxonomy safety, and phased rollout controls for production-grade exam workflows.',
         role: `Status: In Progress<br/>
         <ul>
-            <li>Master taxonomy (stream → subject → topic → subtopic)</li>
-            <li>Canonical name mapping for UI and database consistency</li>
-            <li>JSON-based rule engine with constraint validation</li>
-            <li>Fidelity engine with partial-availability fallback</li>
-            <li>Redistribution logic within topic scope</li>
+            <li>Designed contract-first runtime resolver for exam artifacts with normalization and deterministic config/runtime hashes</li>
+            <li>Built strict API contract boundary for test creation with explicit invalid-request, unsupported-exam, and disabled-state semantics</li>
+            <li>Executed Clean Slate rollout (logical disable + hard cleanup migration) to retire unstable legacy generation paths safely</li>
+            <li>Implemented deterministic allocator with exam-scoped rebalance policy to prevent type-shortage failures when total inventory is sufficient</li>
+            <li>Delivered runtime session integrity controls (back-block, terminate-on-leave, re-entry denial) with terminate endpoint support</li>
+            <li>Roadmap in progress: explicit difficulty distribution config and staged enablement of full-test/template generation flows</li>
         </ul>`,
         techStack: [
             'Node.js',
@@ -211,14 +220,11 @@ export const PROJECTS: IProject[] = [
             'SSH',
             'Service Monitoring',
         ],
-        thumbnail: '/projects/thumbnail/epikcart.jpg',
-        longThumbnail: '/projects/long/epikcart.jpg',
-        images: [
-            '/projects/images/epikcart-1.png',
-            '/projects/images/epikcart-2.png',
-        ],
+        thumbnail: '',
+        longThumbnail: '',
+        images: [],
         liveUrl: '',
-        year: 2025,
+        year: 2026,
         description:
             'A server-controlled AI gateway system focused on secure access, runtime stability, and service continuity.',
         role: `Status: Completed<br/>
@@ -252,6 +258,115 @@ export const PROJECTS: IProject[] = [
             <li>Animation-aware UI polish</li>
         </ul>`,
     },
+    {
+        title: 'Emiko App',
+        slug: 'emiko-app-uiux',
+        status: 'completed',
+        techStack: [
+            'UI/UX Design',
+            'Responsive Design',
+            'Landing Page Design',
+        ],
+        thumbnail: '/projects/thumbnail/resume-roaster.jpg',
+        longThumbnail: '/projects/long/resume-roaster.jpg',
+        images: [
+            '/projects/images/resume-roaster-1.png',
+            '/projects/images/resume-roaster-2.png',
+        ],
+        liveUrl: 'https://emikoapp.netlify.app',
+        year: 2026,
+        description:
+            'A modern marketing website focused on conversion-driven layout, readable hierarchy, and polished mobile-first UI patterns.',
+        role: `<ul>
+            <li>Designed complete UI flow and visual hierarchy</li>
+            <li>Prioritized CTA clarity and section-level conversion design</li>
+            <li>Refined responsive behavior for mobile and tablet breakpoints</li>
+        </ul>`,
+    },
+    {
+        title: 'Amarnath Construction',
+        slug: 'amarnath-construction-uiux',
+        status: 'completed',
+        techStack: ['UI/UX Design', 'Information Architecture', 'Web Design'],
+        thumbnail: '/projects/thumbnail/property-pro.jpg',
+        longThumbnail: '/projects/long/property-pro.jpg',
+        images: [
+            '/projects/images/property-pro-1.png',
+            '/projects/images/property-pro-2.png',
+        ],
+        liveUrl: 'https://amarnathconstruction.in',
+        year: 2025,
+        description:
+            'A business website redesign centered on trust signals, clear service discovery, and structured content for lead generation.',
+        role: `<ul>
+            <li>Structured service pages for faster user decision-making</li>
+            <li>Improved trust and brand clarity using consistent visual components</li>
+            <li>Optimized page sections for inquiry-first user journeys</li>
+        </ul>`,
+    },
+    {
+        title: 'KA Design',
+        slug: 'ka-design-uiux',
+        status: 'completed',
+        techStack: ['UI/UX Design', 'Brand Web Design', 'Responsive Layout'],
+        thumbnail: '/projects/thumbnail/consulting-finance.jpg',
+        longThumbnail: '/projects/long/consulting-finance.jpg',
+        images: [
+            '/projects/images/consulting-finance-1.png',
+            '/projects/images/consulting-finance-2.png',
+        ],
+        liveUrl: 'https://ka-design.vercel.app',
+        year: 2025,
+        description:
+            'A brand-forward portfolio website with clean typography, balanced spacing, and a curated visual narrative.',
+        role: `<ul>
+            <li>Created a cohesive visual system for brand consistency</li>
+            <li>Designed section sequencing for stronger storytelling flow</li>
+            <li>Built responsive layouts to preserve aesthetics across devices</li>
+        </ul>`,
+    },
+    {
+        title: 'Educare Guidance',
+        slug: 'educare-guidance-uiux',
+        status: 'completed',
+        techStack: ['UI/UX Design', 'EdTech UX', 'Content-first Design'],
+        thumbnail: '/projects/thumbnail/devLinks.jpg',
+        longThumbnail: '/projects/long/devLinks.jpg',
+        images: [
+            '/projects/images/devLinks-1.png',
+            '/projects/images/devLinks-2.png',
+        ],
+        liveUrl: 'https://educareguidance.in',
+        year: 2025,
+        description:
+            'An education-focused website designed for fast information scanning, clear guidance pathways, and parent/student readability.',
+        role: `<ul>
+            <li>Simplified navigation for courses, services, and contact paths</li>
+            <li>Designed content blocks for high readability and quick scanning</li>
+            <li>Aligned visual hierarchy with counseling conversion goals</li>
+        </ul>`,
+    },
+    {
+        title: 'Mr Biologist',
+        slug: 'mr-biologist-uiux',
+        status: 'completed',
+        techStack: ['UI/UX Design', 'Education Web Design', 'Visual Design'],
+        thumbnail: '/projects/thumbnail/mti-electronics.webp',
+        longThumbnail: '/projects/long/mti-electronics.webp',
+        images: [
+            '/projects/images/mti-electronics-1.webp',
+            '/projects/images/mti-electronics-2.webp',
+        ],
+        liveUrl: 'https://mrbiologist.vercel.app',
+        year: 2025,
+        description:
+            'A subject-centric educational site focused on approachable design language, structured learning content, and mobile usability.',
+        role: `<ul>
+            <li>Crafted an education-first interface with accessible visual hierarchy</li>
+            <li>Organized subject content for frictionless exploration</li>
+            <li>Improved mobile reading flow for long-form educational sections</li>
+        </ul>`,
+    },
 ];
 
 export const MY_EXPERIENCE: IExperience[] = [
@@ -262,9 +377,12 @@ export const MY_EXPERIENCE: IExperience[] = [
         liveUrl: 'https://psigenei-zeta.vercel.app',
         isFreelance: true,
         description: `<ul>
-            <li>Engineered AI-driven exam generation systems with complex taxonomy and rule-based logic</li>
-            <li>Architected scalable data models for multi-tenant course management and content delivery</li>
-            <li>Optimized high-traffic server-side workflows in Next.js for enterprise-scale reliability</li>
+            <li>Engineered contract-first test architecture (exam-config + syllabus-map) with deterministic hashing and taxonomy snapshot versioning</li>
+            <li>Hardened create-test APIs (400/422/410) and shipped feature-flagged rollout for topic-test generation with controlled blast radius</li>
+            <li>Built deterministic syllabus/question-bank compilers with strict CSV validation, canonical taxonomy matching, and idempotent import behavior</li>
+            <li>Implemented allocator-based DB selection with exam-specific type-quota rebalance and fallback telemetry in allocation metadata</li>
+            <li>Delivered local runtime/session lifecycle APIs and anti-bypass session integrity guardrails for active tests</li>
+            <li>Added broad automated test coverage across runtime resolver, route contracts, local runtime reads, and allocator behavior</li>
         </ul>`,
     },
     {

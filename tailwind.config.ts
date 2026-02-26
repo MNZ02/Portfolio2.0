@@ -65,8 +65,8 @@ export default {
                 sm: 'calc(var(--radius) - 4px)',
             },
             fontFamily: {
-                anton: ['var(--font-anton)'],
-                'roboto-flex': ['var(--font-roboto-flex)'],
+                sora: ['var(--font-sora)'],
+                'space-grotesk': ['var(--font-space-grotesk)'],
             },
             padding: {
                 section: '180px',

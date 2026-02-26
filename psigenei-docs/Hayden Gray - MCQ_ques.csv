@@ -1,0 +1,48 @@
+Question Text,Has Image,Option A,Option B,Option C,Option D,Correct Answer,Explanation,Subject ,Topic ,Subtopic,Source,Year,Cognitive Level,Scope Level,Taxanomy ID
+Which one of the following ions has the maximum number of unpaired electrons?,,Cu²⁺,Na⁺,Cr³⁺,Fe³⁺,D,"Fe³⁺ has 5 unpaired electrons in its d-orbital, the maximum among the options.",Chemistry,Atomic Structure,Rules for filling the electrons in atomic orbitals,IIT JAM BT,2020,Recall,1,100018
+$H_2$ reacts with \textit{trans}-$(Ph_3P)_2Ir(CO)Cl$ to primarily produce \_\_\_\_\_\_.,,https://res.cloudinary.com/dmev7t7b9/image/upload/v1770740978/SmartSelect_20260210_215802_Chrome_bjf6pj.jpg,https://res.cloudinary.com/dmev7t7b9/image/upload/v1770741059/SmartSelect_20260210_220017_Chrome_ztcsgb.jpg,https://res.cloudinary.com/dmev7t7b9/image/upload/v1770741059/SmartSelect_20260210_220025_Chrome_vbcwcx.jpg,https://res.cloudinary.com/dmev7t7b9/image/upload/v1770741058/SmartSelect_20260210_220032_Chrome_cculur.jpg,D,"The reaction forms a dihydride complex, where H2​ splits and bonds with the metal center. This aligns with option D.",Chemistry,Coordination compounds ,Crystal field theory,IIT JAM BT,2020,Conceptual,2,100021
+"Among the following species, the metal center that has the highest number of unpaired electrons is ______.",,VCl4​,Ni(CO)4​,[AuCl4​]−,[CdBr4​]2−,A,"VCl4​ has a vanadium atom in a +4 oxidation state with d1 configuration, leading to the highest number of unpaired electrons. The other complexes have fully paired d-orbitals or no unpaired electrons.",Chemistry,Coordination compounds ,Valence bond theory,IIT JAM BT,2019,Conceptual,2,100020
+"Given the following sets: A={2,4,6,8,10,12},B={8,10,12,14,16,18},C={7,8,9,10,11,12,13}. (A∩B)∪(B∩C) is",,"{8, 10, 12, 14}","{8, 10, 12}","{7, 8, 10, 11, 12, 13, 14}","{4, 6, 7, 8, 10, 11, 12, 13}",B,"A∩B={8,10,12}, B∩C={8,10,12}, so (A∩B)∪(B∩C)={8,10,12}.",Mathematics,Sets & Functions,Sets & Relations,IIT JAM BT,2023,Application,3,100000
+"The value of the integral $\int_{0}^{4} (x - f(x)) \, dx$, where $f(x) = \begin{cases} 0, & 0 \le x < 1 \\ 1, & 1 \le x < 2 \\ 2, & 2 \le x < 3 \\ 3, & 3 \le x < 4 \\ 4, & x = 4 \end{cases}$, is \underline{\hspace{1cm}}.",,2,1,-1,-2,A,"Compute ∫(x−f(x))dx in segments and sum the results. After integration and substitution, the value is 2.",Mathematics,Calculus,Indefinite Integration & Definite Integration,IIT JAM BT,2021,Application,1,100006
+"The curve $y = x^4 - 4x^3 + 4x^2 - 4$ has tangents parallel to the $x$-axis at the following points $(x,y)$ \underline{\hspace{1cm}}.",,"(1, 4), (−2, 2) and (0, −1)","(0, −4), (2, −4) and (1, −3)","(−1, 2), (−2, 1) and (1, −2)","(1, −4), (1, −3) and (2, −4)",B,"Tangents are parallel to the x-axis when the slope (dy/dx) is zero. Solving the derivative of y = x⁴ - 4x³ + 4x² - 4 gives the critical points (0, -4), (2, -4), and (1, -3).",Mathematics,Calculus,Differentiation,IIT JAM BT,2020,Conceptual,2,100005
+"If \begin{bmatrix} x & y \\ p & q \\ u & v \end{bmatrix} R = \begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 1 \end{bmatrix}, then the order of the matrix R is:",,2×3,3×2,2×2,3×3,D,"The matrix R has 3 rows and 3 columns. Therefore, the order of R is 3×3.",Mathematics,Matrices & Determinants,Matrices,IIT JAM BT,2017,Conceptual,3,100002
+The orbital angular momentum of a hydrogen atom in the ground state is ________.,,0,2πh​,2h​,h,A,"For the ground state, the angular momentum quantum number $l=0$. Using $L = \sqrt{l(l+1)}\hbar$, the angular momentum is $0$.",Chemistry,Atomic Structure,Quantum Mechanical Model of H-atom,IIT JAM BT,2019,Recall,2,100017
+The example of substrate-level phosphorylation in glycolysis is:,,Conversion of Glucose to Glucose-6-phosphate,"Conversion of Glyceraldehyde-3-phosphate to 1,3-Bisphosphoglycerate","Conversion of 1,3-Bisphosphoglycerate to 3-Phosphoglycerate",Conversion of Dihydroxyacetone phosphate to Glyceraldehyde-3-phosphate,C,"Substrate-level phosphorylation is the direct synthesis of ATP from ADP using a high-energy intermediate. In glycolysis, this occurs during the conversion of 1,3-Bisphosphoglycerate to 3-Phosphoglycerate by phosphoglycerate kinase and duting conversion of phosphoenolpyruvate to pyruvate by pyruvate kinase. These steps transfer a phosphate group directly to ADP, forming ATP.",Biochemistry,Biomolecules - Carbohydrates,Monosachharides: Structure,GATE XL,2023,Recall,1,100028
+The dipeptide with least rotational barrier in the peptide bond is:,,https://res.cloudinary.com/dmev7t7b9/image/upload/v1770740067/SmartSelect_20260210_214337_Chrome_mqqxnj.jpg,https://res.cloudinary.com/dmev7t7b9/image/upload/v1770740067/SmartSelect_20260210_214346_Chrome_mpqnvg.jpg,https://res.cloudinary.com/dmev7t7b9/image/upload/v1770740067/SmartSelect_20260210_214357_Chrome_tfa0jt.jpg,https://res.cloudinary.com/dmev7t7b9/image/upload/v1770740066/SmartSelect_20260210_214405_Chrome_pnra8w.jpg,D,"OptionD consists of two glycines. Glycine, being the smallest amino acid has the least rotational barrier and therefore has the greatest allowed region in the Ramachandran plot as well.",Biochemistry,Biomolecules - Proteins,Amino Acid Structure & Properties,GATE XL,2019,Conceptual,4,100025
+Match the given vitamins in Column I with the related proteins in Column II.,"| Column I | Column II |
+| :--- | :--- |
+| a) Vitamin C | 1) Thrombin |
+| b) Vitamin K | 2) Rhodopsin |
+| c) Vitamin A | 3) Pyruvate dehydrogenase |
+| d) Vitamin $B_1$ | 4) Prolyl hydroxylase |",a-4; b-1; c-2; d-3,a-4; b-1; c-3; d-2,a-2; b-1; c-4; d-3,a-3; b-4; c-2; d-1,A,"Vitamin C (a-4) acts as a cofactor for prolyl hydroxylase in collagen biosynthesis. Vitamin K (b-1) is essential for thrombin activity. Vitamin A (c-2) is part of rhodopsin, crucial for vision. Vitamin B1 (d-3) acts as a coenzyme for pyruvate dehydrogenase.",Biochemistry,Biomolecules - Carbohydrates,Monosachharides: Structure,GATE XL,2019,Recall,1,100028
+Match the protein elution condition given in Group I with the appropriate chromatography matrices from Group II ,"| Group I (Elution Condition) | Group II (Chromatography Matrix) |
+| :--- | :--- |
+| **P:** Increasing concentration of sodium chloride | **iii:** DEAE-Sephacryl |
+| **Q:** Increasing concentration of histidine | **iv:** Ni-NTA |
+| **R:** Decreasing concentration of ammonium sulfate | **i:** Phenyl-Sepharose |
+| **S:** Decreasing concentration of H$^+$ | **ii:** Chromatofocusing |",P-iii; Q-iv; R-i; S-ii,P-ii; Q-iv; R-i; S-iii,P-i; Q-ii; R-iii; S-iv,P-iv; Q-ii; R-iii; S-i,A,- P: Increasing concentration of sodium chloride → DEAE-Sephacryl (iii): Ion-exchange chromatography uses increasing ionic strength for elution. - Q: Increasing concentration of histidine → Ni-NTA (iv): Affinity chromatography elutes His-tagged proteins using histidine. - R: Decreasing concentration of ammonium sulfate → Phenyl-Sepharose (i): Hydrophobic interaction chromatography elutes proteins by reducing salt concentration. - S: Decreasing concentration of H⁺ → Chromatofocusing (ii): pH gradients elute proteins based on isoelectric points.,Biochemistry,Biomolecules - Proteins,RNA Structure  & Ribozymes,GATE XL,2018,Application,1,100034
+The most abundant type of RNA in a metabolically active mammalian cell is,,mRNA,rRNA,snoRNA,tRNA,B,rRNA (ribosomal RNA) constitutes the majority of total RNA in cells as it is a key component of ribosomes and is involved in protien synthesis (1 mRNA has multiple rRNAs working on trnaslating it). mRNA and tRNA are essential but less abundant. snoRNA (small nucleolar RNA) functions in RNA processing and modification.,Biochemistry,Biomolecules - Proteins,Amino Acid Structure & Properties,IIT JAM BT,2024,Recall,2,100025
+Match the entries in Group I with that in Group II.,"| Group I | Group II |
+| :--- | :--- |
+| **P)** Fehling’s test | **1)** $\alpha$-Amino acid |
+| **Q)** Ninhydrin reaction | **2)** Reducing sugar |
+| **R)** Biuret reaction | **3)** Sulfhydryl group |
+| **S)** Nitroprusside reaction | **4)** Peptide linkage |
+","P-1, Q-2, R-3, S-4","P-3, Q-4, R-1, S-2","P-2, Q-1, R-4, S-3","P-4, Q-1, R-2, S-3",C,"Matched by standard qualitative test associations.",Biochemistry,Biomolecules - Proteins,Amino Acid Structure & Properties,IIT JAM BT,2018,Application,3,100025
+"The geometry of Fe(CO)₅ is
+(Given: Atomic number of Fe = 26)",,pentagonal planar,square pyramidal,trigonal bipyramidal,trigonal pyramidal,C,"Fe(CO)₅ adopts a trigonal bipyramidal geometry due to the arrangement of the five CO ligands around the iron center, with two axial and three equatorial positions, minimizing electron repulsion and achieving stability.",Chemistry,Coordination compounds ,Valence bond theory ,GATE XL,2021,Conceptual,1,100020
+"For the reaction mechanism,
+$$\ce{2X <=> Y} \quad \text{For this step, assume } K_{eq} = \frac{[Y]}{[X]^2}$$
+$$\ce{Y -> P} \quad k: \text{rate constant for this step}$$
+the rate law is: \underline{\hspace{1cm}}.",,\frac{d[P]}{dt} = K_{eq}[Y],\frac{d[P]}{dt} = k[X]^2,\frac{d[P]}{dt} = k K_{eq}[Y],\frac{d[P]}{dt} = k K_{eq}[X]^2,D," Since 𝑌 is in equilibrium with 𝑋, we can express [𝑌] in terms of 
+[𝑋] using the equilibrium constant:
+[𝑌]=𝐾eq[𝑋]2
+The rate of formation of 
+𝑃 is dependent on 
+[𝑌] and the rate constant 𝑘:
+𝑑[𝑃]/𝑑𝑡=𝑘[𝑌]
+Substituting 
+[𝑌] from the equilibrium expression:
+𝑑[𝑃]/𝑑𝑡=𝑘𝐾eq[𝑋]2
+ 
+This matches option (D).",Chemistry,Chemical Kinetics ,"Integrated rate law: Zero, first, second and nth order",GATE XL,2019,Application,4,100022

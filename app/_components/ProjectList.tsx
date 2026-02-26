@@ -1,39 +1,22 @@
 'use client';
 import SectionTitle from '@/components/SectionTitle';
 import { PROJECTS } from '@/lib/data';
-import { cn } from '@/lib/utils';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
-import Image from 'next/image';
-import React, { MouseEvent, useEffect, useRef, useState } from 'react';
-import Project from './Project';
+import React, { useRef } from 'react';
+import ProjectCard from './ProjectCard';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const ProjectList = () => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const imageContainer = useRef<HTMLDivElement>(null);
-    const [selectedProject, setSelectedProject] = useState<string | null>(null);
-
-    useEffect(() => {
-        const syncLayoutMode = () => {
-            if (window.innerWidth >= 1280) {
-                setSelectedProject(PROJECTS[0]?.slug ?? null);
-                return;
-            }
-
-            setSelectedProject(null);
-        };
-
-        syncLayoutMode();
-
-        window.addEventListener('resize', syncLayoutMode);
-
-        return () => {
-            window.removeEventListener('resize', syncLayoutMode);
-        };
-    }, []);
+    const selectedProjects = PROJECTS.filter(
+        (project) =>
+            !['psigenei', 'emiko-app-uiux', 'portfolio-website'].includes(
+                project.slug,
+            ),
+    );
 
     useGSAP(
         () => {
@@ -43,7 +26,6 @@ const ProjectList = () => {
 
             gsap.from('.project-row', {
                 y: 32,
-                autoAlpha: 0,
                 duration: 0.65,
                 stagger: 0.1,
                 ease: 'power2.out',
@@ -56,99 +38,37 @@ const ProjectList = () => {
         { scope: containerRef },
     );
 
-    const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-        if (!containerRef.current || !imageContainer.current || !selectedProject) {
-            return;
-        }
-
-        if (window.innerWidth < 1280) {
-            return;
-        }
-
-        const containerRect = containerRef.current.getBoundingClientRect();
-        const imageRect = imageContainer.current.getBoundingClientRect();
-        const y = e.clientY - containerRect.top - imageRect.height / 2;
-
-        gsap.to(imageContainer.current, {
-            y,
-            opacity: 1,
-            duration: 0.35,
-            ease: 'power2.out',
-        });
-    };
-
-    const handleMouseLeave = () => {
-        if (!imageContainer.current) return;
-
-        gsap.to(imageContainer.current, {
-            opacity: 0,
-            duration: 0.25,
-            ease: 'power2.out',
-        });
-    };
-
-    const handleMouseEnter = (slug: string) => {
-        if (window.innerWidth < 1280) {
-            setSelectedProject(null);
-            return;
-        }
-
-        setSelectedProject(slug);
-    };
-
     return (
         <section className="section-divider py-20 md:py-32" id="selected-projects">
             <div className="container">
                 <SectionTitle
                     title="Selected Projects"
                     eyebrow="Recent Case Studies"
+                    classNames={{ title: 'text-2xl tracking-[0.12em] md:text-3xl' }}
                 />
 
-                <p className="max-w-[700px] text-muted-foreground md:text-lg md:leading-relaxed">
-                    A few representative builds focused on system reliability,
-                    backend complexity, and product delivery under practical
-                    constraints.
-                </p>
+                <div className="relative mt-8 overflow-hidden rounded-[32px] border border-border/60 bg-[linear-gradient(160deg,hsl(var(--surface-1)/0.72),hsl(var(--surface-2)/0.58))] p-5 backdrop-blur-md md:p-7 lg:p-8">
+                    <div className="pointer-events-none absolute -left-24 -top-24 h-56 w-56 rounded-full bg-primary/15 blur-3xl" />
+                    <div className="pointer-events-none absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-cyan-400/10 blur-3xl" />
 
-                <div
-                    className="relative mt-10"
-                    ref={containerRef}
-                    onMouseMove={handleMouseMove}
-                    onMouseLeave={handleMouseLeave}
-                >
-                    {selectedProject && (
-                        <div
-                            className="pointer-events-none absolute right-0 top-0 z-[2] hidden w-[280px] overflow-hidden rounded-2xl border border-border/70 bg-background-light/70 opacity-0 xl:block"
-                            ref={imageContainer}
-                        >
-                            {PROJECTS.map((project) => (
-                                <Image
-                                    src={project.thumbnail}
-                                    alt={`${project.title} thumbnail`}
-                                    width="400"
-                                    height="520"
-                                    className={cn(
-                                        'absolute inset-0 aspect-[4/5] h-full w-full object-cover transition-opacity duration-300',
-                                        {
-                                            'opacity-0':
-                                                project.slug !== selectedProject,
-                                        },
-                                    )}
-                                    key={project.slug}
-                                />
-                            ))}
+                    <p className="relative max-w-[760px] text-sm leading-7 text-muted-foreground md:text-base">
+                        A curated mix of UI/UX design and engineering projects,
+                        crafted for visual quality, clear usability, and
+                        production-level reliability.
+                    </p>
 
-                            <div className="relative aspect-[4/5]"></div>
-                        </div>
-                    )}
-
-                    <div className="grid gap-4 pr-0 xl:pr-[320px]">
-                        {PROJECTS.map((project, index) => (
-                            <Project
+                    <div
+                        className="relative mt-7 grid gap-5 lg:grid-cols-12"
+                        ref={containerRef}
+                    >
+                        {selectedProjects.map((project, index) => (
+                            <ProjectCard
                                 index={index}
                                 project={project}
-                                selectedProject={selectedProject}
-                                onMouseEnter={handleMouseEnter}
+                                featured={
+                                    index % 3 === 0 &&
+                                    project.thumbnail.trim().length > 0
+                                }
                                 key={project.slug}
                             />
                         ))}

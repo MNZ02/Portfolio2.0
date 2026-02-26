@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Anton, Roboto_Flex } from 'next/font/google';
+import { Sora, Space_Grotesk } from 'next/font/google';
 import { ReactLenis } from 'lenis/react';
 
 import 'lenis/dist/lenis.css';
@@ -13,18 +13,16 @@ import Preloader from '../components/Preloader';
 import StickyEmail from './_components/StickyEmail';
 import { SITE_NAME, SITE_URL } from '@/lib/site';
 
-const antonFont = Anton({
-    weight: '400',
-    style: 'normal',
+const soraFont = Sora({
+    weight: ['400', '500', '600', '700'],
     subsets: ['latin'],
-    variable: '--font-anton',
+    variable: '--font-sora',
 });
 
-const robotoFlex = Roboto_Flex({
-    weight: ['100', '400', '500', '600', '700', '800'],
-    style: 'normal',
+const spaceGrotesk = Space_Grotesk({
+    weight: ['300', '400', '500', '600', '700'],
     subsets: ['latin'],
-    variable: '--font-roboto-flex',
+    variable: '--font-space-grotesk',
 });
 
 export const metadata: Metadata = {
@@ -65,7 +63,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${antonFont.variable} ${robotoFlex.variable} antialiased`}
+                className={`${soraFont.variable} ${spaceGrotesk.variable} antialiased`}
             >
                 <ReactLenis
                     root

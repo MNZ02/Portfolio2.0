@@ -91,7 +91,7 @@ const Experiences = () => {
                                                     </a>
                                                 )}
                                             </div>
-                                            <h3 className="mt-2 font-anton text-2xl leading-[1.1] md:text-3xl lg:text-4xl">
+                                            <h3 className="mt-2 font-sora text-2xl leading-[1.1] md:text-3xl lg:text-4xl">
                                                 {item.title}
                                             </h3>
                                             <p className="mt-4 text-xs font-medium uppercase tracking-[0.2em] text-primary">
@@ -151,7 +151,7 @@ const Experiences = () => {
                                                     </a>
                                                 )}
                                             </div>
-                                            <h3 className="mt-1 font-anton text-2xl leading-tight md:text-3xl">
+                                            <h3 className="mt-1 font-sora text-2xl leading-tight md:text-3xl">
                                                 {item.title}
                                             </h3>
                                             <p className="mt-3 text-xs font-medium uppercase tracking-widest text-primary/80">
@@ -172,7 +172,7 @@ const Experiences = () => {
                 ) : (
                     <article className="experience-item surface-card p-7 md:p-9">
                         <p className="eyebrow">Experience updates</p>
-                        <h3 className="mt-3 font-anton text-3xl md:text-4xl">
+                        <h3 className="mt-3 font-sora text-3xl md:text-4xl">
                             Detailed role history will be published here.
                         </h3>
                         <p className="mt-4 max-w-[640px] text-muted-foreground md:text-lg">

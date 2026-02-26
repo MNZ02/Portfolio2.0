@@ -51,7 +51,7 @@ const ProjectDetails = ({ project }: Props) => {
 
                 <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
                     <div className="detail-reveal lg:col-span-8">
-                        <h1 className="font-anton text-5xl leading-[0.95] md:text-7xl">
+                        <h1 className="font-sora text-5xl leading-[0.95] md:text-7xl">
                             {project.title}
                         </h1>
 
@@ -132,31 +132,33 @@ const ProjectDetails = ({ project }: Props) => {
                     </aside>
                 </div>
 
-                <div className="mt-12 grid gap-4" id="images">
-                    {project.images.map((image) => (
-                        <article
-                            key={image}
-                            className="detail-reveal group relative overflow-hidden rounded-2xl border border-border/70 bg-background-light/55"
-                        >
-                            <div
-                                className="aspect-[16/9] w-full bg-cover bg-center bg-no-repeat"
-                                style={{
-                                    backgroundImage: `url(${image})`,
-                                }}
-                            ></div>
-
-                            <a
-                                href={image}
-                                target="_blank"
-                                rel="noreferrer noopener"
-                                className="absolute right-3 top-3 inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/70 bg-background/75 text-muted-foreground opacity-0 transition-all hover:border-primary/70 hover:text-primary group-hover:opacity-100"
-                                aria-label="Open full image"
+                {project.images.length > 0 && (
+                    <div className="mt-12 grid gap-4" id="images">
+                        {project.images.map((image) => (
+                            <article
+                                key={image}
+                                className="detail-reveal group relative overflow-hidden rounded-2xl border border-border/70 bg-background-light/55"
                             >
-                                <ExternalLink size={18} />
-                            </a>
-                        </article>
-                    ))}
-                </div>
+                                <div
+                                    className="aspect-[16/9] w-full bg-cover bg-center bg-no-repeat"
+                                    style={{
+                                        backgroundImage: `url(${image})`,
+                                    }}
+                                ></div>
+
+                                <a
+                                    href={image}
+                                    target="_blank"
+                                    rel="noreferrer noopener"
+                                    className="absolute right-3 top-3 inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/70 bg-background/75 text-muted-foreground opacity-0 transition-all hover:border-primary/70 hover:text-primary group-hover:opacity-100"
+                                    aria-label="Open full image"
+                                >
+                                    <ExternalLink size={18} />
+                                </a>
+                            </article>
+                        ))}
+                    </div>
+                )}
             </div>
         </section>
     );

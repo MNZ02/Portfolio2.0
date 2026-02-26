@@ -45,7 +45,7 @@ const Navbar = () => {
                     <div className="surface-card relative flex h-14 items-center px-4 md:px-5">
                         <Link
                             href="/#banner"
-                            className="font-anton text-lg leading-none tracking-[0.18em] text-foreground"
+                            className="font-sora text-lg leading-none tracking-[0.18em] text-foreground"
                         >
                             MINHAZ.DEV
                         </Link>

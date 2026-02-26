@@ -8,7 +8,7 @@ const Footer = () => {
             <div className="container">
                 <div className="surface-card px-6 py-10 text-center md:px-10 md:py-12">
                     <p className="eyebrow">Let&apos;s build something useful</p>
-                    <h2 className="mt-4 font-anton text-4xl leading-none md:text-6xl">
+                    <h2 className="mt-4 font-sora text-4xl leading-none md:text-6xl">
                         Have a project in mind?
                     </h2>
 
