@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
+    "dev:webpack": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "svgr:icons": "svgr --title-prop --no-dimensions --typescript -d components/icons -- components/icons/svgs"
+    "svgr:icons": "svgr --title-prop --no-dimensions --typescript -d components/icons -- components/icons/svgs",
+    "dev:turbo": "next dev --turbopack"
   },
   "dependencies": {
     "@gsap/react": "^2.1.1",

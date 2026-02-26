@@ -69,8 +69,8 @@ const Banner = () => {
     >
       <ArrowAnimation />
 
-      <div className="container" ref={containerRef}>
-        <div className="grid min-h-[calc(100svh-92px)] items-center gap-10 lg:grid-cols-12 lg:gap-8">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8" ref={containerRef}>
+        <div className="grid min-h-[calc(100svh-92px)] items-center gap-10 lg:grid-cols-12 lg:gap-0">
           <div className="lg:col-span-7 xl:col-span-8">
             <div className="hero-float">
               <p className="hero-intro eyebrow mb-7 inline-flex rounded-full border border-border/70 bg-background-light/70 px-4 py-2 text-[11px]">

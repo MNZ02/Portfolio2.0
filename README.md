@@ -13,6 +13,14 @@ pnpm install
 pnpm dev
 ```
 
+## 🧪 Development Modes
+
+- `pnpm dev`: Webpack dev server (recommended for stable debugging).
+- `pnpm dev:turbo`: Turbopack dev server (faster startup; may show sourcemap warnings on some setups).
+- `pnpm dev:webpack`: Explicit webpack mode alias.
+
+If you see logs like `chunk/module is missing a sourcemap`, that is typically a tooling-level warning in dev mode and not a production runtime issue.
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## 🤝 Contributing
