@@ -393,10 +393,10 @@ export const MY_EXPERIENCE: IExperience[] = [
         duration: 'Jun 2025 – Present',
         liveUrl: 'https://skillmissionassam.org',
         description: `<ul>
-            <li>Developed and maintained 3 Assam government projects: Public Registration, Job Mela, Skill Courses</li>
-            <li>Built secure signup/login flows with RBAC for candidates, mobilizers, and companies</li>
-            <li>Implemented dashboards and profiles for candidates and companies (job applications + course enrollments)</li>
-            <li>Integrated SSO for consistent sessions across all 3 platforms</li>
+            <li>Built and maintained a multi-app Assam public services platform covering Public Registration, Skill Courses, Job Mela, Job Board, and Recruitment workflows</li>
+            <li>Implemented secure identity-verified onboarding (OTP + Aadhaar OTP + eKYC) with role-based access for Candidate, Employer, and Mela Admin journeys</li>
+            <li>Delivered end-to-end employment lifecycle features including job posting, applications, shortlisting/rejection, interview scheduling, and candidate profile/resume workflows</li>
+            <li>Standardized shared architecture with reusable UI/auth/state modules across apps, improving consistency and delivery speed</li>
         </ul>`,
     },
     {
