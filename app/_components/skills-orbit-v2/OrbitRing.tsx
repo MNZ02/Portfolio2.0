@@ -18,6 +18,7 @@ interface Props {
     ) => { base: string; active: string };
     onNodeEnter: (_node: OrbitStackNode) => void;
     onNodeLeave: () => void;
+    onNodeClick: (_node: OrbitStackNode) => void;
 }
 
 const OrbitRing = ({
@@ -32,6 +33,7 @@ const OrbitRing = ({
     getAccentForCategory,
     onNodeEnter,
     onNodeLeave,
+    onNodeClick,
 }: Props) => {
     return (
         <div
@@ -73,6 +75,7 @@ const OrbitRing = ({
                         onLeave={onNodeLeave}
                         onFocus={() => onNodeEnter(node)}
                         onBlur={onNodeLeave}
+                        onClick={() => onNodeClick(node)}
                     />
                 );
             })}

@@ -16,6 +16,7 @@ interface Props {
     onLeave: () => void;
     onFocus: () => void;
     onBlur: () => void;
+    onClick: () => void;
 }
 
 const OrbitNode = React.forwardRef<HTMLButtonElement, Props>(
@@ -32,6 +33,7 @@ const OrbitNode = React.forwardRef<HTMLButtonElement, Props>(
             onLeave,
             onFocus,
             onBlur,
+            onClick,
         },
         ref,
     ) => {
@@ -43,6 +45,7 @@ const OrbitNode = React.forwardRef<HTMLButtonElement, Props>(
                 onMouseLeave={onLeave}
                 onFocus={onFocus}
                 onBlur={onBlur}
+                onClick={onClick}
                 className={cn(
                     'absolute left-1/2 top-1/2 z-[2] h-12 w-12 rounded-2xl p-0 transition-all duration-300 [transform:translate3d(var(--tx),var(--ty),0)_translate(-50%,-50%)_scale(var(--node-scale))] will-change-transform',
                     isActive && 'z-[8]',

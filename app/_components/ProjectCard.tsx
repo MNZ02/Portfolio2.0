@@ -61,18 +61,18 @@ const ProjectCard = ({ project, index, featured = false }: Props) => {
                     </span>
                 </div>
 
-                <div className="flex items-start justify-between gap-4">
+                <div className="flex flex-wrap items-start justify-between gap-2.5 sm:gap-4">
                     <h3
                         className={cn(
-                            'font-sora leading-[0.98]',
+                            'min-w-0 flex-1 font-sora leading-[0.98]',
                             featured
-                                ? 'text-3xl sm:text-[2.2rem]'
-                                : 'text-[1.95rem] sm:text-[2.05rem]',
+                                ? 'text-[1.95rem] sm:text-3xl md:text-[2.2rem]'
+                                : 'text-[1.65rem] sm:text-[1.95rem] md:text-[2.05rem]',
                         )}
                     >
                         {project.title}
                     </h3>
-                    <span className="mt-1 rounded-full border border-border/70 bg-background/45 px-2.5 py-1 text-[11px] uppercase tracking-[0.13em] text-muted-foreground">
+                    <span className="mt-1 shrink-0 rounded-full border border-border/70 bg-background/45 px-2.5 py-1 text-[11px] uppercase tracking-[0.13em] text-muted-foreground">
                         {project.year}
                     </span>
                 </div>

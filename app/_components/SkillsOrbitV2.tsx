@@ -218,7 +218,6 @@ const SkillsOrbitV2 = () => {
 
     useGSAP(
         () => {
-            if (viewMode === 'mobile') return;
             const reducedMotion = window.matchMedia(
                 '(prefers-reduced-motion: reduce)',
             );
@@ -286,8 +285,10 @@ const SkillsOrbitV2 = () => {
             }
 
             let lastTime = 0;
-            const speedFactor = viewMode === 'tablet' ? 0.86 : 1;
-            const radiusScale = viewMode === 'tablet' ? 0.82 : 1;
+            const speedFactor =
+                viewMode === 'mobile' ? 0.74 : viewMode === 'tablet' ? 0.86 : 1;
+            const radiusScale =
+                viewMode === 'mobile' ? 0.58 : viewMode === 'tablet' ? 0.82 : 1;
 
             // Orbit update loop:
             // - smooth timeScale interpolation creates inertial slow/restore
@@ -378,11 +379,12 @@ const SkillsOrbitV2 = () => {
                 <div ref={headingRef}>
                     <p className="eyebrow">Tools and Platforms</p>
                     <h2 className="mt-3 max-w-[900px] font-sora text-4xl font-semibold uppercase leading-[0.92] sm:text-5xl md:text-[4.15rem]">
-                        Build Engine V2
+                        Tech Stack
                     </h2>
                     <p className="mt-5 max-w-[760px] text-sm leading-7 text-muted-foreground md:text-base">
                         A structured orbital system for the technologies behind my
-                        production workflow. Hover to inspect details and system role.
+                        production workflow. Tap or hover nodes to inspect details
+                        and system role.
                     </p>
                 </div>
 
@@ -398,23 +400,131 @@ const SkillsOrbitV2 = () => {
                 >
                     <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(520px_circle_at_var(--glow-x)_var(--glow-y),hsl(var(--primary)/0.14),transparent_70%)]" />
 
-                    <div
-                        className={cn(
-                            'relative grid items-start gap-8',
-                            viewMode === 'mobile'
-                                ? 'grid-cols-1'
-                                : 'lg:grid-cols-12',
-                        )}
-                    >
-                        {viewMode === 'mobile' ? (
-                            <div className="space-y-4">
-                                <InfoPanel
-                                    activeNode={activeNode}
-                                    categoryChipClass={
-                                        CATEGORY_ACCENT[activeNode.category].chip
-                                    }
-                                />
-                                <div className="grid grid-cols-2 gap-3">
+                    <div className="relative grid items-start gap-8 lg:grid-cols-12">
+                        <div className="lg:col-span-8">
+                            <div
+                                className={cn(
+                                    'mx-auto w-full',
+                                    viewMode === 'mobile'
+                                        ? 'max-w-[330px]'
+                                        : 'max-w-[520px]',
+                                )}
+                            >
+                                <div className="relative aspect-square">
+                                    {(Object.keys(RING_MOTION) as Array<
+                                        '1' | '2' | '3'
+                                    >).map((key) => {
+                                        const ring = Number(key) as OrbitRingId;
+                                        const cfg = RING_MOTION[ring];
+                                        const diameter =
+                                            cfg.radius *
+                                            (viewMode === 'mobile'
+                                                ? 0.58
+                                                : viewMode === 'tablet'
+                                                  ? 0.82
+                                                  : 1) *
+                                            2;
+
+                                        return (
+                                            <OrbitRing
+                                                key={ring}
+                                                ringId={ring}
+                                                ringLabel={cfg.label}
+                                                diameter={diameter}
+                                                ringClass={cfg.ringClass}
+                                                nodes={rings[ring] ?? []}
+                                                activeNodeId={activeNode.id}
+                                                inspectedNodeId={inspectedNodeId}
+                                                registerRingRef={(el) => {
+                                                    ringRefs.current[ring] = el;
+                                                }}
+                                                registerNodeRef={(index, el) => {
+                                                    nodeRefs.current[ring][index] =
+                                                        el;
+                                                }}
+                                                getAccentForCategory={
+                                                    getAccentForCategory
+                                                }
+                                                onNodeEnter={inspectNode}
+                                                onNodeLeave={clearInspection}
+                                                onNodeClick={inspectNode}
+                                            />
+                                        );
+                                    })}
+
+                                    <div
+                                        ref={coreRef}
+                                        className={cn(
+                                            'absolute left-1/2 top-1/2 z-[12] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/28 bg-[radial-gradient(circle_at_30%_28%,hsl(var(--primary)/0.3),hsl(var(--surface-1)/0.9)_62%)]',
+                                            viewMode === 'mobile'
+                                                ? 'h-28 w-28 p-3'
+                                                : 'h-36 w-36 p-4',
+                                        )}
+                                    >
+                                        <span
+                                            ref={corePulseRingRef}
+                                            className="pointer-events-none absolute inset-0 rounded-full border border-primary/24"
+                                        />
+                                        <div
+                                            ref={coreBodyRef}
+                                            className="relative flex h-full flex-col items-center justify-center rounded-full border border-primary/20 bg-background/55 text-center"
+                                        >
+                                            <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                                                Stack Core
+                                            </p>
+                                            <p className="mt-1 font-sora text-sm font-semibold uppercase leading-none text-foreground md:text-lg">
+                                                Build
+                                            </p>
+                                            <p className="font-sora text-sm font-semibold uppercase leading-none text-primary md:text-lg">
+                                                Engine
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <aside className="lg:col-span-4">
+                            <InfoPanel
+                                activeNode={activeNode}
+                                categoryChipClass={
+                                    CATEGORY_ACCENT[activeNode.category].chip
+                                }
+                            />
+
+                            <div className="mt-4 rounded-2xl border border-border/60 bg-[hsl(var(--surface-1)/0.78)] p-5 backdrop-blur-sm md:p-6">
+                                <p className="eyebrow mb-4">Category Distribution</p>
+                                <div className="flex flex-wrap gap-2.5">
+                                    {CATEGORY_ORDER.filter(
+                                        (category) =>
+                                            (categoryCounts[category] ?? 0) > 0,
+                                    ).map((category) => {
+                                        const accent = CATEGORY_ACCENT[category];
+                                        return (
+                                            <span
+                                                className={cn(
+                                                    'inline-flex items-center gap-2 rounded-full border bg-background/50 px-3 py-1 text-[11px] uppercase tracking-[0.13em]',
+                                                    accent.chip,
+                                                )}
+                                                key={category}
+                                            >
+                                                {category}
+                                                <span
+                                                    className={cn(
+                                                        'rounded-full px-2 py-0.5 text-[10px]',
+                                                        accent.count,
+                                                    )}
+                                                >
+                                                    {categoryCounts[category]}
+                                                </span>
+                                            </span>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
+                            {viewMode === 'mobile' && (
+                                <div className="mt-4 grid grid-cols-2 gap-3">
                                     {nodes.map((node) => {
                                         const isActive = activeNode.id === node.id;
                                         const accent = CATEGORY_ACCENT[node.category];
@@ -422,7 +532,7 @@ const SkillsOrbitV2 = () => {
                                             <button
                                                 type="button"
                                                 key={node.id}
-                                                onClick={() => setActiveNodeId(node.id)}
+                                                onClick={() => inspectNode(node)}
                                                 className={cn(
                                                     'rounded-2xl border border-border/65 bg-background/45 p-3 text-left transition-colors',
                                                     isActive && accent.chip,
@@ -431,144 +541,15 @@ const SkillsOrbitV2 = () => {
                                                 <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">
                                                     {node.category}
                                                 </p>
-                                                <p className="mt-1 font-sora text-sm font-semibold text-foreground">
+                                                <p className="mt-1 break-words font-sora text-sm font-semibold text-foreground">
                                                     {node.name}
                                                 </p>
                                             </button>
                                         );
                                     })}
                                 </div>
-                            </div>
-                        ) : (
-                            <>
-                                <div className="lg:col-span-8">
-                                <div className="mx-auto w-full max-w-[520px]">
-                                        <div className="relative aspect-square">
-                                            {(Object.keys(RING_MOTION) as Array<
-                                                '1' | '2' | '3'
-                                            >).map((key) => {
-                                                const ring = Number(
-                                                    key,
-                                                ) as OrbitRingId;
-                                                const cfg = RING_MOTION[ring];
-                                                const diameter =
-                                                    cfg.radius *
-                                                    (viewMode === 'tablet'
-                                                        ? 0.82
-                                                        : 1) *
-                                                    2;
-
-                                                return (
-                                                    <OrbitRing
-                                                        key={ring}
-                                                        ringId={ring}
-                                                        ringLabel={cfg.label}
-                                                        diameter={diameter}
-                                                        ringClass={cfg.ringClass}
-                                                        nodes={rings[ring] ?? []}
-                                                        activeNodeId={activeNode.id}
-                                                        inspectedNodeId={
-                                                            inspectedNodeId
-                                                        }
-                                                        registerRingRef={(el) => {
-                                                            ringRefs.current[ring] =
-                                                                el;
-                                                        }}
-                                                        registerNodeRef={(
-                                                            index,
-                                                            el,
-                                                        ) => {
-                                                            nodeRefs.current[ring][
-                                                                index
-                                                            ] = el;
-                                                        }}
-                                                        getAccentForCategory={
-                                                            getAccentForCategory
-                                                        }
-                                                        onNodeEnter={inspectNode}
-                                                        onNodeLeave={
-                                                            clearInspection
-                                                        }
-                                                    />
-                                                );
-                                            })}
-
-                                            <div
-                                                ref={coreRef}
-                                                className="absolute left-1/2 top-1/2 z-[12] h-36 w-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/28 bg-[radial-gradient(circle_at_30%_28%,hsl(var(--primary)/0.3),hsl(var(--surface-1)/0.9)_62%)] p-4"
-                                            >
-                                                <span
-                                                    ref={corePulseRingRef}
-                                                    className="pointer-events-none absolute inset-0 rounded-full border border-primary/24"
-                                                />
-                                                <div
-                                                    ref={coreBodyRef}
-                                                    className="relative flex h-full flex-col items-center justify-center rounded-full border border-primary/20 bg-background/55 text-center"
-                                                >
-                                                    <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                                                        Stack Core
-                                                    </p>
-                                                    <p className="mt-1 font-sora text-lg font-semibold uppercase leading-none text-foreground">
-                                                        Build
-                                                    </p>
-                                                    <p className="font-sora text-lg font-semibold uppercase leading-none text-primary">
-                                                        Engine
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <aside className="lg:col-span-4">
-                                    <InfoPanel
-                                        activeNode={activeNode}
-                                        categoryChipClass={
-                                            CATEGORY_ACCENT[activeNode.category].chip
-                                        }
-                                    />
-
-                                    <div className="mt-4 rounded-2xl border border-border/60 bg-[hsl(var(--surface-1)/0.78)] p-5 backdrop-blur-sm md:p-6">
-                                        <p className="eyebrow mb-4">
-                                            Category Distribution
-                                        </p>
-                                        <div className="flex flex-wrap gap-2.5">
-                                            {CATEGORY_ORDER.filter(
-                                                (category) =>
-                                                    (categoryCounts[category] ??
-                                                        0) > 0,
-                                            ).map((category) => {
-                                                const accent =
-                                                    CATEGORY_ACCENT[category];
-                                                return (
-                                                    <span
-                                                        className={cn(
-                                                            'inline-flex items-center gap-2 rounded-full border bg-background/50 px-3 py-1 text-[11px] uppercase tracking-[0.13em]',
-                                                            accent.chip,
-                                                        )}
-                                                        key={category}
-                                                    >
-                                                        {category}
-                                                        <span
-                                                            className={cn(
-                                                                'rounded-full px-2 py-0.5 text-[10px]',
-                                                                accent.count,
-                                                            )}
-                                                        >
-                                                            {
-                                                                categoryCounts[
-                                                                    category
-                                                                ]
-                                                            }
-                                                        </span>
-                                                    </span>
-                                                );
-                                            })}
-                                        </div>
-                                    </div>
-                                </aside>
-                            </>
-                        )}
+                            )}
+                        </aside>
                     </div>
                 </div>
             </div>
