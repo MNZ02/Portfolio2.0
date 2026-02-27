@@ -8,6 +8,7 @@ interface Props {
     ringLabel: string;
     diameter: number;
     ringClass: string;
+    showLabel?: boolean;
     nodes: OrbitStackNode[];
     activeNodeId: string | null;
     inspectedNodeId: string | null;
@@ -25,6 +26,7 @@ const OrbitRing = ({
     ringLabel,
     diameter,
     ringClass,
+    showLabel = true,
     nodes,
     activeNodeId,
     inspectedNodeId,
@@ -47,9 +49,12 @@ const OrbitRing = ({
                 height: diameter,
             }}
         >
-            <span className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full border border-border/45 bg-background/75 px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] text-muted-foreground backdrop-blur-sm">
-                {ringLabel}
-            </span>
+            <span className="pointer-events-none absolute inset-0 rounded-full border border-foreground/10" />
+            {showLabel && (
+                <span className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full border border-border/55 bg-background/80 px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] text-muted-foreground backdrop-blur-sm">
+                    {ringLabel}
+                </span>
+            )}
 
             {nodes.map((node, index) => {
                 const accents = getAccentForCategory(node);

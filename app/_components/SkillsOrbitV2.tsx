@@ -45,21 +45,23 @@ const RING_MOTION: Record<
         radius: 116,
         label: 'Core Stack',
         ringClass:
-            'border-primary/30 shadow-[0_0_14px_hsl(var(--primary)/0.14)]',
+            'border-[1.5px] border-primary/50 shadow-[0_0_16px_hsl(var(--primary)/0.22)]',
     },
     2: {
         duration: 32,
         direction: -1,
         radius: 168,
         label: 'Infrastructure',
-        ringClass: 'border-dashed border-border/45',
+        ringClass:
+            'border-[1.5px] border-dashed border-border/70 shadow-[0_0_10px_hsl(var(--foreground)/0.08)]',
     },
     3: {
         duration: 60,
         direction: 1,
         radius: 224,
         label: 'Tools & Support',
-        ringClass: 'border-border/25 opacity-70',
+        ringClass:
+            'border-[1.5px] border-border/55 shadow-[0_0_8px_hsl(var(--foreground)/0.08)]',
     },
 };
 
@@ -288,7 +290,7 @@ const SkillsOrbitV2 = () => {
             const speedFactor =
                 viewMode === 'mobile' ? 0.74 : viewMode === 'tablet' ? 0.86 : 1;
             const radiusScale =
-                viewMode === 'mobile' ? 0.58 : viewMode === 'tablet' ? 0.82 : 1;
+                viewMode === 'mobile' ? 0.74 : viewMode === 'tablet' ? 0.84 : 1;
 
             // Orbit update loop:
             // - smooth timeScale interpolation creates inertial slow/restore
@@ -406,7 +408,7 @@ const SkillsOrbitV2 = () => {
                                 className={cn(
                                     'mx-auto w-full',
                                     viewMode === 'mobile'
-                                        ? 'max-w-[330px]'
+                                        ? 'max-w-[390px]'
                                         : 'max-w-[520px]',
                                 )}
                             >
@@ -433,6 +435,7 @@ const SkillsOrbitV2 = () => {
                                                 diameter={diameter}
                                                 ringClass={cfg.ringClass}
                                                 nodes={rings[ring] ?? []}
+                                                showLabel={viewMode !== 'mobile'}
                                                 activeNodeId={activeNode.id}
                                                 inspectedNodeId={inspectedNodeId}
                                                 registerRingRef={(el) => {
@@ -457,7 +460,7 @@ const SkillsOrbitV2 = () => {
                                         className={cn(
                                             'absolute left-1/2 top-1/2 z-[12] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/28 bg-[radial-gradient(circle_at_30%_28%,hsl(var(--primary)/0.3),hsl(var(--surface-1)/0.9)_62%)]',
                                             viewMode === 'mobile'
-                                                ? 'h-28 w-28 p-3'
+                                                ? 'h-24 w-24 p-2.5'
                                                 : 'h-36 w-36 p-4',
                                         )}
                                     >
@@ -469,15 +472,28 @@ const SkillsOrbitV2 = () => {
                                             ref={coreBodyRef}
                                             className="relative flex h-full flex-col items-center justify-center rounded-full border border-primary/20 bg-background/55 text-center"
                                         >
-                                            <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                                                Stack Core
-                                            </p>
-                                            <p className="mt-1 font-sora text-sm font-semibold uppercase leading-none text-foreground md:text-lg">
-                                                Build
-                                            </p>
-                                            <p className="font-sora text-sm font-semibold uppercase leading-none text-primary md:text-lg">
-                                                Engine
-                                            </p>
+                                            {viewMode === 'mobile' ? (
+                                                <>
+                                                    <p className="text-[9px] uppercase tracking-[0.14em] text-muted-foreground">
+                                                        Core
+                                                    </p>
+                                                    <p className="mt-1 font-sora text-sm font-semibold uppercase leading-none text-primary">
+                                                        Engine
+                                                    </p>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                                                        Stack Core
+                                                    </p>
+                                                    <p className="mt-1 font-sora text-sm font-semibold uppercase leading-none text-foreground md:text-lg">
+                                                        Build
+                                                    </p>
+                                                    <p className="font-sora text-sm font-semibold uppercase leading-none text-primary md:text-lg">
+                                                        Engine
+                                                    </p>
+                                                </>
+                                            )}
                                         </div>
                                     </div>
                                 </div>

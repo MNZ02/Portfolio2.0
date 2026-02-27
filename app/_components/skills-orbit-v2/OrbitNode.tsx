@@ -47,7 +47,7 @@ const OrbitNode = React.forwardRef<HTMLButtonElement, Props>(
                 onBlur={onBlur}
                 onClick={onClick}
                 className={cn(
-                    'absolute left-1/2 top-1/2 z-[2] h-12 w-12 rounded-2xl p-0 transition-all duration-300 [transform:translate3d(var(--tx),var(--ty),0)_translate(-50%,-50%)_scale(var(--node-scale))] will-change-transform',
+                    'absolute left-1/2 top-1/2 z-[2] h-10 w-10 rounded-xl p-0 transition-all duration-300 [transform:translate3d(var(--tx),var(--ty),0)_translate(-50%,-50%)_scale(var(--node-scale))] will-change-transform md:h-12 md:w-12 md:rounded-2xl',
                     isActive && 'z-[8]',
                     isDimmed && 'z-[1] blur-[1px]',
                 )}
@@ -74,7 +74,7 @@ const OrbitNode = React.forwardRef<HTMLButtonElement, Props>(
                         alt={node.name}
                         width={22}
                         height={22}
-                        className="h-5 w-5 object-contain"
+                        className="h-4 w-4 object-contain md:h-5 md:w-5"
                     />
                 </span>
             </button>
