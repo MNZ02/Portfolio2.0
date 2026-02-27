@@ -73,11 +73,11 @@ const Button = ({
   );
 
   const buttonClasses = cn(
-    'inline-flex h-12 items-center justify-center gap-2 rounded-full border border-transparent px-5 md:px-7 text-sm font-semibold uppercase tracking-[0.15em] outline-none transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+    'inline-flex h-11 items-center justify-center gap-2 rounded-full border border-transparent px-5 text-xs font-semibold uppercase tracking-[0.12em] outline-none transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background md:h-12 md:px-7 md:text-sm md:tracking-[0.15em]',
     variantClasses,
     {
       [iconClasses]: icon,
-      'rounded-none border-none px-0 text-base tracking-[0.12em]':
+      'h-auto rounded-none border-none px-0 py-1 text-xs tracking-[0.1em] md:text-base md:tracking-[0.12em]':
         variant === 'link',
     },
     className,
